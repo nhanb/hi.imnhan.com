@@ -1,0 +1,91 @@
+{{define "head"}}{{end}}
+
+{{define "body"}}
+<header>
+  <h1 class="site-title">{{.Site.Name}}</h1>
+  <p class="tagline">{{.Site.Tagline}}</p>
+</header>
+
+<hr>
+
+<div class="pages">
+{{- range .ArticlesInNav}}
+  <a href="{{.WebPath}}">{{.Title}}</a>
+{{- end}}
+  <a class="feed-link" href="{{.Feed}}">
+    <img src="{{.Site.Root}}_theme/feed.svg" alt="Atom Feed" title="Atom Feed">
+  </a>
+</div>
+
+<hr>
+
+{{.Content}}
+
+{{if .ArticlesInFeed -}}
+<p>All posts, newest first:</p>
+
+<ul>
+  {{- range .ArticlesInFeed}}
+  {{- if not .IsDraft}}
+  <li>
+    <span class="time-prefix">{{.PostedAt.Local.Format "2006-01-02"}} — </span>
+    <a href="{{.WebPath}}">{{.Title}}</a>
+    <span class="time-suffix">({{.PostedAt.Local.Format "2006-01-02"}})</span>
+  </li>
+  {{- end}}
+  {{- end}}
+</ul>
+{{else}}
+<p>No posts yet.</p>
+{{end}}
+
+<style>
+.site-title {
+  margin-bottom: 0;
+}
+.tagline {
+  margin-top: 0;
+}
+
+.feed-link img {
+  height: 1rem;
+}
+.feed-link {
+  float: right;
+}
+hr {
+  clear: both;
+}
+
+.pages a {
+  margin-right: 0.5rem;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+  /*font-size: 1.1rem;*/
+}
+
+.time-suffix {
+  display: none;
+}
+
+@media (max-width: 30rem) {
+  .time-suffix {
+    display: inline;
+  }
+  .time-prefix {
+    display: none;
+  }
+  li {
+    margin-bottom: 0.5rem;
+  }
+  li::before {
+    content: '❖';
+  }
+}
+</style>
+
+{{template "footer" .}}
+{{end}}

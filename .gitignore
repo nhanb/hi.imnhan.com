@@ -1,5 +1,1 @@
-output/
-*.pid
-__pycache__/
-cache/
-*.pyc
+/output/

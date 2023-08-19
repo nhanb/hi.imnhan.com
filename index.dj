@@ -1,0 +1,4 @@
+Title: Home
+ShowInFeed: false
+Templates: $_theme/base.tmpl, $_theme/includes.tmpl, $_theme/home.tmpl
+---
