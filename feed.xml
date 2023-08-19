@@ -2,17 +2,45 @@
   <title>Hi, I&#39;m Nhân</title>
   <id>https://hi.imnhan.com/</id>
   <link rel="self" href="/feed.xml"></link>
-  <updated>0001-01-01T00:00:00+00:00</updated>
+  <updated>2023-04-22T15:55:00+07:00</updated>
   <author>
     <name>nhanb</name>
     <uri>https://hi.imnhan.com</uri>
     <email>hi@imnhan.com</email>
   </author>
   <entry>
-    <title>Projects</title>
-    <id>https://hi.imnhan.com/projects/</id>
-    <link href="https://hi.imnhan.com/projects/"></link>
-    <published>0001-01-01T00:00:00+00:00</published>
-    <updated>0001-01-01T00:00:00+00:00</updated>
+    <title>Acer Chromebook Spin 713 &#34;Voxel&#34;: an adequate Crostini device, a buggy Linux laptop</title>
+    <id>https://hi.imnhan.com/chromebook/</id>
+    <link href="https://hi.imnhan.com/chromebook/"></link>
+    <published>2023-04-22T15:55:00+07:00</published>
+    <updated>2023-04-22T15:55:00+07:00</updated>
+  </entry>
+  <entry>
+    <title>The video streaming finale, or why put.io is awesome</title>
+    <id>https://hi.imnhan.com/video-streaming-3/</id>
+    <link href="https://hi.imnhan.com/video-streaming-3/"></link>
+    <published>2020-10-21T11:45:00+07:00</published>
+    <updated>2020-10-21T11:45:00+07:00</updated>
+  </entry>
+  <entry>
+    <title>Look ma, no stock theme!</title>
+    <id>https://hi.imnhan.com/custom-theme/</id>
+    <link href="https://hi.imnhan.com/custom-theme/"></link>
+    <published>2015-06-05T13:54:00+07:00</published>
+    <updated>2015-06-05T13:54:00+07:00</updated>
+  </entry>
+  <entry>
+    <title>Dẹp ibus-unikey đi, dùng fcitx-unikey nhé!</title>
+    <id>https://hi.imnhan.com/fcitx/</id>
+    <link href="https://hi.imnhan.com/fcitx/"></link>
+    <published>2015-01-29T20:41:00+07:00</published>
+    <updated>2015-01-29T20:41:00+07:00</updated>
+  </entry>
+  <entry>
+    <title>&#34;Have you built anything cool?&#34;</title>
+    <id>https://hi.imnhan.com/cool/</id>
+    <link href="https://hi.imnhan.com/cool/"></link>
+    <published>2014-01-25T10:37:00+07:00</published>
+    <updated>2014-01-25T10:37:00+07:00</updated>
   </entry>
 </feed>

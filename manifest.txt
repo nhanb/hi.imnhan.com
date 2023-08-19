@@ -1,4 +1,8 @@
 about/index.html
+chromebook/index.html
+cool/index.html
+custom-theme/index.html
+fcitx/index.html
 feed.xml
 ideas/index.html
 index.html
@@ -31,4 +35,5 @@ posts/what-i-did-after-installing-manjaro-xfce/index.html
 posts/why-i-use-linux-automation/index.html
 posts/working-with-sqlite-in-python-without-an-orm-or-migration-framework/index.html
 projects/index.html
+video-streaming-3/index.html
 yaks/index.html

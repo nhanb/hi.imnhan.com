@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Dẹp ibus-unikey đi, dùng fcitx-unikey nhé! | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2015-01-29">
+        Thursday, 29 Jan 2015
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>Dẹp ibus-unikey đi, dùng fcitx-unikey nhé!</h1>
+<p><strong>Cập nhật tháng 1/2021:</strong> hiện tại mình dùng fcitx5 trên Arch + KDE, <a href="https://wiki.archlinux.org/title/Fcitx5">cài đặt
+và config</a> không thể đơn giản hơn:</p>
+<pre><code class="language-sh">sudo pacman -S fcitx5 fcitx5-qt fcitx5-gtk fcitx5-unikey kcm-fcitx5
+</code></pre>
+<p>Sau đó thêm đoạn này vào /etc/environment:</p>
+<pre><code>GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+</code></pre>
+<p>Vào System Settings &gt; Regional Settings &gt; Input Method &gt; Add Input Method,
+chọn Unikey, tùy chỉnh tùy ý.</p>
+<p>Fcitx5 khắc phục được lỗi crash renderer khi dùng facebook messenger trên
+Firefox, và gõ được trên Telegram 🤷.</p>
+<p>Còn dưới đây là bài viết cũ:</p>
+<hr>
+<p>Sáng ra Netrunner bảo có vài chục cái update, mình chủ quan <code>dist-upgrade -y</code> rồi để đó không màng
+đến nữa. Nửa tiếng sau, ibus không thèm chơi với firefox!  :|</p>
+<p>Chuyện gõ tiếng Việt trên linux thì muôn đời trần ai rồi, mình không muốn bàn thêm nữa.
+Trung Ngô—một trong những người phát triển chính của <a href="http://ibus-bogo.readthedocs.org/">ibus-bogo</a>—đã viết một bài blog rất hay về tình
+trạng gõ tiếng Việt hiện nay trên linux nói chung, ai quan tâm có thể tham khảo thêm <a href="https://lewtds.notion.site/c-m-b-g-ki-u-Unikey-tr-n-Linux-9b12cc2fcdbe43149b10eefc7db6b161">ở đây</a>.</p>
+<section id="fcitx-unikey">
+<h2>fcitx-unikey</h2>
+<p>Lọ mọ trên trang github của bogo, mình vô tình phát hiện ra <a href="https://github.com/BoGoEngine/fcitx-bogo">fcitx-bogo</a>: dự án này thực chất
+cũng dùng bogo-engine nhưng chạy với <a href="https://github.com/fcitx/fcitx">fcitx</a> chứ không phải ibus như bình thường. Rất tiếc là
+khi mình cài đặt và chạy thử fcitx-bogo thì nó luôn crash fcitx trước khi xử lý ra được chữ tiếng
+Việt nào. :P</p>
+<p>Dạo một vòng quanh trang github của fcitx, mình thấy dự án này vẫn được phát triển đều đặn chứ
+không bị cảnh đem con bỏ chợ như ibus, và thứ làm mình ngạc nhiên và mừng nhất chính là một repo
+với cái tên rất hứa hẹn: <a href="https://github.com/fcitx/fcitx-unikey">fcitx-unikey</a>.</p>
+<p>Cách compile và cài đặt đã được nêu rõ trên README nên mình sẽ không nói lại ở đây nữa. Một vài
+nhận xét sau khi dùng thử trên Netrunner 14 (em họ của Kubuntu):</p>
+<ul>
+<li>
+Không hiện popup vô duyên khi chuyển method như ibus.
+</li>
+<li>
+Không bật method tiếng Việt vô tội vạ như ibus. Trước đây khi dùng ibus, mặc dù đã tắt tính năng
+“Share same input method among all applications”, method tiếng Việt vẫn được kích hoạt mặc định
+trong các system dialog của KDE, rất khó chịu (bực nhất là nó bật preedit trên ô điền password
+nên mỗi khi khóa máy rồi login lại là password hiện lên hết). Fcitx không bị như vậy, vì method
+mặc định luôn là tiếng Anh.
+</li>
+</ul>
+<p>Một điểm trừ là khi dùng trên skype, phần text đang trong preedit bị hiển thị trong một ô riêng chứ
+không chỉ là text bị gạch dưới như trong những chương trình khác. (xem hình dưới)</p>
+<p><img alt="" src="fcitx-skype.png"></p>
+</section>
+<section id="vim-fcitx">
+<h2>vim-fcitx</h2>
+<p>Những ai đã thử gõ tiếng Việt trên vim chắc chắn đều biết: không tài nào dùng normal mode khi
+preedit đang bật được. Ngày xưa khi dùng ibus mình có thử viết <a href="https://github.com/nhanb/vim-bogo">một plugin</a> để bật tiếng Việt
+khi vào insert mode và trở lại tiếng Anh khi ra normal mode, nhưng cuối cùng không dùng vì preedit
+trong insert mode làm hư <code>inoremap jj &lt;esc&gt;</code>.</p>
+<p>Plugin <a href="https://github.com/nhanb/vim-bogo">vim-fcitx</a> hoạt động tương tự như trên, và vấn đề map jj nêu trên có thể được giải quyết
+bằng cách sửa mã nguồn của fcitx-unikey.</p>
+<p>Mình gõ tiếng Việt kiểu VNI nên bộ gõ chắc chắn không bao giờ xử lý ký tự <code>j</code> =&gt; có thể thêm ký tự
+<code>j</code> vào danh sách WordBreakSyms trong <strong>src/unikey-im.cpp</strong>. (<a href="https://github.com/nhanb/fcitx-unikey/commit/d976a64f560510125bfddf02bd892d42bc94e5b5">xem tại đây</a>)</p>
+<p>Sau đó chỉ cần compile lại fcitx-unikey là xong!</p>
+</section>
+
+</main>
+
+<footer>
+© 2014–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

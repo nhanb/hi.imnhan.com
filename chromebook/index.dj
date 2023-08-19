@@ -1,16 +1,16 @@
 Title: Acer Chromebook Spin 713 "Voxel": an adequate Crostini device, a buggy Linux laptop
-Date: 2023-04-22 15:55
-Slug: acer-chromebook-spin
-Category: consoom
+PostedAt: 2023-04-22 15:55
 Thumb: images/voxel_battery.jpg
 
-**June 2023 update**: I [learned][11] that using pulseaudio instead of
+---
+
+*June 2023 update*: I [learned][11] that using pulseaudio instead of
 pipewire works around the audio issue. The following is the original article.
 
 ---
 
 
-**TL;DR:** bright crisp screen, acceptable keyboard, thin & light build, random
+*TL;DR:* bright crisp screen, acceptable keyboard, thin & light build, random
 touchpad lag on both ChromeOS and Linux, almost usable on MrChromebox UEFI +
 Arch Linux except for the fact that internal speakers crash most of the time
 (wired headphones work fine though). It's absolutely not worth the sticker
@@ -37,9 +37,9 @@ based development [environment][2] on Crostini.
 
 Here it is sandwiched between a Samsung Tab S8 and a Thinkpad T530:
 
-![size](/images/voxel_size.jpg)
+![size](voxel_size.jpg)
 
-![thickness](/images/voxel_thickness.jpg)
+![thickness](voxel_thickness.jpg)
 
 ## ChromeOS/Crostini
 
@@ -98,11 +98,12 @@ custom UEFI firmware, which in turn requires disabling the firmware write
 protection. Fortunately, for this device all I needed to do was opening up the
 laptop and [disconnecting the battery][7]:
 
-![internals](/images/voxel_internals.jpg)
+![internals](voxel_internals.jpg)
 
-![battery-connector](/images/voxel_battery.jpg)
+![battery-connector](voxel_battery.jpg)
 
-If you need more detailed instructions, here's the [official manual][8].
+If you need more detailed instructions, here's the
+[official manual](voxel_chromebook_cp7133w.pdf).
 
 Then go [here][9] for instructions on how to download and run the MrChromebox
 utility script. In my case, I also needed to enable developer mode to get
@@ -120,7 +121,7 @@ devices). After some desperate googling I found
 configs lifted straight from ChromeOS upstream. Sure enough, the device showed
 up:
 
-![default-profile-get](/images/voxel_audio_device.png "")
+![default-profile-get](voxel_audio_device.png)
 
 And it would actually play sound... for a while until it crashes. I later found
 out that wired headphones and HDMI audio work just fine, so only using internal
@@ -149,7 +150,7 @@ The most glaring issue is the absence of the `windows` key (aka `super`,
 `hyper`, or `meta`). It's not a huge problem for me: I always make `capslock`
 act as a `ctrl` key, so I can turn the original `ctrl` into `windows` instead:
 
-![changed-modifier-keys](/images/voxel_keys_mod.jpg)
+![changed-modifier-keys](voxel_keys_mod.jpg)
 
 Another problem is that the F1-12 keys are not usable: they are [mapped to
 function keys][10] in MrChromebox UEFI firmware, and there's no modifier to use
@@ -159,16 +160,15 @@ configured trivially from KDE's system preferences. On the other hand,
 application-specific features that are hardwired to use F-keys are simply
 unreachable: `htop` is one such example.
 
-![htop-fkeys-unusable](/images/voxel_keys_f.png)
+![htop-fkeys-unusable](voxel_keys_f.png)
 
 [1]: https://www.acer.com/us-en/chromebooks/acer-chromebook-enterprise-spin-713-cp713-3w/pdp/NX.AHAAA.006
 [2]: https://git.sr.ht/~nhanb/neodots
 [3]: https://wiki.archlinux.org/title/Chrome_OS_devices/Crostini
 [4]: https://go.dev/
-[5]: /images/put.io_01_mpv.mp4
+[5]: ../video-streaming-3/put.io-drag-n-drop.mp4
 [6]: https://orib.dev/interject.html
 [7]: https://wiki.mrchromebox.tech/Firmware_Write_Protect#Hardware_Write_Protection
-[8]: /images/voxel_chromebook_cp7133w.pdf
 [9]: https://mrchromebox.tech/#fwscript
 [10]: https://github.com/MrChromebox/firmware/issues/349
 [11]: https://github.com/WeirdTreeThing/chromebook-linux-audio/issues/2#issuecomment-1578962117

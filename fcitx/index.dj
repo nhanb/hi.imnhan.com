@@ -1,10 +1,8 @@
 Title: Dẹp ibus-unikey đi, dùng fcitx-unikey nhé!
-Slug: ibus-is-dead-to-me-use-fcitx-instead
-Date: 2015-01-29 20:41
-Category: tutorials
-lang: vi
+PostedAt: 2015-01-29 20:41
+---
 
-**Cập nhật tháng 1/2021:** hiện tại mình dùng fcitx5 trên Arch + KDE, [cài đặt
+*Cập nhật tháng 1/2021:* hiện tại mình dùng fcitx5 trên Arch + KDE, [cài đặt
 và config](https://wiki.archlinux.org/title/Fcitx5) không thể đơn giản hơn:
 
 ```sh
@@ -32,8 +30,8 @@ Còn dưới đây là bài viết cũ:
 Sáng ra Netrunner bảo có vài chục cái update, mình chủ quan `dist-upgrade -y` rồi để đó không màng
 đến nữa. Nửa tiếng sau, ibus không thèm chơi với firefox!  :|
 
-Chuyện gõ tiếng Việt trên linux thì muôn đời trần ai rồi, mình không muốn bàn thêm nữa. Ngô "Chin"
-- một trong những người phát triển chính của [ibus-bogo][1] - đã viết một bài blog rất hay về tình
+Chuyện gõ tiếng Việt trên linux thì muôn đời trần ai rồi, mình không muốn bàn thêm nữa.
+Trung Ngô---một trong những người phát triển chính của [ibus-bogo][1]---đã viết một bài blog rất hay về tình
 trạng gõ tiếng Việt hiện nay trên linux nói chung, ai quan tâm có thể tham khảo thêm [ở đây][2].
 
 ## fcitx-unikey
@@ -60,7 +58,7 @@ nhận xét sau khi dùng thử trên Netrunner 14 (em họ của Kubuntu):
 Một điểm trừ là khi dùng trên skype, phần text đang trong preedit bị hiển thị trong một ô riêng chứ
 không chỉ là text bị gạch dưới như trong những chương trình khác. (xem hình dưới)
 
-![](/images/fcitx-skype.png)
+![](fcitx-skype.png)
 
 ## vim-fcitx
 
@@ -73,12 +71,12 @@ Plugin [vim-fcitx][6] hoạt động tương tự như trên, và vấn đề ma
 bằng cách sửa mã nguồn của fcitx-unikey.
 
 Mình gõ tiếng Việt kiểu VNI nên bộ gõ chắc chắn không bao giờ xử lý ký tự `j` => có thể thêm ký tự
-`j` vào danh sách WordBreakSyms trong **src/unikey-im.cpp**. ([xem tại đây][7])
+`j` vào danh sách WordBreakSyms trong *src/unikey-im.cpp*. ([xem tại đây][7])
 
 Sau đó chỉ cần compile lại fcitx-unikey là xong!
 
 [1]: http://ibus-bogo.readthedocs.org/
-[2]: http://ngochin.com/2014/07/31/uoc-mo-bo-go-kieu-unikey/
+[2]: https://lewtds.notion.site/c-m-b-g-ki-u-Unikey-tr-n-Linux-9b12cc2fcdbe43149b10eefc7db6b161
 [3]: https://github.com/BoGoEngine/fcitx-bogo
 [4]: https://github.com/fcitx/fcitx
 [5]: https://github.com/fcitx/fcitx-unikey

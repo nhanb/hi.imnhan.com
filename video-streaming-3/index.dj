@@ -1,9 +1,10 @@
 Title: The video streaming finale, or why put.io is awesome
-Date: 2020-10-21 11:45
+PostedAt: 2020-10-21 11:45
 
+---
 
-[Previously](/posts/streaming-videos-from-google-drive-a-second-attempt/),
-[previously](/posts/towards-an-acceptable-video-playing-experience/).
+[Previously](../video-streaming-2),
+[previously](../video-streaming-1).
 
 
 I ditched the whole self hosted mess and just bought a [put.io](https://put.io)
@@ -22,10 +23,12 @@ In cases when the subtitles aren't recognized, or when I want to switch between
 audio tracks, I can always drag-n-drop the original file's streaming URL from
 the browser straight to an mpv launcher like this:
 
+``` =html
 <video controls>
-  <source src="/images/put.io_01_mpv.mp4" type="video/mp4">
-  <a href="/images/put.io_01_mpv.mp4">Video: /images/put.io_01_mpv.mp4</a>
+  <source src="put.io-drag-n-drop.mp4" type="video/mp4">
+  <a href="put.io-drag-n-drop.mp4">Video: put.io-drag-n-drop.mp4</a>
 </video>
+```
 
 
 It also has a open source third-party [Android app][1] that lets me browse and
