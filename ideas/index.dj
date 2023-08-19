@@ -1,6 +1,6 @@
 Title: Potential project ideas
-Slug: ideas
-Hidden: True
+ShowInFeed: false
+---
 
 ## Self hosted RSS reader in D
 
@@ -16,7 +16,7 @@ Hidden: True
 - Split screen: one with markdown/bbcode source and one with rendered preview
 - Sane embedded image/video/etc. file management via GUI
   + Bonus: 1-click preprocessing: strip EXIF, losslessly optimize image
-- **No embedded browser**
+- *No embedded browser*
 - Is static site generator, but supports 1-click deployment to neocities,
   github/gitlab/sourcehut pages etc.
 - Human-friend distribution e.g. nuitka, pyoxidizer (pyinstaller is pretty meh)

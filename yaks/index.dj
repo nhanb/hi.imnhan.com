@@ -1,7 +1,6 @@
 Title: Yak shaving
-Slug: yaks
-Hidden: True
-
+ShowInFeed: false
+---
 
 Basically my TODOs, in pursuit of the ever-pervasive _pleasant workflow_.
 
@@ -16,6 +15,7 @@ All blockers seem to have been addressed now?
 ## Interesting tools
 
 - [pyinfra](https://pointlessramblings.com/posts/why-you-should-try-pyinfra/):
+
     + faster than ansible, from my anecdotal experience
     + python, not yaml
     + truly agentless (doesn't even require python)
@@ -34,6 +34,6 @@ Specs:
 
 Services:
 
-- [x] Syncthing
-- [] Some RSS reader
-- [] Some bookmarking system that does full text search.
+- Syncthing
+- Some RSS reader
+- Some bookmarking system that does full text search.

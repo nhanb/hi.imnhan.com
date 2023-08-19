@@ -1,0 +1,18 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hi, I&#39;m Nhân</title>
+  <id>https://hi.imnhan.com/</id>
+  <link rel="self" href="/feed.xml"></link>
+  <updated>0001-01-01T00:00:00+00:00</updated>
+  <author>
+    <name>nhanb</name>
+    <uri>https://hi.imnhan.com</uri>
+    <email>hi@imnhan.com</email>
+  </author>
+  <entry>
+    <title>Projects</title>
+    <id>https://hi.imnhan.com/projects/</id>
+    <link href="https://hi.imnhan.com/projects/"></link>
+    <published>0001-01-01T00:00:00+00:00</published>
+    <updated>0001-01-01T00:00:00+00:00</updated>
+  </entry>
+</feed>

@@ -1,0 +1,20 @@
+Title: About
+ShowInFeed: false
+Thumb: images/keyboard-warrior.jpg
+---
+
+Hi, I'm Nhân. I make webstuff for a living.
+
+![literally me](keyboard-warrior.jpg)
+
+My mind is a sad mess that cannot hold much information after a couple of
+months or so. This blog is where I write down interesting things I discover.
+On occasional bad days I might throw all my ramblings here too, but hopefully
+those will be rare.
+
+This blog is powered by my {-homegrown organic artisanal-} static site generator
+called [s4g][1] and is hosted on Github Pages.
+Its source code can be found on my [github repo][2].
+
+[1]: https://github.com/nhanb/s4g
+[2]: https://github.com/nhanb/hi.imnhan.com

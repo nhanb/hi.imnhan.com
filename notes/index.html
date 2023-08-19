@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Random notes | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>Random notes</h1>
+<p>In which I jot down scattered tidbits on various topics.</p>
+<section id="SRE">
+<h2>SRE</h2>
+<p>There’s a good <a href="http://rachelbythebay.com/w/2019/07/21/reliability/">checklist</a>
+on Rachel By The Bay, the gist is:</p>
+<ul>
+<li>
+Rollbacks should work. On every deployment.
+</li>
+<li>
+A to AB to B (a.k.a. make before break):
+<ul>
+<li>
+v2 code/data should not break v1 code/data
+</li>
+</ul>
+</li>
+<li>
+Strict(er than JSON) schema-ing when you fling data across places
+<ul>
+<li>
+Protobuf, etc.
+</li>
+<li>
+You should only <em>begin</em> to consider JSON if you need to talk to browsers
+</li>
+</ul>
+</li>
+<li>
+Please fix 500s.
+<ul>
+<li>
+Also you should only get 400s when talking to external things out of your control
+</li>
+</ul>
+</li>
+</ul>
+<p>Her <a href="http://rachelbythebay.com/w/2019/10/05/nxdomain/">follow-up</a> is a nice
+scary story too. Also reminder that “infra-as-code” abstractions isn’t an
+excuse <em>not</em> to learn the underlying infra properly.</p>
+</section>
+
+</main>
+
+<footer>
+© 2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>
