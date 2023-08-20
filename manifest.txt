@@ -4,6 +4,8 @@ cool/index.html
 custom-theme/index.html
 fcitx/index.html
 feed.xml
+fightstick-1/index.html
+fightstick-2/index.html
 ideas/index.html
 index.html
 notes/index.html
