@@ -1,6 +1,6 @@
 Title: How I bypassed my university's domain blocker to watch movies on hdviet.com
 PostedAt: 2014-03-17 21:58
-Thumb: images/hdviet_05_no_sub.png
+Thumb: hdviet_05_no_sub.png
 ---
 
 *TL;DR*: Clone [my script from GitHub][4], run it with `python2 server.py 8080`, configure your
