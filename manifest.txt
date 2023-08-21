@@ -8,13 +8,13 @@ fightstick-1/index.html
 fightstick-2/index.html
 go-stack/index.html
 hdviet/index.html
-ideas/index.html
+ideas.html
 index.html
 linux-automation/index.html
 manjaro-xfce/index.html
 mcross/index.html
 node-webkit/index.html
-notes/index.html
+notes.html
 pathogen-vs-vundle/index.html
 petition-fraud/index.html
 pippable-webapp/index.html
@@ -58,4 +58,4 @@ video-streaming-2/index.html
 video-streaming-3/index.html
 vim-open-link/index.html
 virtualenvwrapper/index.html
-yaks/index.html
+yaks.html
