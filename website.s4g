@@ -1,9 +1,10 @@
 Address: https://beta.imnhan.com
 Name: Hi, I'm Nhân
-Tagline: and welcome to my humble corner on the interwebs
+Tagline: and this is my humble corner on the intertubes
 Root: /
 ShowFooter: true
 NavbarLinks: index.dj, about/index.dj, projects/index.dj
+
 AuthorName: nhanb
 AuthorURI: https://hi.imnhan.com
 AuthorEmail: hi@imnhan.com
