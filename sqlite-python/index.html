@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Working with SQLite in Python without an ORM or migration framework | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2022-01-30">
+        Sunday, 30 Jan 2022
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>Working with SQLite in Python without an ORM or migration framework</h1>
+<p><img alt="byte-magazine-databases" src="byte_databases.jpg"><br>
+<em><a href="https://archive.org/details/byte-magazine">(seriously though, BYTE covers are the best)</a></em></p>
+<p>I learned about SQLite’s <code>user_version</code> pragma some time ago from a comment on
+Hacker News (as one does). Not sure which comment it was specifically, but it
+went something <a href="https://news.ycombinator.com/item?id=23510382">like this</a>:</p>
+<blockquote>
+<p>One thing you can look into using is the SQLite user_version pragma.
+We use this right now to roll our own migrators and it’s light years
+better than how migrators work for Entity Framework, et. al.</p>
+<p><a href="https://www.sqlite.org/pragma.html#pragma_user_version">https://www.sqlite.org/pragma.html#pragma_user_version</a></p>
+</blockquote>
+<p>I’d wanted to try working without an ORM for a while, and this comment gave me
+the final missing piece: a straightforward approach to SQL migrations that I
+can trivially implement. Obviously, I had to try it out on my latest <a href="https://sr.ht/~nhanb/pytaku/">pet
+project</a>. Here I’ll outline some of my findings.</p>
+<section id="APSW-as-the-driver">
+<h2>APSW as the driver</h2>
+<p>Using <a href="https://rogerbinns.github.io/apsw/">apsw</a> instead of the standard library’s sqlite3 package has a couple
+of advantages:</p>
+<section id="It-s-easy-to-link-against-the-latest-sqlite3-version">
+<h3>It’s easy to link against the latest sqlite3 version</h3>
+<p>I originally ran pytaku on a cheap Vietnamese VPS provider, which only offered
+Ubuntu 12.04. This came with a relatively old sqlite3 version that lacked
+UPSERT support (probably among other things that I forgot). I guess it’s
+possible to compile a custom python version that links to a newer sqlite, but
+that would defeat the purpose of pytaku being an easy-to-deploy program. Apsw,
+on the other hand, provides a pip <a href="https://rogerbinns.github.io/apsw/download.html#i-really-want-to-use-pip">one-liner</a> that compiles and links to the
+latest sqlite. (still kinda bad, but it’s less bad than compiling custom
+python)</p>
+</section>
+<section id="It-has-the-same-defaults-as-upstream-sqlite">
+<h3>It has the same defaults as upstream sqlite</h3>
+<p>Python stdlib’s <code>sqlite3</code> has a few default configurations that deviate from
+sqlite’s. A couple of things that actually bit me are:</p>
+<ul>
+<li>
+autocommit mode is off by default
+</li>
+<li>
+<code>executescript()</code> automatically issues a <code>COMMIT</code> statement
+</li>
+</ul>
+<p>To be fair, both of them are written in the docs, and these custom defaults are
+probably to maintain consistency with <a href="https://www.python.org/dev/peps/pep-0249/">PEP 249</a>. Still, as I was learning
+sqlite, it’s frustrating to jump between sqlite docs and python docs to
+interpret the correct behavior at times. Apsw does none of those things: it’s
+simply an unopinionated, honest-to-god python binding to sqlite.</p>
+<p>To be completely honest though, in the long run it seems more reasonable to
+learn the pysqlite3 API so that I can avoid an extra dependency. I’m also now
+using Debian 11 which has a reasonably recent sqlite, so the compilation
+advantange is no longer that great.</p>
+</section>
+</section>
+<section id="A-minimum-viable-DB-migration-scheme">
+<h2>A minimum viable DB migration scheme</h2>
+<p>With <a href="https://github.com/nhanb/pytaku/blob/65a6c08128ebbc2b7d33a6b043798c69ac7dfebe/src/pytaku/database/migrator.py">&lt;100 lines</a> of python, I ended up with a migrator that:</p>
+<ul>
+<li>
+Finds migration files in the form of <code>./migrations/mXXXX.sql</code>
+</li>
+<li>
+Uses <code>user_version</code> pragma to figure out what migrations are pending
+</li>
+<li>
+Is forward-only—I did say that this is minimally viable didn’t I ;)
+</li>
+</ul>
+<p>Coming from Django, I missed a definitive place to see the latest definition of
+the whole db (which, in Django, is the models file). That’s why I set up the
+migrator to always write the latest db definition out to a file using
+<a href="https://github.com/nhanb/pytaku/blob/65a6c08128ebbc2b7d33a6b043798c69ac7dfebe/src/pytaku/database/migrator.py#L44-L51"><code>sqlite3 &lt;db_file&gt; .schema &gt; latest_schema.sql</code></a>, and keep that file <a href="https://github.com/nhanb/pytaku/blob/65a6c08128ebbc2b7d33a6b043798c69ac7dfebe/src/pytaku/database/migrations/latest_schema.sql">in
+version control</a>:</p>
+<pre><code class="language-sql">-- This file is auto-generated by the migration script
+-- for reference purposes only. DO NOT EDIT.
+CREATE TABLE title (
+    id text,
+    name text,
+    site text,
+    cover_ext text,
+    chapters text,
+    alt_names text,
+    descriptions text,
+    updated_at text default (datetime('now')), is_webtoon boolean not null default false, descriptions_format text not null default 'text',
+    unique(id, site)
+);
+CREATE TABLE user (
+    id integer primary key,
+    username text unique,
+    password text,
+    created_at text default (datetime('now'))
+);
+[...]
+</code></pre>
+<p>Now to address the elephant in the room: SQLite has… limited ALTER TABLE
+capabilities. The upside is it’s <a href="https://www.sqlite.org/lang_altertable.html">well-documented</a>. What this means in
+practice is that sometimes an otherwise simple <code>ALTER TABLE</code> in other RDBMS-es
+will require more manual gymnastics in SQLite: you’ll need to create a new
+table with the desired properties, copy existing data over to the new table,
+then drop the old table. There are subtle bear traps in the specific order of
+steps to take, but thankfully the docs, again, deliver: as long as you
+follow the <a href="https://www.sqlite.org/lang_altertable.html#otheralter">12 steps</a> correctly, you won’t mess up your data. It sounds
+intimidating but it’s not <em>that</em> bad. Here’s a specific example from pytaku
+where I removed a FOREIGN KEY constraint:</p>
+<pre><code class="language-sql">-- Remove foreign key from "read" table pointing to "chapter".
+-- So we can, say, mark all chapters of a title as read even if some of those
+-- chapters haven't been created.
+
+pragma foreign_keys = off; -- to let us do anything at all
+begin transaction;
+
+create table new_read (
+    user_id integer not null,
+    site text not null,
+    title_id text, -- nullable to accomodate existing mangadex rows, urgh.
+    chapter_id text not null,
+    updated_at text default (datetime('now')),
+
+    foreign key (user_id) references user (id),
+    unique(user_id, site, title_id, chapter_id)
+);
+insert into new_read select * from read;
+drop table read;
+alter table new_read rename to read;
+
+pragma foreign_key_check;
+commit;
+pragma foreign_keys = on;
+</code></pre>
+<p>Besides the boilerplaty dance with <code>foreign_key</code> pragmas and transactions, all I
+had to do was copy the existing table definition from the aforementioned
+latest_schema.sql file, tweak it to my desired state, then do the table
+switcheroo. Again, the specific ordering of steps is important. I won’t go into
+details, but I had actually tripped on a failure mode, which I then realized
+was already nicely warned against in the docs. RTFM is actually fine advice for
+projects that have good documentation, who would have thought?</p>
+</section>
+<section id="Recommended-sane-defaults">
+<h2>Recommended sane defaults</h2>
+<p>SQLite comes with some default settings that may be surprising for people
+coming from e.g. Postgres. Here are some tweaks that worked better for me.</p>
+<p><a href="https://sqlite.org/wal.html">Enable WAL mode</a>. This allows for concurrent readers, which is usually
+what you want from a web service.</p>
+<p><a href="https://www.sqlite.org/pragma.html#pragma_foreign_keys">Enforce foreign key constraints</a>. Yep, you read that right: SQLite
+doesn’t enforce foreign key constraints by default. This is just one of the
+various consequences of SQLite being veeeeery lax about what you store. Another
+potential surprise is column types not being enforced, whose alternative only
+landed recently in the form of <a href="https://www.sqlite.org/stricttables.html">STRICT Tables</a>.</p>
+<p><a href="https://www.sqlite.org/c3ref/busy_timeout.html">Set a non-zero busytimeout</a>. Otherwise if a query is blocked, it will
+crash immediately instead of waiting for the blocking query to finish, no
+matter how short the wait is.</p>
+</section>
+<section id="A-quick-note-on-SQL-injection">
+<h2>A quick note on SQL injection</h2>
+<p><em>(or how to move on from the late 90s)</em></p>
+<p>You don’t need a full blown ORM to protect yourself against SQL injections. In
+fact, SQLite (and any sane RDBMS really) has built-in support for it called
+parameterized queries. Python’s sqlite3 documentation also covers this, but the
+tl;dr is:</p>
+<pre><code class="language-python"># Never compose your query with string interpolation like this:
+cursor.execute(f"SELECT foo FROM bar WHERE stuff = '{user_input}';")
+
+# Use the parameter substitution API instead:
+cursor.execute('SELECT foo FROM bar WHERE stuff = ?;', (user_input,))
+</code></pre>
+<p>Congratulations! You now have better security hygiene than <a href="https://vnhacker.blogspot.com/2021/08/bkav-bi-hack-nhu-nao.html">Vietnam’s “leading”
+cybersecurity firm</a>.</p>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

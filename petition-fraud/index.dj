@@ -1,10 +1,10 @@
 Title: I did NOT sign that online petition!
-Slug: i-did-not-sign-that-rmit-sc-petition
-Date: 2016-03-12 01:13
+PostedAt: 2016-03-12 01:13
+---
 
 This evening I received a rather strange email:
 
-![](/images/rmitsc_01_wtf.png)
+![](rmitsc_01_wtf.png)
 
 Um... I don't remember signing any petition recently (or ever, for that matter)?
 
@@ -15,10 +15,10 @@ university's Student Council. Said petition was apparently started by some Ms. T
 Student Council's vice president. Well... yay for free speech, I guess? Anyway, my name was really
 among the signers list:
 
-![](/images/rmitsc_02_names.png)
+![](rmitsc_02_names.png)
 
-How did this happen? Well, turns out **iPetition does not require email confirmation upon
-signing**, so anyone can effectively enter any email and name they want and the stupid website will
+How did this happen? Well, turns out *iPetition does not require email confirmation upon
+signing*, so anyone can effectively enter any email and name they want and the stupid website will
 happily accept that as an absolutely definitely most positively legit supporter of your cause. Cool
 huh?
 
@@ -45,7 +45,7 @@ Hell, let's throw in some of my own random thoughts to make this more like a blo
 
 - The number of signers keep going up steadily, but slowly. Maybe our friendly neighborhood
   signerman is doing it all by hand instead of a script? If it's the former... let's say I do
-  admire the dedication <strike>and abhor the absolute stupidity</strike>.
+  admire the dedication {-and abhor the absolute stupidity-}.
 
 - Is it normal for a student council to be this full of drama?
 

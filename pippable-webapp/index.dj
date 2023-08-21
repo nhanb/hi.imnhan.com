@@ -1,6 +1,6 @@
 Title: I made my python webapp installable via pip
-Date: 2021-10-02 19:49
-Slug: i-made-my-python-webapp-pip-installable
+PostedAt: 2021-10-02 19:49
+---
 
 Running `pip3 install pytaku` now gives you all the tools you need [^1] [^2] to
 deploy [pytaku][3] - a hobby webapp of mine - on a fresh Debian 11 server:
@@ -112,9 +112,9 @@ easily write a couple of lines of Dockerfile for it by themselves is more
 valuable. Simple distribution is simple to deploy regardless of whether you're
 using docker, packer, ansible, pyinfra, podman, nomad, k8s, k3s, an
 impenetrable shell script some dude wrote 2 years ago who just left the company
-last month... or any combination of the above. The point is **you shouldn't be
+last month... or any combination of the above. The point is *you shouldn't be
 forced to use more heavyweight solutions just because the software is a pain in
-the butt to setup manually**.
+the butt to setup manually*.
 
 And other people _have_ been trying to make python application distribution
 simpler:

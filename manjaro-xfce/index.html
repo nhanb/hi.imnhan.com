@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>What I did after installing Manjaro xfce | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2014-02-04">
+        Tuesday, 04 Feb 2014
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>What I did after installing Manjaro xfce</h1>
+<p>After about 2 months with elementary OS, I got sick of the guaranteed once-every-hour crashes of
+its <strong>Files</strong> file manager (yeah, I’m still hating their naming decisions with a passion), the
+flickering when I play fullscreen OpenGL games, and the automatic collapsing of workspaces. I’ve
+had enough of that. Let’s go back to xfce! But hey, (X)ubuntu 14.04 is nearly out but I don’t want
+to install an alpha version right now, and installing 13.10 just to update 2 months later is insane
+(to me, at least). That’s when I noticed <a href="http://manjaro.org/">Manjaro</a> - a battery-included distro based on Arch.
+All hail rolling release!</p>
+<p>Although Manjaro comes packed with most of the apps that I would install on any other distro
+anyway: GIMP, LibreOffice, Steam, etc., here are some additional steps I took to make it rock.</p>
+<section id="If-you-get-a-default-xfce-environment-after-setup">
+<h2>If you get a default xfce environment after setup…</h2>
+<p>It happened to me when I tried to mount my existing <code>/home</code> partition. Instead of the beautiful
+screenshot featured on Manjaro’s home page, I got something like this (image courtesy of Xfce
+project website):</p>
+<p><img alt="" src="xfce_default.jpg"></p>
+<p>I guess it was because of some weird bug that the partition ended up being owned by <code>root</code> so the
+installer could not copy Manjaro-specific settings at the end. Make it your own again then copy the
+default Manjaro files:</p>
+<pre><code class="language-sh">sudo chown $USER /home
+cp -a /etc/skel/. ~/
+</code></pre>
+<p>Then restart your computer and see if it worked (it should).</p>
+</section>
+<section id="Get-Mirosoft-fonts">
+<h2>Get Mirosoft fonts</h2>
+<p>Getting Micro$oft fonts is like the first thing to do after any Linux distro installation. The Arch
+community has a whole <a href="https://wiki.archlinux.org/index.php/MS_Fonts">wiki page</a> dedicated to it. It’s worth mentioning that you can’t
+<em>legally</em> install those packages without the actual fonts already on your computer. Assuming you
+have an installed copy of Windows 7, go to its <code>Fonts</code> folder and put the necessary fonts in the
+same folder of the extracted package downloaded from the AUR page. For some instant copy-and-paste
+shell commands: (<strong>warning</strong>: this script assumes you already have all your Windows 7 fonts in
+<code>~/win_fonts/</code>. Put them there before running the following commands)</p>
+<pre><code class="language-sh">curl -O 'https://gist.github.com/nhanb/8804875/raw/arch-ms-fonts.sh'
+bash arch-ms-fonts.sh
+</code></pre>
+</section>
+<section id="Proper-font-smoothing">
+<h2>Proper font smoothing</h2>
+<p>I won’t try to reinvent the wheels here. Head to Manjaro’s <a href="http://wiki.manjaro.org/index.php?title=Improve_Font_Rendering">wiki page on font smoothing</a>.
+They’ve got everything you need.</p>
+</section>
+<section id="Install-international-fonts">
+<h2>Install international fonts</h2>
+<p>Even if you’re not Japanese or Korean, you’ll occasionally come across content that contains
+characters from these languages. With the default installation, all those characters will be shown
+as rectangles, which bugs me a lot.</p>
+<p><img alt="" src="jap_font_none.png"></p>
+<p>The solution? Simple. Just install the <code>ttf-droid</code> package:</p>
+<pre><code class="language-sh">sudo pacman -S ttf-droid
+</code></pre>
+<p><img alt="" src="jap_font_done.png"></p>
+<p>Now that’s better!</p>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

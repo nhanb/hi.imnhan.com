@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>How I bypassed my university&#39;s domain blocker to watch movies on hdviet.com | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2014-03-17">
+        Monday, 17 Mar 2014
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>How I bypassed my university&#39;s domain blocker to watch movies on hdviet.com</h1>
+<p><strong>TL;DR</strong>: Clone <a href="https://github.com/nhanb/twisted-connect-proxy">my script from GitHub</a>, run it with <code>python2 server.py 8080</code>, configure your
+browser to use localhost:8080 as HTTP and HTTPS proxy, profit.</p>
+<p><strong>Disclaimer</strong>: The sole reason I came up with this trick and documented it was to satisfy my
+curiosity. I don’t come to campus often anymore so it’s not like I’m going to spend 8 hours a day
+wasting the university’s internet bandwidth for “Two and a half men” anyway…</p>
+<p><strong>Another Note</strong> (last one, promise!): If you’re using Mac OS X or Windows, Proxifier will probably
+do the trick way better and without any hassle. If you’re using Linux or you simply want to learn
+more about this stuff, read on!</p>
+<section id="The-problem">
+<h2>The problem</h2>
+<p>This semester the RMIT-WPA wifi network no longer requires manual proxy configuration (probably
+because it makes Web Programming students miserable - they have to use Google App Engine), which is
+good news. Nevertheless, that annoying domain filter is still up and running, meaning we still
+can’t go to certain blacklisted websites. (mediafire, fshare, gamevn, vnsharing, etc.)</p>
+<p>Hdviet’s case is a bit special: the domain <code>hdviet.com</code> itself is not blocked, but the domain of
+the actual server hosting its playlists &amp; videos, <code>v-01.vn-hd.com</code>, is. A quick look at Firefox’s
+excellent Network inspector confirmed that:</p>
+<p><img alt="" src="hdviet_01_forbidden.png"></p>
+<p>If you request the file directly:</p>
+<p><img alt="" src="hdviet_02_forbidden_direct.png"></p>
+</section>
+<section id="Going-for-the-IP">
+<h2>Going for the IP</h2>
+<p>Naturally, I wanted to check if I could access the resource directly via the IP. An easy way to look
+up a domain’s IP is using <a href="http://ping.eu/ping/">ping.eu</a>. Once you’ve got the IP, try replacing the domain with it in
+the failed request:</p>
+<p><img alt="" src="hdviet_03_ip.png"></p>
+<p>This time it works, which means only the domain is blocked, not the IP.</p>
+<p>One thing worth noting about hdviet: The video is not served as 1 single file, it is instead
+chopped into multiple parts, which are loaded in order. Therefore, our first job is to
+automatically replace <code>v-01.vn-hd.com</code> with the IP in all of the requests.</p>
+</section>
+<section id="Twisted-proxy">
+<h2>Twisted proxy</h2>
+<p>Since changing the request destination directly in the browser is probably difficult (I don’t think
+Google Chrome even allows that), we’ll use an HTTP(S) proxy. This is when Twisted comes in handy.</p>
+<p><a href="https://twistedmatrix.com/">Twisted</a> is a battery-included framework to build robust network applications. By
+“battery-included” they mean that most of the common functionalities have already been implemented
+so we can use them out of the box. For the purpose of this tutorial, we are only interested in its
+HTTP proxy library.</p>
+<p>To install twisted, use <code>pip</code>:</p>
+<pre><code class="language-sh">sudo pip install twisted
+</code></pre>
+<p>Since the default implementation doesn’t support HTTPS, we’ll use a <a href="https://github.com/fmoo/twisted-connect-proxy">powered-up one</a> I found on
+GitHub, written by Peter Ruibal. Let’s clone this thing:</p>
+<pre><code class="language-sh">git clone https://github.com/fmoo/twisted-connect-proxy.git
+</code></pre>
+<p>Now let’s try running the proxy server: <code>cd</code> into the cloned directory and run it with <code>python2</code>:</p>
+<pre><code class="language-sh">cd twisted-connect-proxy
+python2 server.py 8080
+</code></pre>
+<p>Then configure your browser to use <code>localhost:8080</code> as the proxy. For Firefox it’s easy:</p>
+<p><img alt="" src="hdviet_04_firefox_proxy.png"></p>
+<p>You should now be able to surf the web through the running proxy. But hey, you still can’t visit
+any blocked site! Of course you can’t, since we haven’t replaced the domains with IPs. Let’s do
+that.</p>
+</section>
+<section id="Domain-to-IP">
+<h2>Domain to IP</h2>
+<p>Open <code>server.py</code>, look for this part:</p>
+<pre><code class="language-python">class ConnectProxyRequest(ProxyRequest):
+    """HTTP ProxyRequest handler (factory) that supports CONNECT"""
+    connectedProtocol = None
+
+    def process(self):
+        if self.method == 'CONNECT':
+            self.processConnectRequest()
+        else:
+            ProxyRequest.process(self)
+</code></pre>
+<p>The <code>process()</code> method is in charge of forwarding whatever request the proxy receives to the actual
+target server. Let’s intercept it with our own <code>redirect()</code> function:</p>
+<pre><code class="language-python">redirects = {
+    'v-01.vn-hd.com': '125.212.216.93',  # video
+    's.vn-hd.com': '210.211.120.146',  # sub
+}
+
+def redirect(req):
+    for domain, ip in redirects.items():
+        if req.path.find(domain) != -1:  # check if we're requesting a blocked domain
+            req.uri = req.uri.replace(domain, ip, 1)
+            req.path = req.path.replace(domain, ip, 1)
+            req.requestHeaders.setRawHeaders('host', [ip])  # replace "Host" header too
+            return
+
+class ConnectProxyRequest(ProxyRequest):
+    """HTTP ProxyRequest handler (factory) that supports CONNECT"""
+    connectedProtocol = None
+
+    def process(self):
+        redirect(self)  # intercept request processing
+        if self.method == 'CONNECT':
+            self.processConnectRequest()
+    # the rest of the file ...
+</code></pre>
+<p>In the snippet above, we defined a dictionary <code>redirects</code> that stores the blocked domains that we
+need to replace. Note that I added <code>s.vn-hd.com</code> as well, which is the host that stores
+subtitles. In our actual <code>redirect()</code> function, we check if the request being processed is pointing
+to any of the blocked domains defined earlier, then replace domain with its corresponding IP if
+there is a match:</p>
+<pre><code class="language-python">req.uri = req.uri.replace(domain, ip, 1)
+req.path = req.path.replace(domain, ip, 1)
+req.requestHeaders.setRawHeaders('host', [ip])
+</code></pre>
+<p>Note that the 3rd line also changes the “Host” HTTP header. Yes, our beloved people from IT
+Services do inspect HTTP headers to block stuff too. This line will introduce another problem that
+I will explain later in this post.</p>
+<p>Now restart our proxy server and check the link again. It should work. You can now watch stuff, but
+you’ll notice that English subtitles are not shown even if you turn them on:</p>
+<p><img alt="" src="hdviet_05_no_sub.png"></p>
+<p>If you open the browser’s network inspector, reload the page and try to enable English subtitles
+again, you’ll see the problem:</p>
+<p><img alt="" src="hdviet_06_404.png"></p>
+<p>The link in question is:</p>
+<pre><code>http://s.vn-hd.com/store6/21042013/Two_and_a_Half_Men_S02/E001/Two_and_a_Half_Men_S02_E001_ENG.srt
+</code></pre>
+<p>Since <code>s.vn-hd.com</code> is in our blocked domain dictionary (<code>redirects</code>), the proxy server will
+request this:</p>
+<pre><code>http://210.211.120.146/store6/21042013/Two_and_a_Half_Men_S02/E001/Two_and_a_Half_Men_S02_E001_ENG.srt
+</code></pre>
+<p>If you try to open it directly in a browser (that isn’t using our proxy server), you’ll get a 404
+too.  Why is that? This is because the <code>Host</code> header is also changed to
+<code>210.211.120.146</code>
+instead of the original domain <code>s.vn-hd.com</code>. Normally a single web server can be serving
+multiple domains at a time, and when we send an HTTP request, we need to specify <code>Host: &lt;domain&gt;</code>
+for the server to know which domain we want to get the resource from. When the
+<code>Host</code> header is
+simply the IP, the server may get confused and therefore cannot serve the correct resource. As for
+<code>v-01.vn-hd.com</code>, we got lucky in that case.</p>
+<p>On the other hand, if we keep <code>Host: s.vn-hd.com</code> as-is, RMIT will be able to block our request.
+This leads to our final trick:</p>
+</section>
+<section id="Google-App-Engine-to-the-rescue">
+<h2>Google App Engine to the rescue!</h2>
+<p>Because a subtitle file is just plain text, its size is negligible. We can set up an external
+website that receives our original request, fetches the requested file on hdviet’s server and
+returns the requested file’s content back to us. I have already set up a proof-of-concept Google
+App Engine website at <code>hdviet-proxy.appspot.com</code>. It works like this:</p>
+<p><img alt="" src="hdviet_07_graph.png"></p>
+<p>Now we need to edit our server code to redirect any <code>s.vn-hd.com</code> request to
+<code>hdviet-proxy.appspot.com/?url=original_url</code>.</p>
+<pre><code class="language-python">import urllib
+
+sub_server = 's.vn-hd.com'
+remote_server = 'hdviet-proxy.appspot.com'
+redirects = {
+    'v-01.vn-hd.com': '125.212.216.93',  # video
+}
+
+def redirect(req):
+    for domain, ip in redirects.items():
+        if req.path.find(domain) != -1:
+            req.uri = req.uri.replace(domain, ip, 1)
+            req.path = req.path.replace(domain, ip, 1)
+            req.requestHeaders.setRawHeaders('host', [ip])
+            return
+        elif req.path.find(sub_server) != -1:
+            proxied_url = 'http://%s/?%s' % (remote_server,
+                                                urllib.urlencode({'url': req.uri}))
+            req.uri = proxied_url
+            req.path = req.path.replace(sub_server, remote_server)
+            req.requestHeaders.setRawHeaders('host', [remote_server])
+            return
+</code></pre>
+<p>You can view my <a href="https://github.com/nhanb/twisted-connect-proxy">finished script on github</a> and clone it to use right away.</p>
+<p>If you want to set up your own website instead of using mine, it’s really simple. Just use the new
+site template provided with GAE SDK and edit <code>main.py</code> like so:</p>
+<pre><code class="language-python">import webapp2
+from google.appengine.api import urlfetch
+
+class MainHandler(webapp2.RequestHandler):
+    def get(self):
+        url = self.request.get('url')
+        resp = urlfetch.fetch(url).content
+        self.response.write(resp)
+
+app = webapp2.WSGIApplication([
+    ('/', MainHandler)
+], debug=True)
+</code></pre>
+<p>Remember to change the <code>remote_server</code> variable in <code>server.py</code> to match your appspot link.</p>
+<p>Restart the server script, now when the browser requests for this:</p>
+<pre><code>http://s.vn-hd.com/store6/21042013/Two_and_a_Half_Men_S02/E001/Two_and_a_Half_Men_S02_E001_ENG.srt
+</code></pre>
+<p><code>server.py</code> will redirect to this:</p>
+<pre><code>http://hdviet-proxy.appspot.com/?url=http%3A%2F%2Fs.vn-hd.com%2Fstore6%2F21042013%2FTwo_and_a_Half_Men_S02%2FE001%2FTwo_and_a_Half_Men_S02_E001_ENG.srt
+</code></pre>
+<p>And the appspot site will get the original url, fetch its content, and give it right back to us:</p>
+<p><img alt="" src="hdviet_08_srt.png"></p>
+<p>You should now be able to watch movies with subtitles. Congratulations!</p>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Towards an acceptable video playing experience | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2020-04-26">
+        Sunday, 26 Apr 2020
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>Towards an acceptable video playing experience</h1>
+<p>I watch movies and TV shows.
+Naturally, I have some strong preferences on how to view them:</p>
+<p><strong>English subtitles</strong>. Most things I watch are in English.
+Although I’m perfectly comfortable with face-to-face English conversations, I
+just can’t keep up with English dialogue in movies.
+I also don’t want to put up with badly translated subs, so English subtitles
+they must be. This rules out most Vietnamese “netflixes”.</p>
+<p><strong>1080p</strong>, unless it’s ancient or super rare stuff.</p>
+<p><strong>Streamable from tablets</strong>. I shouldn’t need to turn on my PC just to catch up
+on the latest Better Call Saul episode.</p>
+<p>In 2020, there sure are a variety of options available, all of which fall short
+in some ways:</p>
+<ul>
+<li>
+<p>Shady ad-infested Vietnamese movie streaming sites (phimmoi etc): Obnoxious
+pop-up tabs aside, they always <a href="https://kipalog.com/posts/Cac-web-phim-da-giam-99-99--chi-phi-bang-google-drive-nhu-the-nao">abuse Google Drive</a> (or even Facebook?)
+storage behind the scene. Problem is Google Drive encoding is lossy as hell,
+so even at 1080p they look noticeably worse than the original. Also they
+almost always come with hardcoded Vietnamese subs.</p>
+</li>
+<li>
+<p>Netflix clones by big ISPs: Pathetic catalogues. Vietnamese subs.</p>
+</li>
+<li>
+<p>Netflix itself: Actually quite good thanks to usable Android app, but besides
+the increasingly shitty catalogue, it’s <a href="https://help.netflix.com/en/node/23742">impossible to get 1080p from
+Linux</a>. Also I hate that I can’t manually set the video quality: even if
+my current connection gets slow I’d rather pause and wait for buffering
+instead of putting up with a pixelated 480p mess. I still have my Netflix
+subscription today, but only grudgingly.</p>
+</li>
+<li>
+<p>“dude, like, just torrent it”. Solid advice since torrents usually come with
+embedded English sub, but it requires actually downloading the thing first,
+and can’t easily switch devices without moving the file along.</p>
+</li>
+<li>
+<p>Setting up a torrent + plex server? That would require (1) ample disk space,
+(2) generous network bandwidth, (3) actual horsepower for transcoding and (4)
+fast enough network access from home or wherever I watch movies from.</p>
+<ul>
+<li>
+<p>A local NAS-style server satisfies (1), (3) &amp; (4) but struggles with (2),
+and I don’t want it to hog my home internet pipes.</p>
+</li>
+<li>
+<p>Finding a VPS service with (1) &amp; (2) is doable, but (3) gets expensive
+fast and usually they’re in the US or EU which can never have (4). I’m
+actually running a seedbox on Ramnode but can’t run plex on it because of
+lack of (3) and (4). If I’m willing to pay more I can get a Hetzner
+dedicated server which can probably do (3) but (4) gets even worse.</p>
+</li>
+</ul>
+</li>
+</ul>
+<section id="Remote-seedbox-Google-Drive">
+<h2>Remote seedbox + Google Drive</h2>
+<p>I settled on Netflix and torrented stuff that’s not available there.
+For the seedbox, I installed Transmission-web on a Ramnode VPS that has 320GB
+of HDD at $50/year. The network bandwidth is meh but it gets the job done.</p>
+<p>Since Transmission supports hooks via external scripts, I set it up so that
+downloaded torrents get uploaded to my Google Drive using <code>rclone</code>.</p>
+<p>Now whenever I find something interesting that’s not on Netflix, I look for a
+working torrent file and tell my seedbox to get it. Thanks to the web interface
+I can do it from both my PC and tablet. I don’t have to keep my devices running
+so it doesn’t matter if the torrent is not well-seeded and takes a long time.</p>
+<p>Once the file lands on Google Drive, I can either:</p>
+<ul>
+<li>
+<p>watch it directly from GDrive’s web/Android app if I don’t care about
+subtitles or original quality, or</p>
+</li>
+<li>
+<p>download the file first and watch properly</p>
+</li>
+</ul>
+<p>The latter is not ideal.</p>
+</section>
+<section id="Enter-gflick">
+<h2>Enter gflick</h2>
+<p>Turns out advanced video players like <code>mpv</code> and <code>vlc</code> can directly stream HTTP
+videos with full support for seeking and audio / text(a.k.a subtitles) tracks.
+See, well-formed video container formats will have metadata at the beginning of
+the file telling where each track lies within the file. The player can download
+just the metadata first, then the subtitle track, then the actual video track
+starting from a specific position. This is only possible if the http server
+supports partial content download <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range">via the <code>Range</code> header</a>.</p>
+<p>Google Drive does have a “direct link” API in the form of
+<code>https://www.googleapis.com/drive/v3/files/&lt;fileId&gt;?alt=media</code>, which luckily
+supports partial download. The bad news is downloading private files requires
+authentication via a bearer token. The only HTTP authentication scheme that
+these players support, as far as I know, is <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme">Basic auth</a>.</p>
+<p>So I wrote <a href="https://github.com/nhanb/gflick">gflick</a>, which is practically an HTTP proxy that does Google
+authentication behind the scene, exposing a plain HTTP streaming endpoint so
+<code>mpv</code> and the like can use without modification.</p>
+<p>Here’s what it looks like in action:</p>
+<video controls>
+  <source src="https://junk.imnhan.com/gflick.mp4" type="video/mp4">
+  <a href="https://junk.imnhan.com/gflick.mp4">
+    Video: https://junk.imnhan.com/gflick.mp4
+  </a>
+</video>
+<p>It can run just fine as a local server, but cumbersome and not practical on
+tablets, so I put it on a publicly accessible server, protected by nginx which
+does TLS and Basic Auth. As mentioned earlier, good video players can do basic
+auth out of the box. Gflick also exposes a simple web interface to browse my
+Google Drives, so now I can browse my drive on any pc/tablet, and watch things
+with full seek, subtitle/audio track support, right?</p>
+<p>Not quite. While desktop versions of these players work fine, their Android
+versions won’t play it. Now I regret selling my Surface Go! :(</p>
+<p>And… that’s where I’m stuck at the moment. Not sure if I should buy one of
+those Chinese Surface knock-offs or what.</p>
+</section>
+<section id="Other-failed-attempts">
+<h2>Other failed attempts</h2>
+<ul>
+<li>
+<a href="https://github.com/nhanb/mpv-gdrive">mpv-gdrive</a>: Using mpv’s lua scripting API to automatically set the
+correct bearer auth headers. Worked fine on desktop, failed miserably on
+android.
+</li>
+<li>
+<a href="https://github.com/nhanb/drivein">drivein</a>: Uses <code>rclone mount</code>. Worked fine on desktop, android wouldn’t
+allow mounting without root.
+</li>
+</ul>
+<p>Also both of those required setting up each client device. Not ideal.</p>
+<section id="Update-June-10-2020">
+<h3>Update June 10, 2020</h3>
+<p>The sequel is out: <a href="../video-streaming-2/">Streaming videos from Google Drive - a second attempt</a></p>
+</section>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

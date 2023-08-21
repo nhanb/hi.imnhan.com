@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>How to install PyQt5 on a virtualenv on Ubuntu 14.04 | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2015-02-14">
+        Saturday, 14 Feb 2015
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>How to install PyQt5 on a virtualenv on Ubuntu 14.04</h1>
+<p>The official way to install PyQt5 for development is to download and compile SIP + PyQt5 from
+source, which is painstakingly slow (compiling PyQt5 took like 10 minutes on my PC). If you’re
+<a href="https://michalcodes4life.wordpress.com/2014/03/16/pyqt5-python-3-3-in-virtualenv-on-ubuntu/">compiling it against a virtualenv</a>, rinse and repeat for each new virtualenv you create.
+Alhough it is doable, I prefer something faster.</p>
+<p>And yes, there is something faster. Today I came across a <a href="http://stackoverflow.com/a/1962076">Stack Overflow answer</a> that suggested
+a neat trick: installing PyQt globally, then copy the whole thing to your virtualenv
+<strong>site-packages</strong> directory. Here’s how I did it on Ubuntu 14.04, python3.4 and PyQt5:</p>
+<pre><code class="language-sh"># assuming you already have virtualenv &amp; virtualenvwrapper installed
+
+# install pyqt5 globally
+sudo apt-get install python3-pyqt5
+
+mkvirtualenv -p `which python3` cookies
+# (replace "cookies" with your actual virtualenv name, duh!)
+
+LIBDIR="$HOME/virtualenvs/cookies/lib/python3.4/site-packages"
+cp -r /usr/lib/python3/dist-packages/PyQt5 "$LIBDIR/PyQt5"
+cp /usr/lib/python3/dist-packages/sip.cpython-*.so "$LIBDIR/"
+</code></pre>
+<p>And you’re done with no compiling involved. Isn’t that neat? :)</p>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

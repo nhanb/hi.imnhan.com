@@ -1,19 +1,19 @@
 Title: Towards an acceptable video playing experience
-Date: 2020-04-26 10:06
-Category: side projects
+PostedAt: 2020-04-26 10:06
+---
 
 I watch movies and TV shows.
 Naturally, I have some strong preferences on how to view them:
 
-**English subtitles**. Most things I watch are in English.
+*English subtitles*. Most things I watch are in English.
 Although I'm perfectly comfortable with face-to-face English conversations, I
 just can't keep up with English dialogue in movies.
 I also don't want to put up with badly translated subs, so English subtitles
 they must be. This rules out most Vietnamese "netflixes".
 
-**1080p**, unless it's ancient or super rare stuff.
+*1080p*, unless it's ancient or super rare stuff.
 
-**Streamable from tablets**. I shouldn't need to turn on my PC just to catch up
+*Streamable from tablets*. I shouldn't need to turn on my PC just to catch up
 on the latest Better Call Saul episode.
 
 In 2020, there sure are a variety of options available, all of which fall short
@@ -98,12 +98,14 @@ authentication behind the scene, exposing a plain HTTP streaming endpoint so
 
 Here's what it looks like in action:
 
+```=html
 <video controls>
   <source src="https://junk.imnhan.com/gflick.mp4" type="video/mp4">
   <a href="https://junk.imnhan.com/gflick.mp4">
     Video: https://junk.imnhan.com/gflick.mp4
   </a>
 </video>
+```
 
 It can run just fine as a local server, but cumbersome and not practical on
 tablets, so I put it on a publicly accessible server, protected by nginx which
@@ -140,4 +142,4 @@ The sequel is out: [Streaming videos from Google Drive - a second attempt][8]
 [5]: https://github.com/nhanb/gflick
 [6]: https://github.com/nhanb/mpv-gdrive
 [7]: https://github.com/nhanb/drivein
-[8]: /posts/streaming-videos-from-google-drive-a-second-attempt/
+[8]: ../video-streaming-2/

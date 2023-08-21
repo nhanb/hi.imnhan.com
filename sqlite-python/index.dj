@@ -1,14 +1,14 @@
 Title: Working with SQLite in Python without an ORM or migration framework
-Date: 2022-01-30 14:11
-Summary: Some notes on handling migrations, linking the latest SQLite,
-         and sane driver defaults.
-Thumb: images/byte_databases.jpg
+PostedAt: 2022-01-30 14:11
+Thumb: byte_databases.jpg
 
-![byte-magazine-databases](/images/byte_databases.jpg)
+---
+
+![byte-magazine-databases](byte_databases.jpg)\
 _[(seriously though, BYTE covers are the best)][18]_
 
 
-I learned about SQLite's user_version pragma some time ago from a comment on
+I learned about SQLite's `user_version` pragma some time ago from a comment on
 Hacker News (as one does). Not sure which comment it was specifically, but it
 went something [like this][1]:
 
@@ -133,7 +133,7 @@ commit;
 pragma foreign_keys = on;
 ```
 
-Besides the boilerplaty dance with foreign_key pragmas and transactions, all I
+Besides the boilerplaty dance with `foreign_key` pragmas and transactions, all I
 had to do was copy the existing table definition from the aforementioned
 latest_schema.sql file, tweak it to my desired state, then do the table
 switcheroo. Again, the specific ordering of steps is important. I won't go into

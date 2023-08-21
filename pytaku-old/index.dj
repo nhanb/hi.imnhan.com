@@ -1,15 +1,17 @@
 Title: Introducing Pytaku—the only online manga reader you'll ever need
-Date: 2015-01-02 21:19
-Category: side projects
-Tags: pytaku
-Thumb: images/pytaku_01_chapter_progress.png
+PostedAt: 2015-01-02 21:19
+Thumb: pytaku_01_chapter_progress.png
 
-> **Heads up from 2021!** This post describes a previous incarnation of Pytaku
-> which is no longer alive.  The new Pytaku is a slightly different thing which
-> is being (relatively) actively developed [on
-> sourcehut](https://sr.ht/~nhanb/pytaku/).
+---
 
-[Pytaku][pytaku] is an online manga reader that scrapes data from multiple Vietnamese and English
+*Heads up from 2021!* This post describes a previous incarnation of Pytaku
+which is no longer alive.  The new Pytaku is a slightly different thing which
+is being (relatively) actively developed [on
+sourcehut](https://sr.ht/~nhanb/pytaku/).
+
+---
+
+Pytaku is an online manga reader that scrapes data from multiple Vietnamese and English
 manga sites, giving you one single place to keep track of your reading progress and watch for new
 chapters with ease. Here are some of the features implemented so far:
 
@@ -61,14 +63,14 @@ chat room][3].
 
 ## Give it a spin
 
-[Click here][pytaku] to go to the app. Have fun! :)
+{-Click here to go to the app. Have fun! :)-} Update: this version of pytaku is
+no longer online.
 
 [1]: https://github.com/nhanb/pytaku-old-gae/
 [2]: https://github.com/nhanb/pytaku-old-gae/blob/master/README.markdown
 [3]: https://gitter.im/nhanb/pytaku
 [4]: https://github.com/nhanb/pytaku-old-gae/blob/master/frontend/languages/en.yaml
-[img1]: /images/pytaku_01_chapter_progress.png
-[img2]: /images/pytaku_02_bookmarked_series.png
-[img3]: /images/pytaku_03_vietnamese.png
-[pytaku]: https://pytaku.appspot.com
+[img1]: pytaku_01_chapter_progress.png
+[img2]: pytaku_02_bookmarked_series.png
+[img3]: pytaku_03_vietnamese.png
 [gpl]: https://www.gnu.org/licenses/quick-guide-gplv3.html

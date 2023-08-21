@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Virtualenv(wrapper), python2 and python3 | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2014-12-16">
+        Tuesday, 16 Dec 2014
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>Virtualenv(wrapper), python2 and python3</h1>
+<p>Virtualenv and virtualenvwrapper make it super easy to have a sandboxed python environment for each
+of your projects, no doubt about it (if you’re not using them already, feel free to google how to
+get started).</p>
+<p>By default, <code>mkvirtualenv my-env-name</code> will create a virtualenv using the OS’s default python
+version (in Ubuntu’s case, that’s python2). If you want a virtualenv that has <code>python</code> mapped to
+python3 instead, use the <code>-p</code> argument:</p>
+<pre><code class="language-bash">$ mkvirtualenv -p `which python3` my-env-name
+# assumming you have python3 installed already, of course!
+</code></pre>
+<p>However, on Ubuntu this will fail if you installed virtualenv as a pip package. If that’s the case,
+simply remove it and install the Ubuntu package instead. It goes like this for Ubuntu 14.04:</p>
+<pre><code class="language-bash">$ sudo pip uninstall virtualenv
+$ sudo apt-get install python-virtualenv
+$ sudo pip install virtualenvwrapper  # yes, you can install virtualenvwrapper via pip
+$ mkvirtualenv -p `which python3` my-env-name
+</code></pre>
+<p>Neat, eh?</p>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

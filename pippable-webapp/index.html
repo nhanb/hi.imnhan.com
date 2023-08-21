@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>I made my python webapp installable via pip | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2021-10-02">
+        Saturday, 02 Oct 2021
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>I made my python webapp installable via pip</h1>
+<p>Running <code>pip3 install pytaku</code> now gives you all the tools you need <a id="fnref1" href="#fn1" role="doc-noteref"><sup>1</sup></a> <a id="fnref2" href="#fn2" role="doc-noteref"><sup>2</sup></a> to
+deploy <a href="https://sr.ht/~nhanb/pytaku/">pytaku</a> - a hobby webapp of mine - on a fresh Debian 11 server:</p>
+<pre><code class="language-sh">pytaku-generate-config &gt; pytaku.conf.json  # generate config file
+pytaku-migrate  # generate initial sqlite3 db, or migrate to new version
+pytaku -w 5  # run main webapp using gunicorn on localhost:8000
+pytaku-scheduler  # daemon that executes scheduled background tasks
+
+# Optionally, run this to copy all static assets to a designated dir so your
+# web server (nginx/caddy/etc.) can serve them directly instead of through
+# the less performant gunicorn:
+pytaku-collect-static /var/www/pytaku
+</code></pre>
+<p>So how does that work? Let’s break it down.</p>
+<section id="The-pytaku-executables">
+<h2>The pytaku-* executables</h2>
+<p><a href="https://python-poetry.org/">Poetry</a> is awesome. Not only does it offer sane dependency management that
+plays well with the pyenv + virtualenv combo, but it also vastly simplifies
+building and publishing python libraries. Telling pip to install executables
+alongside my library is as simple as writing a few lines in my
+<a href="https://git.sr.ht/~nhanb/pytaku/tree/ff20e51f8c178bf981d80aa3737bf31a1059a506/item/pyproject.toml#L15-21">pyproject.toml</a> file:</p>
+<pre><code class="language-toml">[tool.poetry.scripts]
+pytaku = "pytaku:serve"
+pytaku-dev = "pytaku:dev"
+pytaku-migrate = "pytaku:migrate"
+pytaku-generate-config = "pytaku:generate_config"
+pytaku-scheduler = "pytaku:scheduler"
+pytaku-collect-static = "pytaku:collect_static"
+</code></pre>
+<p>The left hand side indicates the executable file name, while the right hand
+side declares which function to call. In my example, “pytaku:serve” points to
+the serve() function inside src/pytaku/__init__.py.</p>
+<p>Now that we have easy access to CLI entry points, let’s quickly go over
+<a href="https://git.sr.ht/~nhanb/pytaku/tree/ff20e51f8c178bf981d80aa3737bf31a1059a506/item/src/pytaku/__init__.py">how</a> each command works:</p>
+<ul>
+<li>
+<code>pytaku</code> and <code>pytaku-dev</code> simply exec gunicorn and flask respectively
+behind the scene.
+</li>
+<li>
+<code>pytaku-migrate</code> runs my bespoke migrator script (which is extremely
+primitive but hey it was a good learning experience).
+</li>
+<li>
+<code>pytaku-generate-config</code> uses <a href="https://github.com/lincolnloop/goodconf">goodconf</a> to generate a config template,
+pre-filling as many values as it can.
+</li>
+<li>
+<code>pytaku-scheduler</code> is just a dead simple single-threaded scheduler that I
+don’t recommend for any service that has more than a handful of users.
+</li>
+<li>
+<code>pytaku-collect-static</code> leverages importlib.resources.path to get the
+package’s installation path. From there it copies the bundled static assets
+to wherever you want your nginx to serve. It’s basically a simplified version
+of Django’s collectstatic command.
+</li>
+</ul>
+</section>
+<section id="But-why-bother">
+<h2>But why bother?</h2>
+<p>Lincoln Loop’s series of Django-related blog posts were my main inspiration.
+Central to this idea is <a href="https://lincolnloop.com/blog/using-setuppy-your-django-project/">Using setup.py in Your (Django) Project</a>, which
+explains both how and why you would want to make your python project
+pip-friendly. The “why” boils down to 2 points:</p>
+<ul>
+<li>
+You don’t want to reinvent package management. Let pip handle the minute
+details of packaging, distributing, versioning, etc. for you.
+</li>
+<li>
+You no longer need to run python from the source code’s path. In pytaku’s
+case, the working dir now only stores the sqlite database file and the
+json config file, i.e. purely data, completely separate from the source
+code.
+</li>
+</ul>
+<p>More broadly, the idea of simple distributing/deployment is, in my opinion,
+often overlooked these days. Fiddly deployment procedures are largely why
+Docker flourished: our industry just collectively gave up on self-contained
+software distribution and decided to ship a whole rootfs for each application
+process instead. Okay, I may be overreacting here, but I think it’s at least
+fair to say that if every webdev shop standardized on shipping Go binaries
+statically compiled with musl libc, we’d probably reach out for Docker less
+often. When I showed pytaku to a colleague of mine, his first question was
+essentially “Dockerfile when?”. Sure, Docker is neat and solves real problems,
+but how about we strive to avoid, or at least minimize, those problems in the
+first place? Remember, while container evangelists love harping on about
+negligible CPU overhead, they tend to gloss over the storage overhead:</p>
+<pre><code class="language-sh">$ docker image ls
+REPOSITORY   TAG        IMAGE ID       CREATED       SIZE
+python       3-alpine   bcf864391ba1   3 weeks ago   45.1MB
+python       3-slim     66f4843b721f   3 weeks ago   122MB
+</code></pre>
+<p>And the operational complexity overhead. Did you know that by default Docker
+<a href="https://www.jeffgeerling.com/blog/2020/be-careful-docker-might-be-exposing-ports-world">completely sidesteps your firewall</a>? That even if you specifically tell it
+to only listen to a port on localhost, it may or may not still expose it to the
+whole world? That this remains an <a href="https://github.com/moby/moby/issues/22054">open bug since 2016</a>? This isn’t one of
+those security bogeyman stories either, actual people have been <a href="https://blog.newsblur.com/2021/06/28/story-of-a-hacking/">bitten by
+it</a>. At this point cloud apologists would probably jump in and point out
+how this isn’t an issue if you’re running on GCP or AWS because they have
+another layer of firewall that locks down every port by default that you can
+setup on their totally usable web console or infrastructure-as-code it in your
+cloudformations or your terraformses or, actually, do you have a moment to talk
+about our lord and savior Cthulhubernetes–</p>
+<p>But I digress.</p>
+<p>I guess what I was trying to say is, throwing abstractions over complex
+procedures is simply shifting the costs elsewhere. Shipping your software in a
+Dockerfile is fine, but making your distribution so simple that people can
+easily write a couple of lines of Dockerfile for it by themselves is more
+valuable. Simple distribution is simple to deploy regardless of whether you’re
+using docker, packer, ansible, pyinfra, podman, nomad, k8s, k3s, an
+impenetrable shell script some dude wrote 2 years ago who just left the company
+last month… or any combination of the above. The point is <strong>you shouldn’t be
+forced to use more heavyweight solutions just because the software is a pain in
+the butt to setup manually</strong>.</p>
+<p>And other people <em>have</em> been trying to make python application distribution
+simpler:</p>
+<ul>
+<li>
+<a href="https://shiv.readthedocs.io/en/latest/">shiv</a> bundles everything but the python interpreter
+</li>
+<li>
+<a href="https://github.com/indygreg/PyOxidizer">PyOxidizer</a> bundles everything <em>including</em> the python interpreter
+</li>
+<li>
+<a href="https://nuitka.net/">nuika</a> actually compiles your python application into an executable,
+unlike PyInstaller which just generates a self-extracting archive.
+</li>
+</ul>
+<p>We’ll get there. Someday.</p>
+</section>
+<section role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1">
+<p>Well actually you still need to <code>apt install python3-apsw</code>, but that’s
+only because apsw <a href="https://rogerbinns.github.io/apsw/download.html#easy-install-pip-pypi">refuses</a> to provide a binary wheel on pypi. It can be
+replaced by the standard library sqlite3 module anyway - I only picked apsw
+because it exposes essentially the same API as the SQLite C library, which
+helped when I was learning to use SQLite properly for the first time.<a href="#fnref1" role="doc-backlink">↩︎︎</a></p>
+</li>
+<li id="fn2">
+<p>Even with the above, pytaku still won’t run out of the box because it
+needs a <a href="https://github.com/nhanb/gae-proxy/">crappy proxy</a> in order to
+bypass mangasee’s strict cloudflare protection. I know it’s lame but pytaku
+is practically a web scraper project and there’s no way to make it work
+reliably without a proxy pool anyway. I hope this doesn’t distract you from
+the point of the article though.<a href="#fnref2" role="doc-backlink">↩︎︎</a></p>
+</li>
+</ol>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

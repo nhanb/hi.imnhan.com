@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Fix RMIT wi-fi issue in Ubuntu 13.04 and variants | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2013-06-17">
+        Monday, 17 Jun 2013
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>Fix RMIT wi-fi issue in Ubuntu 13.04 and variants</h1>
+<section id="The-issue">
+<h2>The issue</h2>
+<p>When I upgraded to Xubuntu 13.04, although I could connect to any other wi-fi network painlessly,
+the RMIT-WPA network just never allowed me to establish a connection. The most annoying part was
+that it had been working fine in previous versions (12.04, 12.10).</p>
+<p>After days of googling, I finally pinpointed the issue: a certain version of NetworkManager
+bundled in Ubuntu 13.04 has a bug that automatically turns CA certificate usage to <strong>true</strong> for any
+WPA2 wifi network, even if we choose to use none in the GUI.</p>
+<p><img alt="RMIT wi-fi settings" src="rmit_wifi.png"></p>
+</section>
+<section id="The-solution">
+<h2>The solution</h2>
+<p>Just manually edit <code>/etc/NetworkManager/system-connections/RMIT-WPA</code>, make sure that you have
+<code>system-ca-certs=false</code>, then restart the wifi connection. To edit this file you will need root
+permission. If you’re not sure how to do this, open a terminal and enter this command to open
+<code>gedit</code> with sudo permission (<code>mousepad</code> if you’re using xubuntu):</p>
+<pre><code class="language-sh"># Protip: DON'T use sudo for GUI programs! Use gksudo instead.
+gksudo gedit /etc/NetworkManager/system-connections/RMIT-WPA
+</code></pre>
+<p>This is a <a href="https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1104476">known bug</a> and
+many have complained about it. There seems to be no developer assigned to fix it though. I’ll keep
+you updated on the issue.</p>
+<section id="Update-Dec-16-2013">
+<h3>Update (Dec 16, 2013)</h3>
+<p>A fix has been released in GNOME upstream but not incorporated into official Ubuntu repositories
+yet. An impatient contributor has created his own PPA to provide the fixed package. To install it,
+enter the following commands:</p>
+<pre><code>sudo sudo add-apt-repository ppa:pritambaral/nms
+sudo apt-get update
+sudo apt-get install network-manager-gnome
+</code></pre>
+</section>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

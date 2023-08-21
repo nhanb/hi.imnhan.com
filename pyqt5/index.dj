@@ -1,7 +1,6 @@
 Title: How to install PyQt5 on a virtualenv on Ubuntu 14.04
-Slug: how-to-install-pyqt5-on-virtualenv-on-ubuntu-14.04
-Date: 2015-02-14 22:33
-Category: tutorials
+PostedAt: 2015-02-14 22:33
+---
 
 The official way to install PyQt5 for development is to download and compile SIP + PyQt5 from
 source, which is painstakingly slow (compiling PyQt5 took like 10 minutes on my PC). If you're
@@ -10,9 +9,9 @@ Alhough it is doable, I prefer something faster.
 
 And yes, there is something faster. Today I came across a [Stack Overflow answer][2] that suggested
 a neat trick: installing PyQt globally, then copy the whole thing to your virtualenv
-**site-packages** directory. Here's how I did it on Ubuntu 14.04, python3.4 and PyQt5:
+*site-packages* directory. Here's how I did it on Ubuntu 14.04, python3.4 and PyQt5:
 
-```bash
+```sh
 # assuming you already have virtualenv & virtualenvwrapper installed
 
 # install pyqt5 globally

@@ -1,6 +1,6 @@
 Title: Go, Postgres, Caddy, systemd: a simple, highly portable, Docker-free web stack
-Slug: go-postgres-caddy-systemd-stack
-Date: 2023-02-12 14:24
+PostedAt: 2023-02-12 14:24
+---
 
 I've [mentioned][1] before that I'm not a fan of Docker as a deployment
 strategy. In that same post I briefly mentioned that Go could simplify
@@ -27,8 +27,8 @@ that boilerplate for reading data into Go structs though. I heard good things
 about [sqlc][5], which generates Go code from SQL queries. I'll most likely try
 that next.
 
-Sticking to pure Go code brings 2 big benefits: **independence from glibc** and
-**effortless cross-compilation**.
+Sticking to pure Go code brings 2 big benefits: *independence from glibc* and
+*effortless cross-compilation*.
 
 Not depending on glibc means our compiled executable for, say, Linux, will run,
 not only on any Linux distro regardless of its glibc version, but also on
@@ -247,16 +247,16 @@ before][1], and I'll say it again:
 > simple to deploy regardless of whether you're using docker, packer, ansible,
 > pyinfra, podman, nomad, k8s, k3s, an impenetrable shell script some dude
 > wrote 2 years ago who just left the company last month... or any combination
-> of the above. The point is **you shouldn't be forced to use more heavyweight
+> of the above. The point is *you shouldn't be forced to use more heavyweight
 > solutions just because the software is a pain in the butt to setup
-> manually**.
+> manually*.
 
 Sooner or later we'll all have to peek under the hood to diagnose problems, and
 the fewer moving pieces you have to learn and understand, the more grateful
 you'll be to your predecessors (and, let's be honest, the fewer profanities
 you'll have to utter to yourself).
 
-[1]: /posts/i-made-my-python-webapp-pip-installable/
+[1]: ../pippable-webapp/
 [2]: https://lets-go.alexedwards.net/
 [3]: https://www.alexedwards.net/blog/introducing-flow
 [4]: https://github.com/lib/pq

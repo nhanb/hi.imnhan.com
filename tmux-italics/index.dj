@@ -1,25 +1,29 @@
 Title: Enable italic text inside vim inside tmux inside gnome-terminal
-Date: 2014-08-02 16:46
-Category: tutorials
-Tags: linux, vim
-Slug: enable-italic-text-vim-tmux-gnome-terminal
-Thumb: images/italic_01_gvim.png
+PostedAt: 2014-08-02 16:46
+Thumb: italic_01_gvim.png
+---
 
-**Update**: As `egmont` pointed out in the comments: setting `TERM=xterm` inside tmux is
+*2023 Update*: I now use [kitty](https://sw.kovidgoyal.net/kitty/) terminal
+which has powerful tab & split functionalities so tmux is no longer necessary
+for my "unix IDE" use case. Removing tmux also means removing a whole class of
+compatibility issues, making it much nicer to work with terminal programs. I
+recommend giving it a try.
+
+*Update*: As `egmont` pointed out in the comments: setting `TERM=xterm` inside tmux is
 discouraged and will cause wrong behavior in some programs. Changing all instances of
 `xterm-256color` to `screen-256color` in this tutorial should work, but I'm no longer using
 gnome-terminal so I can't test that. I'm now a KDE convert by the way; italic text Just
-Works<sup>tm</sup> with Konsole. Neat, eh?
+Works^TM^ with Konsole. Neat, eh?
 
-It has bothered me for a while what I can't get terminal vim to display *italic* text. It might
+It has bothered me for a while what I can't get terminal vim to display _italic_ text. It might
 seem trivial but it makes a world of difference when I'm editing Markdown or HTML. Here's what gvim
 looks like:
 
-![](/images/italic_01_gvim.png)
+![](italic_01_gvim.png)
 
 Neat, right? This is what terminal vim shows:
 
-![](/images/italic_02_vim.png)
+![](italic_02_vim.png)
 
 I don't know about you, but the second one looks catastrophically messy and counterintuitive to me.
 Let's change that. My current setup is terminal vim running inside a tmux session on
@@ -30,11 +34,11 @@ gnome-terminal. Let's go through these things.
 Note that older versions of `gnome-terminal` do not support italic text. To check if your terminal
 does support it, run this command:
 
-```bash
+```sh
 $ echo -e "\e[3m foo \e[23m"
 ```
 
-If your version of gnome-terminal supports it, an italic *foo* will appear. If not, upgrade it! :)
+If your version of gnome-terminal supports it, an italic _foo_ will appear. If not, upgrade it! :)
 
 ## vim
 

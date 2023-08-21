@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Opening http link under the cursor in vim | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_theme/base.css">
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2021-08-07">
+        Saturday, 07 Aug 2021
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+<h1>Opening http link under the cursor in vim</h1>
+<p>Mr. <a href="https://www.walterbright.com/">Walter Bright</a>, creator of the D
+programming language, recently
+<a href="https://news.ycombinator.com/item?id=28090272">commented</a> on Hacker News:</p>
+<blockquote>
+<p>And for bug fixes, reference the issue which often gives a detailed
+explanation for why the code is a certain way:</p>
+<p><a href="https://github.com/dlang/dmd/blob/master/src/dmd/backend/cgxmm.d#L1210">https://github.com/dlang/dmd/blob/master/src/dmd/backend/cgxmm.d#L1210</a></p>
+<p>Ever since I enhanced the editor I use to open the browser on links, this
+sort of thing has proven to be very, very handy.</p>
+</blockquote>
+<p>I’ve never had any issue with opening links from vim: I have <code>&lt;leader&gt;y</code> set up
+in Visual mode to yank stuff into the system-wide clipboard which I can then
+paste into the browser. However, ever since I mapped <code>&lt;leader&gt;gh</code> to trigger
+<a href="https://github.com/tpope/vim-fugitive/blob/2dc08dfe354ed5400f5cdb3d5009dcd4024aac8a/doc/fugitive.txt#L213"><code>:GBrowse</code></a> that opens a browser tab instantly, the old “select, copy,
+alt-tab to browser, ctrl+t, ctrl+v” flow started to feel… prehistoric. Mr.
+Bright’s comment gave me the final nudge to actually go ahead and set it up.</p>
+<p>The good folks from the <a href="https://stackoverflow.com/questions/9458294/open-url-under-cursor-in-vim-with-browser">developer encyclopedia</a> suggested <code>gx</code> but for some
+reason, setting <code>g:netrw_browsex_viewer</code> <a href="https://github.com/vim/vim/issues/4738">didn’t seem to do anything</a> so the
+command would always <code>wget</code> the link then tell the browser to open that
+downloaded file. Therefore, I cobbled together this snippet which was adapted
+from those stackoverflow &amp; github threads:</p>
+<pre><code class="language-vimscript">function! OpenURL()
+  let l:url = matchstr(expand("&lt;cWORD&gt;"), 'https\=:\/\/[^ &gt;,;()]*')
+  if l:url != ""
+    let l:url = shellescape(l:url, 1)
+    let l:command = "!xdg-open ".l:url
+    echo l:command
+    silent exec l:command
+  else
+    echo "No URL found under cursor."
+  endif
+endfunction
+
+nnoremap gl :call OpenURL()&lt;cr&gt;
+</code></pre>
+<p><em>(if you’re on a Mac, replacing <code>xdg-open</code> with <code>open</code> will probably
+do the same thing)</em></p>
+<p>Now whenever I have my cursor on an http(s) url, I can type <code>gl</code> from normal
+mode and xdg-open will use my default browser to open it up. This could be
+extended to any other scheme like <code>mailto</code> or <code>ftp</code> but I don’t have any
+practical use for them right now so that will do.</p>
+<p>One drawback is if there’s a whitespace in the URL (which is bad practice
+anyway), my regex won’t match the whole thing. In such cases I’d rather resort
+to good old manual visual mode than try to be clever and make my URL detecting
+logic exponentially more complex. I’d take simple software with obvious, easily
+understood behavior over overcomplicated, (possibly) subtly broken balls of mud
+any day.</p>
+<p>By the way, if you looked at my script and got spooked by the idea of executing
+a shell command composed from arbitrary, potentially unsafe input (i.e. text
+file content), don’t worry: that’s what <a href="https://learnvimscriptthehardway.stevelosh.com/chapters/32.html#escaping-shell-command-arguments"><code>shellescape()</code></a> is for.</p>
+<section id="But-why-stop-there">
+<h2>But why stop there?</h2>
+<p>We’re using Jira at work (I know, don’t ask), and we have a convention to
+include the Jira ticket in all top-level git commit messages like this (French
+optional):</p>
+<pre><code>[SRE-123456] Finally fix the goddamn pipeline
+</code></pre>
+<p>That’s no URL, but the jira ticket ID pattern is pretty simple, so I simply
+altered the regexp a bit like this:</p>
+<pre><code class="language-vimscript">function! OpenJira()
+  let l:jira_id = toupper(matchstr(expand("&lt;cWORD&gt;"), '\c\(id2\|sre\|csi\)-[0-9]\+'))
+  if l:jira_id != ""
+    let l:command = "!xdg-open https://my-company.atlassian.net/browse/".l:jira_id
+    echo l:command
+    silent exec l:command
+  else
+    echo "No Jira ticket found under cursor."
+  endif
+endfunction
+nnoremap gj :call OpenJira()&lt;cr&gt;
+</code></pre>
+<p>Voila! Now I can press <code>gj</code> to open any atlassian ticket from just its ID.</p>
+<p>Some interesting points:</p>
+<ul>
+<li>
+<code>ID2/SRE/CSI</code> are the prefixes that I know of. No idea if there are any
+other. Would be trivial to add later anyway.
+</li>
+<li>
+Because the pattern of <code>l:jira_id</code> is very simple, I don’t even need to
+shellescape() this one.
+</li>
+<li>
+I didn’t even bother to refactor common stuff between the OpenURL() and
+OpenJira().
+</li>
+</ul>
+<p>On a more big-picture note, I can afford to make seemingly sloppy decisions
+precisely because this serves only myself, and my specific use cases are
+usually narrow. It’s not very general, but it works, and works precisely the
+way I want it. This is one of the reasons I’ve always preferred simple tooling
+that I can build upon, rather than following the prescribed workflows of more
+full-fledged IDEs.</p>
+<p>I’m not bashing IDEs, and I’m in no way promoting vim or <a href="https://github.com/DigitalMars/med">rolling your own
+emacs</a>. I’m firmly in the “use whatever
+you’re comfortable with” camp. I think the whole idea of editor/IDE wars is
+juvenile, dumb and counterproductive (all software sucks in some way anyway,
+fight me). Showing nifty tricks you can do with your tools, inspiring others to
+either check them out or implement those on their own tools, just like how Mr.
+Bright has done with his little comment, is a much better use of everyone’s
+time. I think.</p>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 nhanb<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a>
+</footer>
+
+</body>
+
+</html>

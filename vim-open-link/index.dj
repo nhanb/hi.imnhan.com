@@ -1,5 +1,6 @@
 Title: Opening http link under the cursor in vim
-Date: 2021-08-07 11:37
+PostedAt: 2021-08-07 11:37
+---
 
 Mr. [Walter Bright](https://www.walterbright.com/), creator of the D
 programming language, recently
@@ -94,7 +95,7 @@ Some interesting points:
 
 - `ID2/SRE/CSI` are the prefixes that I know of. No idea if there are any
   other. Would be trivial to add later anyway.
-- Because the pattern of l:jira_id is very simple, I don't even need to
+- Because the pattern of `l:jira_id` is very simple, I don't even need to
   shellescape() this one.
 - I didn't even bother to refactor common stuff between the OpenURL() and
   OpenJira().
