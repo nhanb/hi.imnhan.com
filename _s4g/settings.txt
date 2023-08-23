@@ -3,10 +3,11 @@ Name: Hi, I'm Nhân
 Tagline: and this is my humble corner on the intertubes
 Root: /
 ShowFooter: true
+FooterText: Made with <a href="https://github.com/nhanb/s4g">s4g</a> and probably too much <a href="https://www.instagram.com/cheese.coffee/">cà phê sữa đá</a>
 NavbarLinks: index.dj, about/index.dj, projects/index.dj, #CV#https://cv.imnhan.com
 DefaultThumb: about/keyboard-warrior.jpg
 
-AuthorName: nhanb
+AuthorName: Bùi Thành Nhân
 AuthorURI: https://hi.imnhan.com
 AuthorEmail: hi@imnhan.com
 AuthorTwitter: nhanb
