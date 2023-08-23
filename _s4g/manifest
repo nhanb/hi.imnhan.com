@@ -13,6 +13,10 @@ index.html
 linux-automation/index.html
 manjaro-xfce/index.html
 mcross/index.html
+movie-streaming/gflick-fixed/index.html
+movie-streaming/gflick/index.html
+movie-streaming/index.html
+movie-streaming/put.io/index.html
 node-webkit/index.html
 notes.html
 pathogen-vs-vundle/index.html
@@ -53,9 +57,6 @@ sqlite-python/index.html
 stepmania-pad/index.html
 tmux-italics/index.html
 ubuntu-programs/index.html
-video-streaming-1/index.html
-video-streaming-2/index.html
-video-streaming-3/index.html
 vim-open-link/index.html
 virtualenvwrapper/index.html
 yaks.html

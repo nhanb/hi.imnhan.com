@@ -18,9 +18,9 @@ posts/my-first-diy-fightstick-part-2/index.html -> fightstick-2/
 posts/opening-http-link-under-the-cursor-in-vim/index.html -> vim-open-link/
 posts/setting-up-your-development-environment-for-a-node-webkit-project/index.html -> node-webkit/
 posts/simplest-possible-stepmania-soft-to-hard-pad-mod/index.html -> stepmania-pad/
-posts/streaming-videos-from-google-drive-a-second-attempt/index.html -> video-streaming-2/
-posts/the-video-streaming-finale-or-why-putio-is-awesome/index.html -> video-streaming-3/
-posts/towards-an-acceptable-video-playing-experience/index.html -> video-streaming-1/
+posts/streaming-videos-from-google-drive-a-second-attempt/index.html -> movie-streaming/gflick-fixed/
+posts/the-video-streaming-finale-or-why-putio-is-awesome/index.html -> movie-streaming/put.io/
+posts/towards-an-acceptable-video-playing-experience/index.html -> movie-streaming/gflick/
 posts/virtualenwrapper-python2-python3/index.html -> virtualenvwrapper/
 posts/what-i-did-after-installing-manjaro-xfce/index.html -> manjaro-xfce/
 posts/why-i-use-linux-automation/index.html -> linux-automation/
