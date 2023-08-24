@@ -4,8 +4,9 @@ Thumb: voxel_battery.jpg
 
 ---
 
-*June 2023 update*: I [learned][11] that using pulseaudio instead of
-pipewire works around the audio issue. The following is the original article.
+*August 2023 update*: A recent update to the chromebook audio script
+[fixed][11] the crashing bug. There are other minor annoyances with the device
+of course, but at least it's usable now. The following is the original article.
 
 ---
 
@@ -171,4 +172,4 @@ unreachable: `htop` is one such example.
 [7]: https://wiki.mrchromebox.tech/Firmware_Write_Protect#Hardware_Write_Protection
 [9]: https://mrchromebox.tech/#fwscript
 [10]: https://github.com/MrChromebox/firmware/issues/349
-[11]: https://github.com/WeirdTreeThing/chromebook-linux-audio/issues/2#issuecomment-1578962117
+[11]: https://github.com/WeirdTreeThing/chromebook-linux-audio/issues/2#issuecomment-1680246477
