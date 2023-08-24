@@ -1,5 +1,7 @@
 Title: s4g is a Stupidly Simple Static Site Generator
 PostedAt: 2023-08-24 10:12
+Description: It just had to happen at some point.
+Thumb: series-footer.png
 ---
 
 This blog is now built with [s4g][1]---a static site generator (SSG) made by
