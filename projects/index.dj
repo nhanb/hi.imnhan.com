@@ -6,6 +6,13 @@ ShowInFeed: false
 I've written some open source software in my free time.
 In some cases I even maintain them! Shocking, I know.
 
+## s4g
+
+[s4g](../s4g/) is the static site generator that powers this blog.
+It's written in Go and uses djot as a saner markdown. Reasonably complete, but
+definitely has room for improvement---internal link rot detection is one strong
+candidate. Syntax highlighting would be nice too.
+
 ## Shark
 
 [Shark][13] is a simple "desktop pet". It's my first foray into cross-platform
@@ -29,6 +36,12 @@ fighting game streams. It's served its purpose beaufifully during
 [our](https://www.facebook.com/SaigonFGC/) local tournaments and several
 [Saigon Cups](https://sgc19.saigonfgc.com/en/)... until a certain pandemic
 happened.
+
+## GORTS
+
+[GORTS](https://github.com/nhanb/gorts/) is ORTS rewritten in Go and Tcl/Tk.
+It has been a fun experiment in cross-language IPC, and a much less masochistic
+exercise in software packaging compared to Python.
 
 
 ## An animated wallpaper for KDE Plasma
