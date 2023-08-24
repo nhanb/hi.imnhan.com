@@ -2,12 +2,19 @@
   <title>Hi, I&#39;m Nhân</title>
   <id>https://beta.imnhan.com/</id>
   <link rel="self" href="/feed.xml"></link>
-  <updated>2023-04-22T15:55:00+07:00</updated>
+  <updated>2023-08-24T10:12:00+07:00</updated>
   <author>
     <name>Bùi Thành Nhân</name>
     <uri>https://hi.imnhan.com</uri>
     <email>hi@imnhan.com</email>
   </author>
+  <entry>
+    <title>s4g is a Stupidly Simple Static Site Generator</title>
+    <id>https://beta.imnhan.com/s4g/</id>
+    <link href="https://beta.imnhan.com/s4g/"></link>
+    <published>2023-08-24T10:12:00+07:00</published>
+    <updated>2023-08-24T10:12:00+07:00</updated>
+  </entry>
   <entry>
     <title>Acer Chromebook Spin 713 &#34;Voxel&#34;: an adequate Crostini device, a buggy Linux laptop</title>
     <id>https://beta.imnhan.com/chromebook/</id>

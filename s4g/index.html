@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>s4g is a Stupidly Simple Static Site Generator | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_s4g/theme/base.css">
+
+  <meta property="og:title" content="s4g is a Stupidly Simple Static Site Generator" />
+  <meta name="twitter:title" content="s4g is a Stupidly Simple Static Site Generator" />
+  <meta name="twitter:card" content="summary" /><meta property="og:image" content="https://beta.imnhan.com/about/keyboard-warrior.jpg" />
+    <meta name="twitter:image" content="https://beta.imnhan.com/about/keyboard-warrior.jpg" /><meta name="twitter:site" content="@nhanb" />
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_s4g/theme/navbar.css">
+<nav>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/projects/">Projects</a>
+  <a href="https://cv.imnhan.com">CV</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2023-08-24">
+        Thursday, 24 Aug 2023
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+
+<h1>s4g is a Stupidly Simple Static Site Generator</h1>
+
+<p>This blog is now built with <a href="https://github.com/nhanb/s4g">s4g</a>—a static site generator (SSG) made by
+yours truly.</p>
+<section id="Why">
+<h2>Why?</h2>
+<p>What sets s4g apart from typical SSGs is that it doesn’t separate source code
+and output. For a concrete example, <a href="https://getpelican.com/">Pelican</a> would read source from the
+/content/ dir and write a complete website to /output/, like this:</p>
+<pre><code>my-blog
+├── content &lt;-- source
+│   ├── pages
+│   │   ├── about.md
+│   │   └── home.md
+│   └── posts
+│       ├── first-post.md
+│       └── second-post.md
+└── output &lt;-- generated website ready to be served
+    ├── about
+    │   └── index.html
+    ├── home
+    │   └── index.html
+    └── posts
+        ├── first-post
+        │   └── index.html
+        └── second-post
+            └── index.html
+</code></pre>
+<p>While s4g would simply put the processed html right next to its source (s4g
+uses djot instead of markdown, so source files are .dj instead of .md):</p>
+<pre><code>my-blog &lt;-- is both source and serveable website
+├── about
+│   ├── index.dj
+│   └── index.html
+├── home
+│   ├── index.dj
+│   └── index.html
+└── posts
+    ├── first-post
+    │   ├── index.dj
+    │   └── index.html
+    └── second-post
+        ├── index.dj
+        └── index.html
+</code></pre>
+<p>This simplifies a few things:</p>
+<section id="1-Folder-layout-is-website-layout">
+<h3>1. Folder layout <em>is</em> website layout</h3>
+<p>With Pelican you typically need to supply a few url patterns to let
+the generator know where to put the generated html:</p>
+<pre><code>ARTICLE_PATHS = ["posts"]
+ARTICLE_URL = "posts/{slug}/"
+ARTICLE_SAVE_AS = "posts/{slug}/index.html"
+ARTICLE_LANG_URL = "posts/{slug}-{lang}/"
+ARTICLE_LANG_SAVE_AS = "posts/{slug}-{lang}/index.html"
+</code></pre>
+<p>While with s4g you just put the .dj file where you want the .html to end up.</p>
+</section>
+<section id="2-Obvious-static-asset-placement">
+<h3>2. Obvious static asset placement</h3>
+<p>A post typically links to static assets such as images or videos.
+Ideally we want to put these assets in the same place as their content file.
+This is surprisingly tricky with Pelican: you have to either throw every
+asset of every post in one big static folder, or carefully tweak the url
+settings and use a custom link syntax, as per <a href="https://docs.getpelican.com/en/4.8.0/content.html#mixed-content-in-the-same-directory">their docs</a>:</p>
+<blockquote>
+<p>Note: Placing static and content source files together in the same source
+directory does not guarantee that they will end up in the same place in the
+generated site. The easiest way to do this is by using the <code>{attach}</code> link
+syntax (described below). Alternatively, the <code>STATIC_SAVE_AS</code>,
+<code>PAGE_SAVE_AS</code>, and <code>ARTICLE_SAVE_AS</code> settings (and the corresponding <code>*_URL</code>
+settings) can be configured to place files of different types together, just
+as they could in earlier versions of Pelican.</p>
+</blockquote>
+<p>With s4g, we can simply put asset files in the same folder as the <code>index.dj</code>
+file, and use relative links when referencing them in the djot body.
+Here’s an example from my blog:</p>
+<pre><code># a post's folder structure:
+
+sqlite-python/
+├── byte_databases.jpg &lt;-- asset
+├── index.dj           &lt;-- source
+└── index.html         &lt;-- generated html
+
+# in index.dj, to generate an img tag:
+
+![](byte_databases.jpg)
+</code></pre>
+<p>No custom url syntax needed, and any djot previewer will have no problem
+picking up the image (assuming djot gets popular enough to get previewer
+support in the first place).</p>
+</section>
+<section id="3-Easy-post-grouping">
+<h3>3. Easy post grouping</h3>
+<p>Sometimes I write a series of related posts, and want to make it obvious when
+a visitor lands on any such post. The s4g solution: put them all in a folder.
+Here’s a <a href="https://hi.imnhan.com/movie-streaming/">live example</a> from my blog:</p>
+<pre><code>movie-streaming/              &lt;-- series home
+├── gflick                    &lt;-- post
+│   ├── index.dj
+│   └── index.html
+├── gflick-fixed              &lt;-- post
+│   ├── gflick_01_mobile.png
+│   ├── index.dj
+│   └── index.html
+├── index.dj
+├── index.html
+└── put.io                    &lt;-- post
+    ├── index.dj
+    ├── index.html
+    └── put.io-drag-n-drop.mp4
+</code></pre>
+<p>Here’s the content of <code>/movie-streaming/index.dj</code>:</p>
+<pre><code>Title: The movie streaming saga
+ShowInFeed: false
+PageType: series-index
+---
+
+It's the 2020s. Fiber-to-the-home bandwidth is plentiful.
+Follow me on this journey to find the best movie streaming experience for the
+ethically flexible. _ThE EnD mIgHT sHoCK yOu._
+</code></pre>
+<p>When s4g finds a .dj with <code>PageType: series-index</code>, it treats the page as a
+series index, and its direct subfolders as posts in this series.</p>
+<p>The series index renders its list of posts in addition to its own djot content:</p>
+<p><img alt="" src="series-index.png"></p>
+<p>Each post in the series has a extra header and footer:</p>
+<p><img alt="" src="series-header.png"></p>
+<p><img alt="" src="series-footer.png"></p>
+</section>
+<section id="Miscellaneous-blog-things">
+<h3>Miscellaneous blog things</h3>
+<p>An RSS feed is table stakes, so that’s what you get out of the box.
+Technically it’s an Atom feed, but hey, tomaytoes-tomahtoes.</p>
+<p>There’s also automatic OpenGraph / Twitter Cards meta tags, so you get those
+sweet preview widgets when sharing your links on social media or rich chat
+applications.</p>
+<p>Cool links don’t die, but sometimes you do want to change a post’s URL. In such
+cases, simply add a line to <strong>_s4g/redirects.txt</strong> that says:</p>
+<pre><code>old-link/index.html -&gt; new-link/
+</code></pre>
+<p>S4g will then generate an html with the appropriate <code>&lt;meta
+http-equiv="Refresh" ... &gt;</code> tag to redirect visitors to your new location. I
+heard this works on googlebot too! Anyway, this is how I updated all of my old
+lengthy paths e.g. “posts/introducing-mcross-a-minimal-gemini-browser” to
+short, typeable paths such as “mcross”.</p>
+</section>
+<section id="Quality-of-life-stuff">
+<h3>Quality-of-life stuff</h3>
+<p>I originally wanted to use s4g as a teaching tool for a sort of “Learning
+HTML/CSS by creating a blog” tutorial series, but lost interest halfway. It
+still resulted in a few user-friendly goodies: out-of-the box livereload,
+a custom human-friendly metadata syntax, error message shown directly on the
+browser (still incomplete: it includes the offending file and field, but no
+line number yet), etc.</p>
+<p>The livereload turns out to be quite handy: it feels especially nice to edit my
+css, save and see the change instantly on my phone browser.</p>
+</section>
+<section id="Risks">
+<h3>Risks</h3>
+<p>Since source and output live in the same folder, there’s a non-zero chance that
+some bug in s4g may eat your source data. I obviously don’t want that to
+happen, but I haven’t tested it rigorously. Therefore, I only run s4g on
+version-controlled websites, and recommend users do the same.</p>
+</section>
+</section>
+<section id="Quickstart">
+<h2>Quickstart</h2>
+<p>I probably won’t bother to write proper documentation any time soon, because
+let’s face it: I’m probably going to be s4g’s only user.</p>
+<p>However, if you’re curious enough to tinker with it, the following should
+get you started:</p>
+<pre><code class="language-sh"># Install
+sudo pacman -Syu nodejs go
+go install go.imnhan.com/s4g@latest
+
+# Create first blog
+s4g new -f ~/blog
+cd ~/blog
+s4g # start webserver at localhost:8000 and listen for changes
+</code></pre>
+<p>Visit <a href="http://localhost:8000">http://localhost:8000</a> and you’ll see a blank home page.
+To add your first post, create a new <code>hello.dj</code> file:</p>
+<pre><code>Title: Hello world
+PostedAt: 2023-01-02 19:00
+---
+
+Why _hello_ there!
+</code></pre>
+<p>The home page will now auto-refresh, showing your newly minted “hello world”.</p>
+<p>For more elaborate examples, check out the <a href="https://github.com/nhanb/s4g/tree/master/docs">sample site</a> and <a href="https://github.com/nhanb/hi.imnhan.com">my own
+blog</a>, which cover hidden posts, deploying on sub-directory paths, custom &amp;
+fallback thumbnails, per-post custom templates, series, among other things.</p>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 Bùi Thành Nhân<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a> and probably too much <a href="https://www.instagram.com/cheese.coffee/">cà phê sữa đá</a>
+</footer>
+
+</body>
+
+</html>
