@@ -1,6 +1,6 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Hi, I&#39;m Nhân</title>
-  <id>https://beta.imnhan.com/</id>
+  <id>https://hi.imnhan.com/</id>
   <link rel="self" href="/feed.xml"></link>
   <updated>2023-08-24T10:12:00+07:00</updated>
   <author>
@@ -10,197 +10,197 @@
   </author>
   <entry>
     <title>s4g is a Stupidly Simple Static Site Generator</title>
-    <id>https://beta.imnhan.com/s4g/</id>
-    <link href="https://beta.imnhan.com/s4g/"></link>
+    <id>https://hi.imnhan.com/s4g/</id>
+    <link href="https://hi.imnhan.com/s4g/"></link>
     <published>2023-08-24T10:12:00+07:00</published>
     <updated>2023-08-24T10:12:00+07:00</updated>
   </entry>
   <entry>
     <title>Acer Chromebook Spin 713 &#34;Voxel&#34;: an adequate Crostini device, a buggy Linux laptop</title>
-    <id>https://beta.imnhan.com/chromebook/</id>
-    <link href="https://beta.imnhan.com/chromebook/"></link>
+    <id>https://hi.imnhan.com/chromebook/</id>
+    <link href="https://hi.imnhan.com/chromebook/"></link>
     <published>2023-04-22T15:55:00+07:00</published>
     <updated>2023-04-22T15:55:00+07:00</updated>
   </entry>
   <entry>
     <title>Go, Postgres, Caddy, systemd: a simple, highly portable, Docker-free web stack</title>
-    <id>https://beta.imnhan.com/go-stack/</id>
-    <link href="https://beta.imnhan.com/go-stack/"></link>
+    <id>https://hi.imnhan.com/go-stack/</id>
+    <link href="https://hi.imnhan.com/go-stack/"></link>
     <published>2023-02-12T14:24:00+07:00</published>
     <updated>2023-02-12T14:24:00+07:00</updated>
   </entry>
   <entry>
     <title>Working with SQLite in Python without an ORM or migration framework</title>
-    <id>https://beta.imnhan.com/sqlite-python/</id>
-    <link href="https://beta.imnhan.com/sqlite-python/"></link>
+    <id>https://hi.imnhan.com/sqlite-python/</id>
+    <link href="https://hi.imnhan.com/sqlite-python/"></link>
     <published>2022-01-30T14:11:00+07:00</published>
     <updated>2022-01-30T14:11:00+07:00</updated>
   </entry>
   <entry>
     <title>I made my python webapp installable via pip</title>
-    <id>https://beta.imnhan.com/pippable-webapp/</id>
-    <link href="https://beta.imnhan.com/pippable-webapp/"></link>
+    <id>https://hi.imnhan.com/pippable-webapp/</id>
+    <link href="https://hi.imnhan.com/pippable-webapp/"></link>
     <published>2021-10-02T19:49:00+07:00</published>
     <updated>2021-10-02T19:49:00+07:00</updated>
   </entry>
   <entry>
     <title>Opening http link under the cursor in vim</title>
-    <id>https://beta.imnhan.com/vim-open-link/</id>
-    <link href="https://beta.imnhan.com/vim-open-link/"></link>
+    <id>https://hi.imnhan.com/vim-open-link/</id>
+    <link href="https://hi.imnhan.com/vim-open-link/"></link>
     <published>2021-08-07T11:37:00+07:00</published>
     <updated>2021-08-07T11:37:00+07:00</updated>
   </entry>
   <entry>
     <title>Simplest possible stepmania soft-to-hard pad mod</title>
-    <id>https://beta.imnhan.com/stepmania-pad/</id>
-    <link href="https://beta.imnhan.com/stepmania-pad/"></link>
+    <id>https://hi.imnhan.com/stepmania-pad/</id>
+    <link href="https://hi.imnhan.com/stepmania-pad/"></link>
     <published>2021-02-08T12:47:00+07:00</published>
     <updated>2021-02-08T12:47:00+07:00</updated>
   </entry>
   <entry>
     <title>The video streaming finale, or why put.io is awesome</title>
-    <id>https://beta.imnhan.com/movie-streaming/put.io/</id>
-    <link href="https://beta.imnhan.com/movie-streaming/put.io/"></link>
+    <id>https://hi.imnhan.com/movie-streaming/put.io/</id>
+    <link href="https://hi.imnhan.com/movie-streaming/put.io/"></link>
     <published>2020-10-21T11:45:00+07:00</published>
     <updated>2020-10-21T11:45:00+07:00</updated>
   </entry>
   <entry>
     <title>Streaming videos from Google Drive: a second attempt</title>
-    <id>https://beta.imnhan.com/movie-streaming/gflick-fixed/</id>
-    <link href="https://beta.imnhan.com/movie-streaming/gflick-fixed/"></link>
+    <id>https://hi.imnhan.com/movie-streaming/gflick-fixed/</id>
+    <link href="https://hi.imnhan.com/movie-streaming/gflick-fixed/"></link>
     <published>2020-06-10T08:25:00+07:00</published>
     <updated>2020-06-10T08:25:00+07:00</updated>
   </entry>
   <entry>
     <title>Introducing McRoss—a minimal gemini browser</title>
-    <id>https://beta.imnhan.com/mcross/</id>
-    <link href="https://beta.imnhan.com/mcross/"></link>
+    <id>https://hi.imnhan.com/mcross/</id>
+    <link href="https://hi.imnhan.com/mcross/"></link>
     <published>2020-05-29T09:44:00+07:00</published>
     <updated>2020-05-29T09:44:00+07:00</updated>
   </entry>
   <entry>
     <title>Towards an acceptable video playing experience</title>
-    <id>https://beta.imnhan.com/movie-streaming/gflick/</id>
-    <link href="https://beta.imnhan.com/movie-streaming/gflick/"></link>
+    <id>https://hi.imnhan.com/movie-streaming/gflick/</id>
+    <link href="https://hi.imnhan.com/movie-streaming/gflick/"></link>
     <published>2020-04-26T10:06:00+07:00</published>
     <updated>2020-04-26T10:06:00+07:00</updated>
   </entry>
   <entry>
     <title>I did NOT sign that online petition!</title>
-    <id>https://beta.imnhan.com/petition-fraud/</id>
-    <link href="https://beta.imnhan.com/petition-fraud/"></link>
+    <id>https://hi.imnhan.com/petition-fraud/</id>
+    <link href="https://hi.imnhan.com/petition-fraud/"></link>
     <published>2016-03-12T01:13:00+07:00</published>
     <updated>2016-03-12T01:13:00+07:00</updated>
   </entry>
   <entry>
     <title>My first DIY fightstick: Part 2</title>
-    <id>https://beta.imnhan.com/fightstick-2/</id>
-    <link href="https://beta.imnhan.com/fightstick-2/"></link>
+    <id>https://hi.imnhan.com/fightstick-2/</id>
+    <link href="https://hi.imnhan.com/fightstick-2/"></link>
     <published>2016-01-23T17:10:00+07:00</published>
     <updated>2016-01-23T17:10:00+07:00</updated>
   </entry>
   <entry>
     <title>My first DIY fightstick: Part 1</title>
-    <id>https://beta.imnhan.com/fightstick-1/</id>
-    <link href="https://beta.imnhan.com/fightstick-1/"></link>
+    <id>https://hi.imnhan.com/fightstick-1/</id>
+    <link href="https://hi.imnhan.com/fightstick-1/"></link>
     <published>2015-12-08T12:50:00+07:00</published>
     <updated>2015-12-08T12:50:00+07:00</updated>
   </entry>
   <entry>
     <title>Look ma, no stock theme!</title>
-    <id>https://beta.imnhan.com/custom-theme/</id>
-    <link href="https://beta.imnhan.com/custom-theme/"></link>
+    <id>https://hi.imnhan.com/custom-theme/</id>
+    <link href="https://hi.imnhan.com/custom-theme/"></link>
     <published>2015-06-05T13:54:00+07:00</published>
     <updated>2015-06-05T13:54:00+07:00</updated>
   </entry>
   <entry>
     <title>How to install PyQt5 on a virtualenv on Ubuntu 14.04</title>
-    <id>https://beta.imnhan.com/pyqt5/</id>
-    <link href="https://beta.imnhan.com/pyqt5/"></link>
+    <id>https://hi.imnhan.com/pyqt5/</id>
+    <link href="https://hi.imnhan.com/pyqt5/"></link>
     <published>2015-02-14T22:33:00+07:00</published>
     <updated>2015-02-14T22:33:00+07:00</updated>
   </entry>
   <entry>
     <title>Dẹp ibus-unikey đi, dùng fcitx-unikey nhé!</title>
-    <id>https://beta.imnhan.com/fcitx/</id>
-    <link href="https://beta.imnhan.com/fcitx/"></link>
+    <id>https://hi.imnhan.com/fcitx/</id>
+    <link href="https://hi.imnhan.com/fcitx/"></link>
     <published>2015-01-29T20:41:00+07:00</published>
     <updated>2015-01-29T20:41:00+07:00</updated>
   </entry>
   <entry>
     <title>Introducing Pytaku—the only online manga reader you&#39;ll ever need</title>
-    <id>https://beta.imnhan.com/pytaku-old/</id>
-    <link href="https://beta.imnhan.com/pytaku-old/"></link>
+    <id>https://hi.imnhan.com/pytaku-old/</id>
+    <link href="https://hi.imnhan.com/pytaku-old/"></link>
     <published>2015-01-02T21:19:00+07:00</published>
     <updated>2015-01-02T21:19:00+07:00</updated>
   </entry>
   <entry>
     <title>Virtualenv(wrapper), python2 and python3</title>
-    <id>https://beta.imnhan.com/virtualenvwrapper/</id>
-    <link href="https://beta.imnhan.com/virtualenvwrapper/"></link>
+    <id>https://hi.imnhan.com/virtualenvwrapper/</id>
+    <link href="https://hi.imnhan.com/virtualenvwrapper/"></link>
     <published>2014-12-16T21:35:00+07:00</published>
     <updated>2014-12-16T21:35:00+07:00</updated>
   </entry>
   <entry>
     <title>Enable italic text inside vim inside tmux inside gnome-terminal</title>
-    <id>https://beta.imnhan.com/tmux-italics/</id>
-    <link href="https://beta.imnhan.com/tmux-italics/"></link>
+    <id>https://hi.imnhan.com/tmux-italics/</id>
+    <link href="https://hi.imnhan.com/tmux-italics/"></link>
     <published>2014-08-02T16:46:00+07:00</published>
     <updated>2014-08-02T16:46:00+07:00</updated>
   </entry>
   <entry>
     <title>Setting up your development environment for a node-webkit project</title>
-    <id>https://beta.imnhan.com/node-webkit/</id>
-    <link href="https://beta.imnhan.com/node-webkit/"></link>
+    <id>https://hi.imnhan.com/node-webkit/</id>
+    <link href="https://hi.imnhan.com/node-webkit/"></link>
     <published>2014-05-01T08:23:00+07:00</published>
     <updated>2014-05-01T08:23:00+07:00</updated>
   </entry>
   <entry>
     <title>How I bypassed my university&#39;s domain blocker to watch movies on hdviet.com</title>
-    <id>https://beta.imnhan.com/hdviet/</id>
-    <link href="https://beta.imnhan.com/hdviet/"></link>
+    <id>https://hi.imnhan.com/hdviet/</id>
+    <link href="https://hi.imnhan.com/hdviet/"></link>
     <published>2014-03-17T21:58:00+07:00</published>
     <updated>2014-03-17T21:58:00+07:00</updated>
   </entry>
   <entry>
     <title>What I did after installing Manjaro xfce</title>
-    <id>https://beta.imnhan.com/manjaro-xfce/</id>
-    <link href="https://beta.imnhan.com/manjaro-xfce/"></link>
+    <id>https://hi.imnhan.com/manjaro-xfce/</id>
+    <link href="https://hi.imnhan.com/manjaro-xfce/"></link>
     <published>2014-02-04T20:20:13+07:00</published>
     <updated>2014-02-04T20:20:13+07:00</updated>
   </entry>
   <entry>
     <title>&#34;Have you built anything cool?&#34;</title>
-    <id>https://beta.imnhan.com/cool/</id>
-    <link href="https://beta.imnhan.com/cool/"></link>
+    <id>https://hi.imnhan.com/cool/</id>
+    <link href="https://hi.imnhan.com/cool/"></link>
     <published>2014-01-25T10:37:00+07:00</published>
     <updated>2014-01-25T10:37:00+07:00</updated>
   </entry>
   <entry>
     <title>Installing programs in Ubuntu</title>
-    <id>https://beta.imnhan.com/ubuntu-programs/</id>
-    <link href="https://beta.imnhan.com/ubuntu-programs/"></link>
+    <id>https://hi.imnhan.com/ubuntu-programs/</id>
+    <link href="https://hi.imnhan.com/ubuntu-programs/"></link>
     <published>2013-09-06T21:03:00+07:00</published>
     <updated>2013-09-06T21:03:00+07:00</updated>
   </entry>
   <entry>
     <title>Fix RMIT wi-fi issue in Ubuntu 13.04 and variants</title>
-    <id>https://beta.imnhan.com/rmit-wifi/</id>
-    <link href="https://beta.imnhan.com/rmit-wifi/"></link>
+    <id>https://hi.imnhan.com/rmit-wifi/</id>
+    <link href="https://hi.imnhan.com/rmit-wifi/"></link>
     <published>2013-06-17T08:12:00+07:00</published>
     <updated>2013-06-17T08:12:00+07:00</updated>
   </entry>
   <entry>
     <title>Why I use Linux: Automation</title>
-    <id>https://beta.imnhan.com/linux-automation/</id>
-    <link href="https://beta.imnhan.com/linux-automation/"></link>
+    <id>https://hi.imnhan.com/linux-automation/</id>
+    <link href="https://hi.imnhan.com/linux-automation/"></link>
     <published>2013-06-07T08:02:00+07:00</published>
     <updated>2013-06-07T08:02:00+07:00</updated>
   </entry>
   <entry>
     <title>Modern vim plugin management: Pathogen vs Vundle</title>
-    <id>https://beta.imnhan.com/pathogen-vs-vundle/</id>
-    <link href="https://beta.imnhan.com/pathogen-vs-vundle/"></link>
+    <id>https://hi.imnhan.com/pathogen-vs-vundle/</id>
+    <link href="https://hi.imnhan.com/pathogen-vs-vundle/"></link>
     <published>2013-05-13T12:00:00+07:00</published>
     <updated>2013-05-13T12:00:00+07:00</updated>
   </entry>

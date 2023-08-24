@@ -1,4 +1,4 @@
-Address: https://beta.imnhan.com
+Address: https://hi.imnhan.com
 Name: Hi, I'm Nhân
 Tagline: and this is my humble corner on the intertubes
 Root: /
