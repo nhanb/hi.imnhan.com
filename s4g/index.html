@@ -38,53 +38,57 @@
 
 <h1>s4g is a Stupidly Simple Static Site Generator</h1>
 
-<p>This blog is now built with <a href="https://github.com/nhanb/s4g">s4g</a>—a static site generator (SSG) made by
-yours truly.</p>
+<p>This blog is now built with <a href="https://github.com/nhanb/s4g">s4g</a>—an experimental static site generator.</p>
 <section id="Why">
 <h2>Why?</h2>
-<p>What sets s4g apart from typical SSGs is that it doesn’t separate source code
-and output. For a concrete example, <a href="https://getpelican.com/">Pelican</a> would read source from the
+<p>Unlike typical static site generators, s4g doesn’t separate source code and
+output. For a concrete example, <a href="https://getpelican.com/">Pelican</a> would read source from the
 /content/ dir and write a complete website to /output/, like this:</p>
 <pre><code>my-blog
 ├── content &lt;-- source
-│   ├── pages
-│   │   ├── about.md
-│   │   └── home.md
-│   └── posts
-│       ├── first-post.md
-│       └── second-post.md
+│   ├── pages
+│   │   ├── about.md
+│   │   └── home.md
+│   └── posts
+│       ├── first-post.md
+│       └── second-post.md
 └── output &lt;-- generated website ready to be served
     ├── about
-    │   └── index.html
+    │   └── index.html
     ├── home
-    │   └── index.html
+    │   └── index.html
     └── posts
         ├── first-post
-        │   └── index.html
+        │   └── index.html
         └── second-post
             └── index.html
 </code></pre>
-<p>While s4g would simply put the processed html right next to its source (s4g
-uses djot instead of markdown, so source files are .dj instead of .md):</p>
+<p>s4g, on the other hand, simply looks for .dj files (s4g uses djot instead of
+markdown) and generates a matching .html in the same place:</p>
 <pre><code>my-blog &lt;-- is both source and serveable website
 ├── about
-│   ├── index.dj
-│   └── index.html
+│   ├── index.dj
+│   └── index.html
 ├── home
-│   ├── index.dj
-│   └── index.html
+│   ├── index.dj
+│   └── index.html
 └── posts
     ├── first-post
-    │   ├── index.dj
-    │   └── index.html
+    │   index.dj
+    │   index.html
     └── second-post
         ├── index.dj
         └── index.html
 </code></pre>
-<p>This simplifies a few things:</p>
+<p>This is certainly not a novel idea. In fact, one can glob over their dir with a
+pandoc command and <a href="https://github.com/nhanb/gbvs.saigonfgc.com/blob/26e50c676c3c060310b292f1c520753cf34210fc/build.py">be done with it</a>. The fun starts when you want to
+generate things that need aggregate data, a home index, series index, RSS feed,
+etc… While we’re at it, why not add rebuild-on-save, livereload, the whole
+shebang? One thing led to another, and s4g was born.</p>
+<p>This dumb approach to paths simplifies a few things:</p>
 <section id="1-Folder-layout-is-website-layout">
 <h3>1. Folder layout <em>is</em> website layout</h3>
-<p>With Pelican you typically need to supply a few url patterns to let
+<p>With Pelican we typically need to supply a few url patterns to let
 the generator know where to put the generated html:</p>
 <pre><code>ARTICLE_PATHS = ["posts"]
 ARTICLE_URL = "posts/{slug}/"
@@ -92,13 +96,13 @@ ARTICLE_SAVE_AS = "posts/{slug}/index.html"
 ARTICLE_LANG_URL = "posts/{slug}-{lang}/"
 ARTICLE_LANG_SAVE_AS = "posts/{slug}-{lang}/index.html"
 </code></pre>
-<p>While with s4g you just put the .dj file where you want the .html to end up.</p>
+<p>While with s4g we just put the .dj file where we want the .html to end up.</p>
 </section>
 <section id="2-Obvious-static-asset-placement">
 <h3>2. Obvious static asset placement</h3>
 <p>A post typically links to static assets such as images or videos.
 Ideally we want to put these assets in the same place as their content file.
-This is surprisingly tricky with Pelican: you have to either throw every
+This is surprisingly tricky with Pelican: we have to either throw every
 asset of every post in one big static folder, or carefully tweak the url
 settings and use a custom link syntax, as per <a href="https://docs.getpelican.com/en/4.8.0/content.html#mixed-content-in-the-same-directory">their docs</a>:</p>
 <blockquote>
@@ -135,12 +139,12 @@ a visitor lands on any such post. The s4g solution: put them all in a folder.
 Here’s a <a href="https://hi.imnhan.com/movie-streaming/">live example</a> from my blog:</p>
 <pre><code>movie-streaming/              &lt;-- series home
 ├── gflick                    &lt;-- post
-│   ├── index.dj
-│   └── index.html
+│   ├── index.dj
+│   └── index.html
 ├── gflick-fixed              &lt;-- post
-│   ├── gflick_01_mobile.png
-│   ├── index.dj
-│   └── index.html
+│   ├── gflick_01_mobile.png
+│   ├── index.dj
+│   └── index.html
 ├── index.dj
 ├── index.html
 └── put.io                    &lt;-- post
@@ -168,17 +172,17 @@ series index, and its direct subfolders as posts in this series.</p>
 </section>
 <section id="Miscellaneous-blog-things">
 <h3>Miscellaneous blog things</h3>
-<p>An RSS feed is table stakes, so that’s what you get out of the box.
+<p>An RSS feed is table stakes, so that’s what we get out of the box.
 Technically it’s an Atom feed, but hey, tomaytoes-tomahtoes.</p>
-<p>There’s also automatic OpenGraph / Twitter Cards meta tags, so you get those
-sweet preview widgets when sharing your links on social media or rich chat
+<p>There’s also automatic OpenGraph / Twitter Cards meta tags, so we get those
+sweet preview widgets when sharing links on social media or rich chat
 applications.</p>
-<p>Cool links don’t die, but sometimes you do want to change a post’s URL. In such
+<p>Cool links don’t die, but sometimes we do want to change a post’s URL. In such
 cases, simply add a line to <strong>_s4g/redirects.txt</strong> that says:</p>
 <pre><code>old-link/index.html -&gt; new-link/
 </code></pre>
-<p>S4g will then generate an html with the appropriate <code>&lt;meta
-http-equiv="Refresh" ... &gt;</code> tag to redirect visitors to your new location. I
+<p>S4g will then generate <strong>old-link/index.html</strong> with the appropriate <code>&lt;meta
+http-equiv="Refresh" ...&gt;</code> tag to redirect visitors to the new location. I
 heard this works on googlebot too! Anyway, this is how I updated all of my old
 lengthy paths e.g. “posts/introducing-mcross-a-minimal-gemini-browser” to
 short, typeable paths such as “mcross”.</p>
@@ -194,20 +198,9 @@ line number yet), etc.</p>
 <p>The livereload turns out to be quite handy: it feels especially nice to edit my
 css, save and see the change instantly on my phone browser.</p>
 </section>
-<section id="Risks">
-<h3>Risks</h3>
-<p>Since source and output live in the same folder, there’s a non-zero chance that
-some bug in s4g may eat your source data. I obviously don’t want that to
-happen, but I haven’t tested it rigorously. Therefore, I only run s4g on
-version-controlled websites, and recommend users do the same.</p>
-</section>
 </section>
 <section id="Quickstart">
 <h2>Quickstart</h2>
-<p>I probably won’t bother to write proper documentation any time soon, because
-let’s face it: I’m probably going to be s4g’s only user.</p>
-<p>However, if you’re curious enough to tinker with it, the following should
-get you started:</p>
 <pre><code class="language-sh"># Install
 sudo pacman -Syu nodejs go
 go install go.imnhan.com/s4g@latest
@@ -229,6 +222,41 @@ Why _hello_ there!
 <p>For more elaborate examples, check out the <a href="https://github.com/nhanb/s4g/tree/master/docs">sample site</a> and <a href="https://github.com/nhanb/hi.imnhan.com">my own
 blog</a>, which cover hidden posts, deploying on sub-directory paths, custom &amp;
 fallback thumbnails, per-post custom templates, series, among other things.</p>
+</section>
+<section id="Questionables">
+<h2>Questionables</h2>
+<section id="Djot">
+<h3>Djot?</h3>
+<p>Imagine markdown but not full of corner cases and highly extensible. I’m glad
+jgm didn’t try to fold this into commonmark. Let John Gruber keep his weird toy
+non-spec “format”. Let me be clear though, I have no ill will towards
+Gruber—his thing worked for his purposes, but it’s a tragedy that we as an
+industry failed to converge on a more technically sound format for lightweight
+text markup.</p>
+</section>
+<section id="Since-source-and-output-live-in-the-same-folder-will-some-bug-in-s4g-eat-my-source">
+<h3>Since source and output live in the same folder, will some bug in s4g eat
+my source?</h3>
+<p>I obviously try to avoid that, but the current code is proof-of-concept
+quality. Therefore, I only run s4g on version-controlled websites, and
+recommend users do the same for now.</p>
+</section>
+<section id="Adding-compiled-assets-to-version-control-sounds-bad">
+<h3>Adding compiled assets to version control sounds… bad?</h3>
+<p>For programs, probably.
+For websites though, I prefer to keep snapshots of the whole website as it’s
+deployed, and be able to roll it back together with the source code. Admittedly
+this makes for noisy diffs sometimes, but I’ll be sly here and call it a UI
+problem ;)</p>
+</section>
+<section id="I-just-looked-at-the-code-and-holy-crap-what-s-with-all-those-non-data-structures-and-nested-loops">
+<h3>I just looked at the code and holy crap what’s with all those (non) data
+structures and nested loops!</h3>
+<p>Yeah but the whole thing takes about 100ms on my thirty-something-articles
+blog, which is by no means impressive, but not a real hindrance for daily use
+either. If an actual user shows up with a site big enough to have a problem,
+I’ll look into optimizing it.</p>
+</section>
 </section>
 
 </main>

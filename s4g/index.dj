@@ -4,62 +4,66 @@ Description: It just had to happen at some point.
 Thumb: series-footer.png
 ---
 
-This blog is now built with [s4g][1]---a static site generator (SSG) made by
-yours truly.
+This blog is now built with [s4g][1]---an experimental static site generator.
 
 ## Why?
 
-What sets s4g apart from typical SSGs is that it doesn't separate source code
-and output. For a concrete example, [Pelican][2] would read source from the
+Unlike typical static site generators, s4g doesn't separate source code and
+output. For a concrete example, [Pelican][2] would read source from the
 /content/ dir and write a complete website to /output/, like this:
 
 ```
 my-blog
 ├── content <-- source
-│   ├── pages
-│   │   ├── about.md
-│   │   └── home.md
-│   └── posts
-│       ├── first-post.md
-│       └── second-post.md
+│   ├── pages
+│   │   ├── about.md
+│   │   └── home.md
+│   └── posts
+│       ├── first-post.md
+│       └── second-post.md
 └── output <-- generated website ready to be served
     ├── about
-    │   └── index.html
+    │   └── index.html
     ├── home
-    │   └── index.html
+    │   └── index.html
     └── posts
         ├── first-post
-        │   └── index.html
+        │   └── index.html
         └── second-post
             └── index.html
 ```
 
-While s4g would simply put the processed html right next to its source (s4g
-uses djot instead of markdown, so source files are .dj instead of .md):
-
+s4g, on the other hand, simply looks for .dj files (s4g uses djot instead of
+markdown) and generates a matching .html in the same place:
 
 ```
 my-blog <-- is both source and serveable website
 ├── about
-│   ├── index.dj
-│   └── index.html
+│   ├── index.dj
+│   └── index.html
 ├── home
-│   ├── index.dj
-│   └── index.html
+│   ├── index.dj
+│   └── index.html
 └── posts
     ├── first-post
-    │   ├── index.dj
-    │   └── index.html
+    │   index.dj
+    │   index.html
     └── second-post
         ├── index.dj
         └── index.html
 ```
 
-This simplifies a few things:
+This is certainly not a novel idea. In fact, one can glob over their dir with a
+pandoc command and [be done with it][8]. The fun starts when you want to
+generate things that need aggregate data, a home index, series index, RSS feed,
+etc... While we're at it, why not add rebuild-on-save, livereload, the whole
+shebang? One thing led to another, and s4g was born.
+
+This dumb approach to paths simplifies a few things:
 
 ### 1. Folder layout _is_ website layout
 
-With Pelican you typically need to supply a few url patterns to let
+With Pelican we typically need to supply a few url patterns to let
 the generator know where to put the generated html:
 
 ```
@@ -70,13 +74,13 @@ ARTICLE_LANG_URL = "posts/{slug}-{lang}/"
 ARTICLE_LANG_SAVE_AS = "posts/{slug}-{lang}/index.html"
 ```
 
-While with s4g you just put the .dj file where you want the .html to end up.
+While with s4g we just put the .dj file where we want the .html to end up.
 
 ### 2. Obvious static asset placement
 
 A post typically links to static assets such as images or videos.
 Ideally we want to put these assets in the same place as their content file.
-This is surprisingly tricky with Pelican: you have to either throw every
+This is surprisingly tricky with Pelican: we have to either throw every
 asset of every post in one big static folder, or carefully tweak the url
 settings and use a custom link syntax, as per [their docs][3]:
 
@@ -118,12 +122,12 @@ Here's a [live example][5] from my blog:
 ```
 movie-streaming/              <-- series home
 ├── gflick                    <-- post
-│   ├── index.dj
-│   └── index.html
+│   ├── index.dj
+│   └── index.html
 ├── gflick-fixed              <-- post
-│   ├── gflick_01_mobile.png
-│   ├── index.dj
-│   └── index.html
+│   ├── gflick_01_mobile.png
+│   ├── index.dj
+│   └── index.html
 ├── index.dj
 ├── index.html
 └── put.io                    <-- post
@@ -160,22 +164,22 @@ Each post in the series has a extra header and footer:
 
 ### Miscellaneous blog things
 
-An RSS feed is table stakes, so that's what you get out of the box.
+An RSS feed is table stakes, so that's what we get out of the box.
 Technically it's an Atom feed, but hey, tomaytoes-tomahtoes.
 
-There's also automatic OpenGraph / Twitter Cards meta tags, so you get those
-sweet preview widgets when sharing your links on social media or rich chat
+There's also automatic OpenGraph / Twitter Cards meta tags, so we get those
+sweet preview widgets when sharing links on social media or rich chat
 applications.
 
-Cool links don't die, but sometimes you do want to change a post's URL. In such
+Cool links don't die, but sometimes we do want to change a post's URL. In such
 cases, simply add a line to *_s4g/redirects.txt* that says:
 
 ```
 old-link/index.html -> new-link/
 ```
 
-S4g will then generate an html with the appropriate `<meta
-http-equiv="Refresh" ... >` tag to redirect visitors to your new location. I
+S4g will then generate *old-link/index.html* with the appropriate `<meta
+http-equiv="Refresh" ...>` tag to redirect visitors to the new location. I
 heard this works on googlebot too! Anyway, this is how I updated all of my old
 lengthy paths e.g. "posts/introducing-mcross-a-minimal-gemini-browser" to
 short, typeable paths such as "mcross".
@@ -192,20 +196,8 @@ line number yet), etc.
 The livereload turns out to be quite handy: it feels especially nice to edit my
 css, save and see the change instantly on my phone browser.
 
-### Risks
-
-Since source and output live in the same folder, there's a non-zero chance that
-some bug in s4g may eat your source data. I obviously don't want that to
-happen, but I haven't tested it rigorously. Therefore, I only run s4g on
-version-controlled websites, and recommend users do the same.
 
 ## Quickstart
-
-I probably won't bother to write proper documentation any time soon, because
-let's face it: I'm probably going to be s4g's only user.
-
-However, if you're curious enough to tinker with it, the following should
-get you started:
 
 ```sh
 # Install
@@ -235,6 +227,40 @@ For more elaborate examples, check out the [sample site][6] and [my own
 blog][7], which cover hidden posts, deploying on sub-directory paths, custom &
 fallback thumbnails, per-post custom templates, series, among other things.
 
+## Questionables
+
+### Djot?
+
+Imagine markdown but not full of corner cases and highly extensible. I'm glad
+jgm didn't try to fold this into commonmark. Let John Gruber keep his weird toy
+non-spec "format". Let me be clear though, I have no ill will towards
+Gruber---his thing worked for his purposes, but it's a tragedy that we as an
+industry failed to converge on a more technically sound format for lightweight
+text markup.
+
+### Since source and output live in the same folder, will some bug in s4g eat
+my source?
+
+I obviously try to avoid that, but the current code is proof-of-concept
+quality. Therefore, I only run s4g on version-controlled websites, and
+recommend users do the same for now.
+
+### Adding compiled assets to version control sounds... bad?
+
+For programs, probably.
+For websites though, I prefer to keep snapshots of the whole website as it's
+deployed, and be able to roll it back together with the source code. Admittedly
+this makes for noisy diffs sometimes, but I'll be sly here and call it a UI
+problem ;)
+
+### I just looked at the code and holy crap what's with all those (non) data
+structures and nested loops!
+
+Yeah but the whole thing takes about 100ms on my thirty-something-articles
+blog, which is by no means impressive, but not a real hindrance for daily use
+either. If an actual user shows up with a site big enough to have a problem,
+I'll look into optimizing it.
+
 [1]: https://github.com/nhanb/s4g
 [2]: https://getpelican.com/
 [3]: https://docs.getpelican.com/en/4.8.0/content.html#mixed-content-in-the-same-directory
@@ -242,3 +268,4 @@ fallback thumbnails, per-post custom templates, series, among other things.
 [5]: https://hi.imnhan.com/movie-streaming/
 [6]: https://github.com/nhanb/s4g/tree/master/docs
 [7]: https://github.com/nhanb/hi.imnhan.com
+[8]: https://github.com/nhanb/gbvs.saigonfgc.com/blob/26e50c676c3c060310b292f1c520753cf34210fc/build.py
