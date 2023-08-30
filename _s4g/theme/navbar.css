@@ -1,13 +1,26 @@
 nav > a {
-  margin-right: 0.5rem;
+  margin-right: 1rem;
+  text-decoration: none;
 }
 
 nav > .posted-on {
-  float: right;
   font-style: italic;
-  margin-bottom: 0.5rem;
+  float: right;
 }
 
 .nav-hr {
   clear: both;
+  margin: 0;
+}
+
+.feed-link {
+  padding: 0 0.2rem;
+  color: #d2660b;
+  background-color: white;
+  text-decoration: none;
+  border-radius: 0.3rem;
+}
+.feed-link:hover {
+  background-color: #e37418;
+  color: white;
 }

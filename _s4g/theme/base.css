@@ -1,7 +1,7 @@
 html {
   font-family: system-ui, sans-serif;
   font-size: 1em;
-  max-width: 50rem;
+  max-width: 45rem;
   margin: auto;
   /* Always show scrollbar, to prevent content shifting when navigating
    * between long and short pages: */
@@ -12,6 +12,13 @@ p,
 ul,
 ol {
   line-height: 1.35rem;
+}
+
+a {
+  color: black;
+}
+a:hover {
+  background-color: yellow;
 }
 
 main img,

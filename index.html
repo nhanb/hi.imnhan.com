@@ -22,18 +22,18 @@
 </header>
 
 <hr>
+<link rel="stylesheet" href="/_s4g/theme/navbar.css">
+<nav>
+  <a href="/" >Home</a>
+  <a href="/about/" >About</a>
+  <a href="/projects/" >Projects</a>
+  <a href="https://cv.imnhan.com" target="_blank">CV🡕</a>
 
-<div class="pages">
-  <a href="/">Home</a>
-  <a href="/about/">About</a>
-  <a href="/projects/">Projects</a>
-  <a href="https://cv.imnhan.com">CV</a>
-  <a class="feed-link" href="/feed.xml">
-    <img src="/_s4g/theme/feed.svg" alt="Atom Feed" title="Atom Feed">
-  </a>
-</div>
+  <a class="feed-link" href="/feed.xml">Atom&nbsp;Feed</a>
 
-<hr>
+</nav>
+<hr class="nav-hr">
+
 
 
 
@@ -191,20 +191,6 @@
   margin-top: 0;
 }
 
-.feed-link img {
-  height: 1rem;
-}
-.feed-link {
-  float: right;
-}
-hr {
-  clear: both;
-}
-
-.pages a {
-  margin-right: 0.5rem;
-}
-
 ul {
   padding: 0;
   list-style: none;
@@ -212,6 +198,10 @@ ul {
 
 .article {
   margin-bottom: 1rem;
+}
+.article a {
+  text-decoration: none;
+  font-weight: bold;
 }
 </style>
 

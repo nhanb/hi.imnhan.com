@@ -8,16 +8,7 @@
 
 <hr>
 
-<div class="pages">
-{{- range .NavLinks}}
-  <a href="{{.Url}}">{{.Text}}</a>
-{{- end}}
-  <a class="feed-link" href="{{.Feed}}">
-    <img src="{{.ThemePath}}/feed.svg" alt="Atom Feed" title="Atom Feed">
-  </a>
-</div>
-
-<hr>
+{{- template "navbar" .}}
 
 {{.Content}}
 
@@ -47,20 +38,6 @@
   margin-top: 0;
 }
 
-.feed-link img {
-  height: 1rem;
-}
-.feed-link {
-  float: right;
-}
-hr {
-  clear: both;
-}
-
-.pages a {
-  margin-right: 0.5rem;
-}
-
 ul {
   padding: 0;
   list-style: none;
@@ -68,6 +45,10 @@ ul {
 
 .article {
   margin-bottom: 1rem;
+}
+.article a {
+  text-decoration: none;
+  font-weight: bold;
 }
 </style>
 

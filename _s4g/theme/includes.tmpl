@@ -2,8 +2,10 @@
 <link rel="stylesheet" href="{{.ThemePath}}/navbar.css">
 <nav>
   {{- range .NavLinks}}
-  <a href="{{.Url}}">{{.Text}}</a>
+  <a href="{{.Url}}" {{if .NewTab}}target="_blank"{{end}}>{{.Text}}</a>
   {{- end}}
+
+  <a class="feed-link" href="{{.Feed}}">Atom&nbsp;Feed</a>
 
   {{- if not .Post.PostedAt.IsZero}}
   <span class="posted-on">
