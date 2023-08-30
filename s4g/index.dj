@@ -231,12 +231,10 @@ fallback thumbnails, per-post custom templates, series, among other things.
 
 ### Djot?
 
-Imagine markdown but not full of corner cases and highly extensible. I'm glad
-jgm didn't try to fold this into commonmark. Let John Gruber keep his weird toy
-non-spec "format". Let me be clear though, I have no ill will towards
-Gruber---his thing worked for his purposes, but it's a tragedy that we as an
-industry failed to converge on a more technically sound format for lightweight
-text markup.
+Imagine markdown but not full of corner cases and highly extensible.
+No disrespect to John Gruber here---his thing worked for his purposes---but
+I think it's a tragedy that we as an industry failed to converge on a more
+technically sound format for lightweight text markup.
 
 ### Since source and output live in the same folder, will some bug in s4g eat
 my source?
