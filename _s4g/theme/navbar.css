@@ -1,5 +1,5 @@
 nav > a {
-  margin-right: 1rem;
+  margin-right: 0.7rem;
   text-decoration: none;
 }
 
@@ -10,11 +10,11 @@ nav > .posted-on {
 
 .nav-hr {
   clear: both;
-  margin: 0;
 }
 
 .feed-link {
   padding: 0 0.2rem;
+  margin-left: -0.2rem; /* make up for padding -> avoid misalignment */
   color: #d2660b;
   background-color: white;
   text-decoration: none;

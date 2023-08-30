@@ -5,7 +5,7 @@
   <a href="{{.Url}}" {{if .NewTab}}target="_blank"{{end}}>{{.Text}}</a>
   {{- end}}
 
-  <a class="feed-link" href="{{.Feed}}">Atom&nbsp;Feed</a>
+  <a class="feed-link" href="{{.Feed}}" title="Actually Atom">RSS</a>
 
   {{- if not .Post.PostedAt.IsZero}}
   <span class="posted-on">
