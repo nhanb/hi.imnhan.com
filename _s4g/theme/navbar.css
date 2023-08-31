@@ -16,7 +16,6 @@ nav > .posted-on {
   padding: 0 0.2rem;
   margin-left: -0.2rem; /* make up for padding -> avoid misalignment */
   color: #d2660b;
-  background-color: white;
   text-decoration: none;
   border-radius: 0.3rem;
 }
