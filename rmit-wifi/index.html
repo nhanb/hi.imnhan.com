@@ -41,7 +41,7 @@
 <h1>Fix RMIT wi-fi issue in Ubuntu 13.04 and variants</h1>
 
 <section id="The-issue">
-<h2>The issue</h2>
+<h2>The issue<a href="#The-issue" class="heading-link">#</a></h2>
 <p>When I upgraded to Xubuntu 13.04, although I could connect to any other wi-fi network painlessly,
 the RMIT-WPA network just never allowed me to establish a connection. The most annoying part was
 that it had been working fine in previous versions (12.04, 12.10).</p>
@@ -51,7 +51,7 @@ WPA2 wifi network, even if we choose to use none in the GUI.</p>
 <p><img alt="RMIT wi-fi settings" src="rmit_wifi.png"></p>
 </section>
 <section id="The-solution">
-<h2>The solution</h2>
+<h2>The solution<a href="#The-solution" class="heading-link">#</a></h2>
 <p>Just manually edit <code>/etc/NetworkManager/system-connections/RMIT-WPA</code>, make sure that you have
 <code>system-ca-certs=false</code>, then restart the wifi connection. To edit this file you will need root
 permission. If you’re not sure how to do this, open a terminal and enter this command to open
@@ -63,7 +63,7 @@ gksudo gedit /etc/NetworkManager/system-connections/RMIT-WPA
 many have complained about it. There seems to be no developer assigned to fix it though. I’ll keep
 you updated on the issue.</p>
 <section id="Update-Dec-16-2013">
-<h3>Update (Dec 16, 2013)</h3>
+<h3>Update (Dec 16, 2013)<a href="#Update-Dec-16-2013" class="heading-link">#</a></h3>
 <p>A fix has been released in GNOME upstream but not incorporated into official Ubuntu repositories
 yet. An impatient contributor has created his own PPA to provide the fixed package. To install it,
 enter the following commands:</p>

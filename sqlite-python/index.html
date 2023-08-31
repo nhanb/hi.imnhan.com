@@ -56,11 +56,11 @@ the final missing piece: a straightforward approach to SQL migrations that I
 can trivially implement. Obviously, I had to try it out on my latest <a href="https://sr.ht/~nhanb/pytaku/">pet
 project</a>. Here I’ll outline some of my findings.</p>
 <section id="APSW-as-the-driver">
-<h2>APSW as the driver</h2>
+<h2>APSW as the driver<a href="#APSW-as-the-driver" class="heading-link">#</a></h2>
 <p>Using <a href="https://rogerbinns.github.io/apsw/">apsw</a> instead of the standard library’s sqlite3 package has a couple
 of advantages:</p>
 <section id="It-s-easy-to-link-against-the-latest-sqlite3-version">
-<h3>It’s easy to link against the latest sqlite3 version</h3>
+<h3>It’s easy to link against the latest sqlite3 version<a href="#It-s-easy-to-link-against-the-latest-sqlite3-version" class="heading-link">#</a></h3>
 <p>I originally ran pytaku on a cheap Vietnamese VPS provider, which only offered
 Ubuntu 12.04. This came with a relatively old sqlite3 version that lacked
 UPSERT support (probably among other things that I forgot). I guess it’s
@@ -71,7 +71,7 @@ latest sqlite. (still kinda bad, but it’s less bad than compiling custom
 python)</p>
 </section>
 <section id="It-has-the-same-defaults-as-upstream-sqlite">
-<h3>It has the same defaults as upstream sqlite</h3>
+<h3>It has the same defaults as upstream sqlite<a href="#It-has-the-same-defaults-as-upstream-sqlite" class="heading-link">#</a></h3>
 <p>Python stdlib’s <code>sqlite3</code> has a few default configurations that deviate from
 sqlite’s. A couple of things that actually bit me are:</p>
 <ul>
@@ -94,7 +94,7 @@ advantange is no longer that great.</p>
 </section>
 </section>
 <section id="A-minimum-viable-DB-migration-scheme">
-<h2>A minimum viable DB migration scheme</h2>
+<h2>A minimum viable DB migration scheme<a href="#A-minimum-viable-DB-migration-scheme" class="heading-link">#</a></h2>
 <p>With <a href="https://github.com/nhanb/pytaku/blob/65a6c08128ebbc2b7d33a6b043798c69ac7dfebe/src/pytaku/database/migrator.py">&lt;100 lines</a> of python, I ended up with a migrator that:</p>
 <ul>
 <li>
@@ -177,7 +177,7 @@ was already nicely warned against in the docs. RTFM is actually fine advice for
 projects that have good documentation, who would have thought?</p>
 </section>
 <section id="Recommended-sane-defaults">
-<h2>Recommended sane defaults</h2>
+<h2>Recommended sane defaults<a href="#Recommended-sane-defaults" class="heading-link">#</a></h2>
 <p>SQLite comes with some default settings that may be surprising for people
 coming from e.g. Postgres. Here are some tweaks that worked better for me.</p>
 <p><a href="https://sqlite.org/wal.html">Enable WAL mode</a>. This allows for concurrent readers, which is usually
@@ -192,7 +192,7 @@ crash immediately instead of waiting for the blocking query to finish, no
 matter how short the wait is.</p>
 </section>
 <section id="A-quick-note-on-SQL-injection">
-<h2>A quick note on SQL injection</h2>
+<h2>A quick note on SQL injection<a href="#A-quick-note-on-SQL-injection" class="heading-link">#</a></h2>
 <p><em>(or how to move on from the late 90s)</em></p>
 <p>You don’t need a full blown ORM to protect yourself against SQL injections. In
 fact, SQLite (and any sane RDBMS really) has built-in support for it called

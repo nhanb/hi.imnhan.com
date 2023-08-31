@@ -49,7 +49,7 @@ wasting the university’s internet bandwidth for “Two and a half men” anywa
 do the trick way better and without any hassle. If you’re using Linux or you simply want to learn
 more about this stuff, read on!</p>
 <section id="The-problem">
-<h2>The problem</h2>
+<h2>The problem<a href="#The-problem" class="heading-link">#</a></h2>
 <p>This semester the RMIT-WPA wifi network no longer requires manual proxy configuration (probably
 because it makes Web Programming students miserable - they have to use Google App Engine), which is
 good news. Nevertheless, that annoying domain filter is still up and running, meaning we still
@@ -62,7 +62,7 @@ excellent Network inspector confirmed that:</p>
 <p><img alt="" src="hdviet_02_forbidden_direct.png"></p>
 </section>
 <section id="Going-for-the-IP">
-<h2>Going for the IP</h2>
+<h2>Going for the IP<a href="#Going-for-the-IP" class="heading-link">#</a></h2>
 <p>Naturally, I wanted to check if I could access the resource directly via the IP. An easy way to look
 up a domain’s IP is using <a href="http://ping.eu/ping/">ping.eu</a>. Once you’ve got the IP, try replacing the domain with it in
 the failed request:</p>
@@ -73,7 +73,7 @@ chopped into multiple parts, which are loaded in order. Therefore, our first job
 automatically replace <code>v-01.vn-hd.com</code> with the IP in all of the requests.</p>
 </section>
 <section id="Twisted-proxy">
-<h2>Twisted proxy</h2>
+<h2>Twisted proxy<a href="#Twisted-proxy" class="heading-link">#</a></h2>
 <p>Since changing the request destination directly in the browser is probably difficult (I don’t think
 Google Chrome even allows that), we’ll use an HTTP(S) proxy. This is when Twisted comes in handy.</p>
 <p><a href="https://twistedmatrix.com/">Twisted</a> is a battery-included framework to build robust network applications. By
@@ -98,7 +98,7 @@ any blocked site! Of course you can’t, since we haven’t replaced the domains
 that.</p>
 </section>
 <section id="Domain-to-IP">
-<h2>Domain to IP</h2>
+<h2>Domain to IP<a href="#Domain-to-IP" class="heading-link">#</a></h2>
 <p>Open <code>server.py</code>, look for this part:</p>
 <pre><code class="language-python">class ConnectProxyRequest(ProxyRequest):
     """HTTP ProxyRequest handler (factory) that supports CONNECT"""
@@ -173,7 +173,7 @@ simply the IP, the server may get confused and therefore cannot serve the correc
 This leads to our final trick:</p>
 </section>
 <section id="Google-App-Engine-to-the-rescue">
-<h2>Google App Engine to the rescue!</h2>
+<h2>Google App Engine to the rescue!<a href="#Google-App-Engine-to-the-rescue" class="heading-link">#</a></h2>
 <p>Because a subtitle file is just plain text, its size is negligible. We can set up an external
 website that receives our original request, fetches the requested file on hdviet’s server and
 returns the requested file’s content back to us. I have already set up a proof-of-concept Google

@@ -45,13 +45,13 @@
 third-party tools: Pathogen or Vundle. I assume you are using a Linux distro and have git
 already installed. If not, consult Dr. Google for more details.</p>
 <section id="Vim-plugins-anatomy">
-<h2>Vim plugins anatomy</h2>
+<h2>Vim plugins anatomy<a href="#Vim-plugins-anatomy" class="heading-link">#</a></h2>
 <p>A vim plugin is simply a set of files that alter vim’s behavior or add new functionalities to it.
 To make this possible, by default vim looks for files in your home folder (which is 
 <code>/home/username</code> or <code>~</code>):</p>
 </section>
 <section id="vimrc-file">
-<h2>~/.vimrc (file)</h2>
+<h2>~/.vimrc (file)<a href="#vimrc-file" class="heading-link">#</a></h2>
 <p>This is where you put your personalizations to vim: indentations, keybindings, etc. This post
 will not discuss in detail how you do your customizations. For now just know that it’s there.</p>
 <p>You will probably want to move this file into your ~/.vim folder to be able to manage everything
@@ -61,7 +61,7 @@ terminal and type:</p>
 </code></pre>
 </section>
 <section id="vim-directory">
-<h2>~/.vim (directory)</h2>
+<h2>~/.vim (directory)<a href="#vim-directory" class="heading-link">#</a></h2>
 <p>This should contain a bunch of subdirectories. Some examples:</p>
 <ul>
 <li>
@@ -137,7 +137,7 @@ Now imagine you have 20-30 plugins installed (which is normal, by the way). It�
 pretty sight now, is it?</p>
 </section>
 <section id="Pathogen-to-the-rescue">
-<h2>Pathogen to the rescue!</h2>
+<h2>Pathogen to the rescue!<a href="#Pathogen-to-the-rescue" class="heading-link">#</a></h2>
 <p>The legendary Tim Pope came up with a genius solution:
 <a href="https://github.com/tpope/vim-pathogen">pathogen</a>.
 Now let’s install it like any regular plugin (I’ve omitted the README):</p>
@@ -183,7 +183,7 @@ appropriate configuration files. The plugins are now isolated so removing or upd
 becomes trivial: just remove or update its own directory.</p>
 </section>
 <section id="Pathogen-Git">
-<h2>Pathogen + Git</h2>
+<h2>Pathogen + Git<a href="#Pathogen-Git" class="heading-link">#</a></h2>
 <p>Everything goes to the cloud these days, and certainly your vim setup should as well. If you
 haven’t created a <a href="https://github.com">Github</a> account, do it now. Create an empty repository
 with any name you want (mine is <code>.vim</code>). Don’t commit yet. Create a file: <code>~/.vim/.gitignore</code>,
@@ -238,7 +238,7 @@ remove the folder by hand. See
 for detailed instructions.</p>
 </section>
 <section id="Vundle-the-new-cool-kid">
-<h2>Vundle, the new cool kid</h2>
+<h2>Vundle, the new cool kid<a href="#Vundle-the-new-cool-kid" class="heading-link">#</a></h2>
 <p>This time let’s start fresh: remove all submodules and pathogen. Your bundle folder should be
 now empty. Clone <a href="https://github.com/gmarik/vundle">Vundle</a>:</p>
 <pre><code class="language-sh">git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle

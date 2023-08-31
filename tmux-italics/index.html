@@ -60,7 +60,7 @@ looks like:</p>
 Let’s change that. My current setup is terminal vim running inside a tmux session on
 gnome-terminal. Let’s go through these things.</p>
 <section id="gnome-terminal">
-<h2>gnome-terminal</h2>
+<h2>gnome-terminal<a href="#gnome-terminal" class="heading-link">#</a></h2>
 <p>Note that older versions of <code>gnome-terminal</code> do not support italic text. To check if your terminal
 does support it, run this command:</p>
 <pre><code class="language-sh">$ echo -e "\e[3m foo \e[23m"
@@ -68,7 +68,7 @@ does support it, run this command:</p>
 <p>If your version of gnome-terminal supports it, an italic <em>foo</em> will appear. If not, upgrade it! :)</p>
 </section>
 <section id="vim">
-<h2>vim</h2>
+<h2>vim<a href="#vim" class="heading-link">#</a></h2>
 <p>You may have noticed: <code>[3m</code> and <code>[23m</code> are the special sequences to start and stop printing
 italic text. Unfortunately, vim doesn’t care about those. It expects <code>sitm</code> and <code>ritm</code> instead.
 We’ll need to map them manually. Simply use these commands:</p>
@@ -84,7 +84,7 @@ $ echo 'export TERM=xterm-256color-italic' &gt;&gt; ~/.bashrc
 not, I can’t help you any further :P</p>
 </section>
 <section id="tmux">
-<h2>tmux</h2>
+<h2>tmux<a href="#tmux" class="heading-link">#</a></h2>
 <p>The only reason I use terminal vim instead of gvim is tmux integration, therefore I almost always
 run vim inside a tmux session. Unfortunately tmux does some weird things to your terminal, one of
 them is altering the <code>$TERM</code> environment variable. When we open a tmux session, it will typically
@@ -96,14 +96,14 @@ value. Add this line to <code>~/.tmux.conf</code>:</p>
 </code></pre>
 </section>
 <section id="More-on-vim">
-<h2>More on vim</h2>
+<h2>More on vim<a href="#More-on-vim" class="heading-link">#</a></h2>
 <p>If you still can’t see any italic text in a markdown file, it might be because your colorscheme
 deliberately disables it. Try using another colorscheme (I highly recommend <a href="http://ethanschoonover.com/solarized">solarized</a>). You
 can also check if your markdown syntax plugin does use italics; I’m currently using <a href="https://github.com/tpope/vim-markdown">Tim Pope’s
 markdown plugin</a> and it works great!</p>
 </section>
 <section id="References">
-<h2>References:</h2>
+<h2>References:<a href="#References" class="heading-link">#</a></h2>
 <ol>
 <li>
 <a href="http://superuser.com/questions/204743/terminal-that-supports-ansi-italic-escape-code">Terminal that supports ANSI italic escape code?</a>

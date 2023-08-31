@@ -47,7 +47,7 @@ warts and all, how I recently set up a publicly accessible Go web service,
 backed by a Postgres database, fronted by Caddy which does TLS termination &amp;
 automatic Let’s Encrypt cert renewal, supervised &amp; isolated by systemd.</p>
 <section id="Go">
-<h2>Go</h2>
+<h2>Go<a href="#Go" class="heading-link">#</a></h2>
 <p>If you’re new to Go like me, you may find it helpful to skim the book <a href="https://lets-go.alexedwards.net/">Let’s
 Go</a> by Alex Edwards. It demonstrates helpful patterns so you can quickly put
 together a web service with little more than the Go standard library. However,
@@ -105,7 +105,7 @@ SQLite with musl libc, if you must.
 </ul>
 </section>
 <section id="Postgres">
-<h2>Postgres</h2>
+<h2>Postgres<a href="#Postgres" class="heading-link">#</a></h2>
 <p>While SQLite is a fine choice for small-to-medium sites, it does have its own
 quirks: so-called <a href="https://www.sqlite.org/flextypegood.html">flexible type checking</a> and <a href="https://www.sqlite.org/lang_altertable.html#making_other_kinds_of_table_schema_changes">limited ALTER TABLE
 capabilities</a> are my two pet peeves.</p>
@@ -171,7 +171,7 @@ DynamicUser feature to run my service on its own dynamically created user
 anyway. This brings us to…</p>
 </section>
 <section id="systemd">
-<h2>systemd</h2>
+<h2>systemd<a href="#systemd" class="heading-link">#</a></h2>
 <p>Inevitably you’ll need something to manage your service process: autostart on
 boot, report/restart when it goes down, piping logs to the right place, that
 sort of thing. People used to install things like <a href="http://supervisord.org/">supervisord</a> for that.
@@ -213,7 +213,7 @@ ssh myserver systemctl restart myservice
 </code></pre>
 </section>
 <section id="Caddy">
-<h2>Caddy</h2>
+<h2>Caddy<a href="#Caddy" class="heading-link">#</a></h2>
 <p>Nowadays I prefer <a href="https://caddyserver.com/">Caddy</a> as the TLS-terminating reverse proxy instead of
 nginx, since it transparently performs Let’s Encrypt’s ACME challenge behind
 the scene. With my web service listening at localhost:8000, it literally takes
@@ -238,7 +238,7 @@ HTTPS cert bookkeeping is not one of them, so I’m more than happy to stop
 fiddling with certbot cron jobs.</p>
 </section>
 <section id="Closing-remarks">
-<h2>Closing remarks</h2>
+<h2>Closing remarks<a href="#Closing-remarks" class="heading-link">#</a></h2>
 <p>For a proper production-grade service, there’s more to be done:
 personally I’m using <code>ufw</code> to lock down everything except for the HTTP(S) ports
 and wireguard (I’m doing ssh over wireguard only too). Enabling unattended

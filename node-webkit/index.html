@@ -64,7 +64,7 @@ That’s it, really
 </li>
 </ul>
 <section id="Install-node-webkit-on-your-machine">
-<h2>Install node-webkit on your machine</h2>
+<h2>Install node-webkit on your machine<a href="#Install-node-webkit-on-your-machine" class="heading-link">#</a></h2>
 <p>Follow the README on <a href="https://github.com/rogerwang/node-webkit">node-webkit’s GitHub page</a> to download a precompiled <code>nw</code> binary for your
 platform. If you’re using Arch Linux, you’re in luck since there’s already an AUR package:</p>
 <pre><code class="language-sh">$ yaourt -S node-webkit
@@ -74,7 +74,7 @@ for a hotfix.</p>
 <p>The rest of this tutorial will assume that you have <code>nw</code> accessible as an executable in your $PATH.</p>
 </section>
 <section id="Running-an-app">
-<h2>Running an app</h2>
+<h2>Running an app<a href="#Running-an-app" class="heading-link">#</a></h2>
 <p>First, take a look at nw’s <a href="https://github.com/rogerwang/node-webkit#quick-start">quickstart guide</a>. We’ll make a somewhat different structure,
 allowing the <strong>dist</strong> directory to store our binary releases:</p>
 <pre><code>├── app/
@@ -127,7 +127,7 @@ weird url, which is why we can’t use absolute urls in the first place:</p>
 <p>But let’s not get ahead of ourselves. Let’s solve the most obvious dev issue first:</p>
 </section>
 <section id="Automatic-reload">
-<h2>Automatic reload</h2>
+<h2>Automatic reload<a href="#Automatic-reload" class="heading-link">#</a></h2>
 <p>Sure enough, at first glance your app is just another html page. You may be tempted to run some
 simple http server and open localhost in Google Chrome (<code>python2 -m SimpleHTTPServer 8080</code>
 anyone?). There are tons of ways to make Google Chrome automatically reload a page, right?</p>
@@ -177,7 +177,7 @@ $ nw app
 </code></pre>
 </section>
 <section id="Simple-cross-platform-build-command">
-<h2>Simple cross-platform build command</h2>
+<h2>Simple cross-platform build command<a href="#Simple-cross-platform-build-command" class="heading-link">#</a></h2>
 <p>To be honest, you can manually write shell scripts to build for each platform. Check out <a href="https://github.com/rogerwang/node-webkit/wiki/How-to-package-and-distribute-your-apps">this wiki
 article</a> if you prefer the do-it-yourself way.</p>
 <p>But if you’re lazy (like me) and don’t have a problem using nodejs/grunt, just use the excellent

@@ -43,7 +43,7 @@
 
 <p>This blog is now built with <a href="https://github.com/nhanb/s4g">s4g</a>—an experimental static site generator.</p>
 <section id="Why">
-<h2>Why?</h2>
+<h2>Why?<a href="#Why" class="heading-link">#</a></h2>
 <p>Unlike typical static site generators, s4g doesn’t separate source code and
 output. For a concrete example, <a href="https://getpelican.com/">Pelican</a> would read source from the
 /content/ dir and write a complete website to /output/, like this:</p>
@@ -90,7 +90,7 @@ etc… While we’re at it, why not add rebuild-on-save, livereload, the whole
 shebang? One thing led to another, and s4g was born.</p>
 <p>This dumb approach to paths simplifies a few things:</p>
 <section id="1-Folder-layout-is-website-layout">
-<h3>1. Folder layout <em>is</em> website layout</h3>
+<h3>1. Folder layout <em>is</em> website layout<a href="#1-Folder-layout-is-website-layout" class="heading-link">#</a></h3>
 <p>With Pelican we typically need to supply a few url patterns to let
 the generator know where to put the generated html:</p>
 <pre><code>ARTICLE_PATHS = ["posts"]
@@ -102,7 +102,7 @@ ARTICLE_LANG_SAVE_AS = "posts/{slug}-{lang}/index.html"
 <p>While with s4g we just put the .dj file where we want the .html to end up.</p>
 </section>
 <section id="2-Obvious-static-asset-placement">
-<h3>2. Obvious static asset placement</h3>
+<h3>2. Obvious static asset placement<a href="#2-Obvious-static-asset-placement" class="heading-link">#</a></h3>
 <p>A post typically links to static assets such as images or videos.
 Ideally we want to put these assets in the same place as their content file.
 This is surprisingly tricky with Pelican: we have to either throw every
@@ -136,7 +136,7 @@ picking up the image (assuming djot gets popular enough to get previewer
 support in the first place).</p>
 </section>
 <section id="3-Easy-post-grouping">
-<h3>3. Easy post grouping</h3>
+<h3>3. Easy post grouping<a href="#3-Easy-post-grouping" class="heading-link">#</a></h3>
 <p>Sometimes I write a series of related posts, and want to make it obvious when
 a visitor lands on any such post. The s4g solution: put them all in a folder.
 Here’s a <a href="https://hi.imnhan.com/movie-streaming/">live example</a> from my blog:</p>
@@ -174,7 +174,7 @@ series index, and its direct subfolders as posts in this series.</p>
 <p><img alt="" src="series-footer.png"></p>
 </section>
 <section id="Miscellaneous-blog-things">
-<h3>Miscellaneous blog things</h3>
+<h3>Miscellaneous blog things<a href="#Miscellaneous-blog-things" class="heading-link">#</a></h3>
 <p>An RSS feed is table stakes, so that’s what we get out of the box.
 Technically it’s an Atom feed, but hey, tomaytoes-tomahtoes.</p>
 <p>There’s also automatic OpenGraph / Twitter Cards meta tags, so we get those
@@ -191,7 +191,7 @@ lengthy paths e.g. “posts/introducing-mcross-a-minimal-gemini-browser” to
 short, typeable paths such as “mcross”.</p>
 </section>
 <section id="Quality-of-life-stuff">
-<h3>Quality-of-life stuff</h3>
+<h3>Quality-of-life stuff<a href="#Quality-of-life-stuff" class="heading-link">#</a></h3>
 <p>I originally wanted to use s4g as a teaching tool for a sort of “Learning
 HTML/CSS by creating a blog” tutorial series, but lost interest halfway. It
 still resulted in a few user-friendly goodies: out-of-the box livereload,
@@ -203,7 +203,7 @@ css, save and see the change instantly on my phone browser.</p>
 </section>
 </section>
 <section id="Quickstart">
-<h2>Quickstart</h2>
+<h2>Quickstart<a href="#Quickstart" class="heading-link">#</a></h2>
 <pre><code class="language-sh"># Install
 sudo pacman -Syu nodejs go
 go install go.imnhan.com/s4g@latest
@@ -227,9 +227,9 @@ blog</a>, which cover hidden posts, deploying on sub-directory paths, custom &am
 fallback thumbnails, per-post custom templates, series, among other things.</p>
 </section>
 <section id="Questionables">
-<h2>Questionables</h2>
+<h2>Questionables<a href="#Questionables" class="heading-link">#</a></h2>
 <section id="Djot">
-<h3>Djot?</h3>
+<h3>Djot?<a href="#Djot" class="heading-link">#</a></h3>
 <p>Imagine markdown but not full of corner cases and highly extensible.
 No disrespect to John Gruber here—his thing worked for his purposes—but
 I think it’s a tragedy that we as an industry failed to converge on a more
@@ -237,13 +237,13 @@ technically sound format for lightweight text markup.</p>
 </section>
 <section id="Since-source-and-output-live-in-the-same-folder-will-some-bug-in-s4g-eat-my-source">
 <h3>Since source and output live in the same folder, will some bug in s4g eat
-my source?</h3>
+my source?<a href="#Since-source-and-output-live-in-the-same-folder-will-some-bug-in-s4g-eat-my-source" class="heading-link">#</a></h3>
 <p>I obviously try to avoid that, but the current code is proof-of-concept
 quality. Therefore, I only run s4g on version-controlled websites, and
 recommend users do the same for now.</p>
 </section>
 <section id="Adding-compiled-assets-to-version-control-sounds-bad">
-<h3>Adding compiled assets to version control sounds… bad?</h3>
+<h3>Adding compiled assets to version control sounds… bad?<a href="#Adding-compiled-assets-to-version-control-sounds-bad" class="heading-link">#</a></h3>
 <p>For programs, probably.
 For websites though, I prefer to keep snapshots of the whole website as it’s
 deployed, and be able to roll it back together with the source code. Admittedly
@@ -252,7 +252,7 @@ problem ;)</p>
 </section>
 <section id="I-just-looked-at-the-code-and-holy-crap-what-s-with-all-those-non-data-structures-and-nested-loops">
 <h3>I just looked at the code and holy crap what’s with all those (non) data
-structures and nested loops!</h3>
+structures and nested loops!<a href="#I-just-looked-at-the-code-and-holy-crap-what-s-with-all-those-non-data-structures-and-nested-loops" class="heading-link">#</a></h3>
 <p>Yeah but the whole thing takes about 100ms on my thirty-something-articles
 blog, which is by no means impressive, but not a real hindrance for daily use
 either. If an actual user shows up with a site big enough to have a problem,
