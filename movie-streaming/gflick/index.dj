@@ -100,10 +100,8 @@ Here's what it looks like in action:
 
 ```=html
 <video controls>
-  <source src="https://junk.imnhan.com/gflick.mp4" type="video/mp4">
-  <a href="https://junk.imnhan.com/gflick.mp4">
-    Video: https://junk.imnhan.com/gflick.mp4
-  </a>
+  <source src="gflick.mp4" type="video/mp4">
+  <a href="gflick.mp4">Video: gflick.mp4</a>
 </video>
 ```
 

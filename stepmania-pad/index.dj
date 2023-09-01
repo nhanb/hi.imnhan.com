@@ -83,10 +83,8 @@ P/s here it is in action:
 
 ```=html
 <video controls>
-  <source src="https://junk.imnhan.com/softpadmod.mp4" type="video/mp4">
-  <a href="https://junk.imnhan.com/softpadmod.mp4">
-    Video: https://junk.imnhan.com/softpadmod.mp4
-  </a>
+  <source src="softpadmod.mp4" type="video/mp4">
+  <a href="softpadmod.mp4">Video: softpadmod.mp4</a>
 </video>
 ```
 
