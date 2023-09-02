@@ -32,7 +32,7 @@ a {
   color: black;
 }
 a:hover {
-  background-color: yellow;
+  background-color: gold;
 }
 a[target="_blank"]::after {
   content: "↗";
@@ -51,7 +51,7 @@ section:target > h3,
 section:target > h4,
 section:target > h5,
 section:target > h6 {
-  background-color: #beefff;
+  background-color: gainsboro;
   margin-left: -1rem;
   padding-left: 1rem;
 }
