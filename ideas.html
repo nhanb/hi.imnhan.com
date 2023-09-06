@@ -34,17 +34,14 @@
 
 <h1>Potential project ideas</h1>
 
-<section id="Self-hosted-RSS-reader-in-D">
-<h2>Self hosted RSS reader in D<a href="#Self-hosted-RSS-reader-in-D" class="heading-link">#</a></h2>
+<section id="Self-hosted-RSS-reader-in-pure-Go">
+<h2>Self hosted RSS reader in pure Go<a href="#Self-hosted-RSS-reader-in-pure-Go" class="heading-link">#</a></h2>
 <ul>
 <li>
 Single executable, web based
 </li>
 <li>
-SQLite3
-</li>
-<li>
-Either use adamdruppe’s rss.d or wrap libmrss
+bbolt
 </li>
 <li>
 Bonus: e-ink friendly display
@@ -54,18 +51,25 @@ Bonus: netsurf friendly
 </li>
 </ul>
 </section>
-<section id="Desktop-GUI-blogging-CMS-using-tkinter">
-<h2>Desktop GUI blogging CMS using tkinter<a href="#Desktop-GUI-blogging-CMS-using-tkinter" class="heading-link">#</a></h2>
+<section id="Desktop-GUI-blogging-CMS-using-Tcl-Tk-Go-backend">
+<h2>Desktop GUI blogging CMS using Tcl/Tk + Go backend<a href="#Desktop-GUI-blogging-CMS-using-Tcl-Tk-Go-backend" class="heading-link">#</a></h2>
 <ul>
 <li>
 Native win/mac look-and-feel, acceptable on linux (<code>clam</code> looks alright)
 </li>
 <li>
-Split screen: one with markdown/bbcode source and one with rendered preview
+SQLite as application file format
+</li>
+<li>
+WYSIWYG à la ProseMirror, exportable to djot/markdown.
 </li>
 <li>
 Sane embedded image/video/etc. file management via GUI
-+ Bonus: 1-click preprocessing: strip EXIF, losslessly optimize image
+<ul>
+<li>
+Bonus: 1-click preprocessing: strip EXIF, losslessly optimize image
+</li>
+</ul>
 </li>
 <li>
 <strong>No embedded browser</strong>
@@ -75,7 +79,8 @@ Is static site generator, but supports 1-click deployment to neocities,
 github/gitlab/sourcehut pages etc.
 </li>
 <li>
-Human-friend distribution e.g. nuitka, pyoxidizer (pyinstaller is pretty meh)
+Human-friendly distribution.
+Ideally only two binaries: main proram and tclsh/wish executable.
 </li>
 <li>
 Bonus: pluggable templates

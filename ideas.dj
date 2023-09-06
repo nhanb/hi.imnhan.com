@@ -2,24 +2,27 @@ Title: Potential project ideas
 ShowInFeed: false
 ---
 
-## Self hosted RSS reader in D
+## Self hosted RSS reader in pure Go
 
 - Single executable, web based
-- SQLite3
-- Either use adamdruppe's rss.d or wrap libmrss
+- bbolt
 - Bonus: e-ink friendly display
 - Bonus: netsurf friendly
 
-## Desktop GUI blogging CMS using tkinter
+## Desktop GUI blogging CMS using Tcl/Tk + Go backend
 
 - Native win/mac look-and-feel, acceptable on linux (`clam` looks alright)
-- Split screen: one with markdown/bbcode source and one with rendered preview
+- SQLite as application file format
+- WYSIWYG à la ProseMirror, exportable to djot/markdown.
 - Sane embedded image/video/etc. file management via GUI
+
   + Bonus: 1-click preprocessing: strip EXIF, losslessly optimize image
+
 - *No embedded browser*
 - Is static site generator, but supports 1-click deployment to neocities,
   github/gitlab/sourcehut pages etc.
-- Human-friend distribution e.g. nuitka, pyoxidizer (pyinstaller is pretty meh)
+- Human-friendly distribution.
+  Ideally only two binaries: main proram and tclsh/wish executable.
 - Bonus: pluggable templates
 
 ## Discord bot that launches CSGO/etc. server on demand
