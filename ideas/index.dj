@@ -1,11 +1,19 @@
 Title: Potential project ideas
 ShowInFeed: false
+Thumb: idea-man.jpg
+Description: "The idea is there. It just needs implementation."
+---
+
+![](idea-man.jpg)
+
+> The idea is there. It just needs implementation.
+
 ---
 
 ## Self hosted RSS reader in pure Go
 
 - Single executable, web based
-- bbolt
+- bbolt for persistence
 - Bonus: e-ink friendly display
 - Bonus: netsurf friendly
 
