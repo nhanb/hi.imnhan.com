@@ -10,6 +10,40 @@ Description: "The idea is there. It just needs implementation."
 
 ---
 
+## A Linux appliance with u-root
+
+Only the kernel and a Go runtime, plus [a bunch][1] of busybox-like utils.
+Doesn't get more minimal than that!
+
+Candidates:
+
+- rss reader: see below
+- git-in-a-box: see [go-git][5]
+- btrfs NAS: encryption can use either gocryptfs, or fscrypt when its btrfs
+  support lands in mainline... [apparently soon?][6]
+
+Why not gokrazy? Nothing wrong with it, though I don't really need most of its
+amenities. Also I recently tried to update my old gokrazy instance and it
+failed for no obvious reason. Searching existing issues yielded no result and
+I'm too lazy to investigate further.
+
+### Preliminary research
+
+No ufw, so learn to use nftables directly instead.
+[This][2] is a good starting point.
+
+No ca-certificates: [copy from host][3] instead, e.g. on Arch:
+
+```
+u-root -files '/etc/ca-certificates/extracted/tls-ca-bundle.pem:/etc/ssl/certs/ca-certificates.crt'
+```
+
+To draw to fbdev, see [cmds/exp/fbsplash][4]. Helpful to draw a dashboard to
+hdmi out, like gokrazy.
+
+TODO: check if tailscale can run on this. That would cleanly solve the "enter
+disk encryption passphrase remotely after reboot" problem.
+
 ## Self hosted RSS reader in pure Go
 
 - Single executable, web based
@@ -39,3 +73,10 @@ Eyeing Linode's 4GB RAM tier at $0.03/hr. But in general it should work on any
 cloud VPS that supports (almost) instant VM launch via API, and snapshots.
 
 - Easy on/off/status commands via Discord bot maybe
+
+[1]: https://github.com/u-root/u-root/tree/main/cmds/core
+[2]: https://wiki.nftables.org/wiki-nftables/index.php/Simple_ruleset_for_a_server
+[3]: https://github.com/u-root/u-root/issues/2151#issuecomment-990124460
+[4]: https://github.com/u-root/u-root/blob/main/cmds/exp/fbsplash/main.go
+[5]: https://github.com/go-git/go-git/issues/234
+[6]: https://youtu.be/6YIc2fVLVPU?si=AEB-iTJhTF-Nxo_3&t=893

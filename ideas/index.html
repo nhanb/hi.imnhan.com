@@ -40,6 +40,40 @@
 <p>The idea is there. It just needs implementation.</p>
 </blockquote>
 <hr>
+<section id="A-Linux-appliance-with-u-root">
+<h2>A Linux appliance with u-root<a href="#A-Linux-appliance-with-u-root" class="heading-link">#</a></h2>
+<p>Only the kernel and a Go runtime, plus <a href="https://github.com/u-root/u-root/tree/main/cmds/core">a bunch</a> of busybox-like utils.
+Doesn’t get more minimal than that!</p>
+<p>Candidates:</p>
+<ul>
+<li>
+rss reader: see below
+</li>
+<li>
+git-in-a-box: see <a href="https://github.com/go-git/go-git/issues/234">go-git</a>
+</li>
+<li>
+btrfs NAS: encryption can use either gocryptfs, or fscrypt when its btrfs
+support lands in mainline… <a href="https://youtu.be/6YIc2fVLVPU?si=AEB-iTJhTF-Nxo_3&amp;t=893">apparently soon?</a>
+</li>
+</ul>
+<p>Why not gokrazy? Nothing wrong with it, though I don’t really need most of its
+amenities. Also I recently tried to update my old gokrazy instance and it
+failed for no obvious reason. Searching existing issues yielded no result and
+I’m too lazy to investigate further.</p>
+<section id="Preliminary-research">
+<h3>Preliminary research<a href="#Preliminary-research" class="heading-link">#</a></h3>
+<p>No ufw, so learn to use nftables directly instead.
+<a href="https://wiki.nftables.org/wiki-nftables/index.php/Simple_ruleset_for_a_server">This</a> is a good starting point.</p>
+<p>No ca-certificates: <a href="https://github.com/u-root/u-root/issues/2151#issuecomment-990124460">copy from host</a> instead, e.g. on Arch:</p>
+<pre><code>u-root -files '/etc/ca-certificates/extracted/tls-ca-bundle.pem:/etc/ssl/certs/ca-certificates.crt'
+</code></pre>
+<p>To draw to fbdev, see <a href="https://github.com/u-root/u-root/blob/main/cmds/exp/fbsplash/main.go">cmds/exp/fbsplash</a>. Helpful to draw a dashboard to
+hdmi out, like gokrazy.</p>
+<p>TODO: check if tailscale can run on this. That would cleanly solve the “enter
+disk encryption passphrase remotely after reboot” problem.</p>
+</section>
+</section>
 <section id="Self-hosted-RSS-reader-in-pure-Go">
 <h2>Self hosted RSS reader in pure Go<a href="#Self-hosted-RSS-reader-in-pure-Go" class="heading-link">#</a></h2>
 <ul>
