@@ -1,0 +1,21 @@
+Title: Notes
+PostedAt: 2023-09-18 23:21
+ShowInFeed: false
+---
+
+## sftp/sshfs only
+
+Per [Hacker News](https://news.ycombinator.com/item?id=37390184#37427965):
+
+> If the user account is only supposed to have file transfer capabilities/no
+> shell access, add it a to a specific group e.g. `sftponly`, and only allow
+> this group to use the `internal-sftp` command in `/etc/ssh/sshd_config`
+>
+> ```
+> Match Group sftponly
+> ForceCommand internal-sftp -l INFO -f LOCAL6
+> AllowTcpForwarding no
+> AllowAgentForwarding no
+> GatewayPorts no
+> X11Forwarding no
+> ```

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Notes | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_s4g/theme/fonts.css">
+  <link rel="stylesheet" href="/_s4g/theme/base.css">
+
+  <meta property="og:title" content="Notes" />
+  <meta name="twitter:title" content="Notes" />
+  <meta name="twitter:card" content="summary" /><meta property="og:image" content="https://hi.imnhan.com/about/keyboard-warrior.jpg" />
+    <meta name="twitter:image" content="https://hi.imnhan.com/about/keyboard-warrior.jpg" /><meta name="twitter:site" content="@nhanb" />
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_s4g/theme/navbar.css">
+<nav>
+  <a href="/" >Home</a>
+  <a href="/about/" >About</a>
+  <a href="/projects/" >Projects</a>
+  <a href="https://cv.imnhan.com" target="_blank">CV</a>
+
+  <a class="feed-link" href="/feed.xml" title="Actually Atom">RSS</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2023-09-18">
+        Monday, 18 Sep 2023
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+
+<h1>Notes</h1>
+
+<section id="sftp-sshfs-only">
+<h2>sftp/sshfs only<a href="#sftp-sshfs-only" class="heading-link">#</a></h2>
+<p>Per <a href="https://news.ycombinator.com/item?id=37390184#37427965">Hacker News</a>:</p>
+<blockquote>
+<p>If the user account is only supposed to have file transfer capabilities/no
+shell access, add it a to a specific group e.g. <code>sftponly</code>, and only allow
+this group to use the <code>internal-sftp</code> command in <code>/etc/ssh/sshd_config</code></p>
+<pre><code>Match Group sftponly
+ForceCommand internal-sftp -l INFO -f LOCAL6
+AllowTcpForwarding no
+AllowAgentForwarding no
+GatewayPorts no
+X11Forwarding no
+</code></pre>
+</blockquote>
+</section>
+
+</main>
+
+<footer>
+© 2013–2023 Bùi Thành Nhân<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a> and probably too much <a href="https://www.instagram.com/cheese.coffee/" target="_blank">cà&nbsp;phê&nbsp;sữa&nbsp;đá</a>
+</footer>
+
+</body>
+
+</html>
