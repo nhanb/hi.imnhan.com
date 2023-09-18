@@ -92,7 +92,7 @@ blockquote {
 }
 blockquote::before {
   position: absolute;
-  margin-left: -0.5em;
+  margin-left: -0.6em;
   margin-top: -0.25em;
   font-size: 3em;
   content: open-quote;
