@@ -3,7 +3,9 @@ PostedAt: 2023-09-18 23:21
 ShowInFeed: false
 ---
 
-## sftp/sshfs only
+## sftp/sshfs only ssh config
+
+Useful for, say, a static web hosting service that deploys via rsync.
 
 Per [Hacker News](https://news.ycombinator.com/item?id=37390184#37427965):
 
@@ -19,3 +21,5 @@ Per [Hacker News](https://news.ycombinator.com/item?id=37390184#37427965):
 > GatewayPorts no
 > X11Forwarding no
 > ```
+
+See also: <https://wiki.archlinux.org/title/SFTP_chroot>
