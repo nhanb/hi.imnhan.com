@@ -10,6 +10,35 @@ Description: "The idea is there. It just needs implementation."
 
 ---
 
+## NAS options
+
+### Mini/micro PC: use m.2 -> 5xSATA adapter
+
+Already got an HP EliteDesk 800 Desktop Mini G1, which seems to have m.2 2280
+pcie slot: <https://h30434.www3.hp.com/t5/Business-PCs-Workstations-and-Point-of-Sale-Systems/HP-EliteDesk-800-G1-SSD-Compatibility/td-p/8335711>
+
+Potential shopping list:
+
+- <https://vi.aliexpress.com/item/1005003010904342.html> (has data & power wires too)
+- <https://www.lazada.vn/products/525-inch-to-5-x-35-inch-sata-hdd-cage-rack-hard-drive-disk-enclosure-disk-tray-adapter-i2421205886-s11929573138.html>
+- <https://www.lazada.vn/products/m2-ngff-pcie-b-key-sata-to-sata-30-5-port-expansion-card-6gbps-adapter-card-jmb585-chipset-m2-nvme-to-sata30-i2263128054-s10920588244.html>
+
+### Topton N5105 build
+
+![](./sama-im01.jpg)
+
+- Case: sama im01 <https://voz.vn/t/tim-vo-case-nao-nho-gon-matx-lap-duoc-2-4-hdd-may-bac.818843/>
+- Needs hdd cages
+- Motherboard: [Topton N5105](https://vi.aliexpress.com/item/1005005398288415.html)
+- PSU: TBD
+
+### Mid-tower office PC
+
+... is self-explanatory. Usually comes with 4-ish 3.5" brackets out of the box.
+
+Or go SFF and still get 2 3.5" bays:
+<https://maytinhdongbo.com/p/may-tinh-hp-600-g2-sff-core-i3-ssd-cho-van-phong.htm>
+
 ## A Linux appliance with u-root
 
 Only the kernel and a Go runtime, plus [a bunch][1] of busybox-like utils.
