@@ -2,12 +2,19 @@
   <title>Hi, I&#39;m Nhân</title>
   <id>https://hi.imnhan.com/</id>
   <link rel="self" href="/feed.xml"></link>
-  <updated>2023-08-24T10:12:00+07:00</updated>
+  <updated>2023-10-31T20:28:00+07:00</updated>
   <author>
     <name>Bùi Thành Nhân</name>
     <uri>https://hi.imnhan.com</uri>
     <email>hi@imnhan.com</email>
   </author>
+  <entry>
+    <title>Java Script</title>
+    <id>https://hi.imnhan.com/java-script/</id>
+    <link href="https://hi.imnhan.com/java-script/"></link>
+    <published>2023-10-31T20:28:00+07:00</published>
+    <updated>2023-10-31T20:28:00+07:00</updated>
+  </entry>
   <entry>
     <title>s4g is a Stupidly Simple Static Site Generator</title>
     <id>https://hi.imnhan.com/s4g/</id>
