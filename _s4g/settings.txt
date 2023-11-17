@@ -1,6 +1,6 @@
 Address: https://hi.imnhan.com
 Name: Hi, I'm Nhân
-Tagline: and this is my humble corner on the intertubes
+Tagline: and welcome to my humble corner on the intertubes
 Root: /
 ShowFooter: true
 FooterText: Made with <a href="https://github.com/nhanb/s4g">s4g</a> and probably too much <a href="https://www.instagram.com/cheese.coffee/" target="_blank">cà&nbsp;phê&nbsp;sữa&nbsp;đá</a>

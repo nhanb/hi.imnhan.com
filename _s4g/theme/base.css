@@ -61,6 +61,10 @@ main video {
   max-width: 100%;
 }
 
+main hr {
+  margin: 2rem 0;
+}
+
 footer {
   margin-top: 2rem;
   text-align: right;
@@ -69,8 +73,11 @@ footer {
 
 pre,
 .sidenote {
-  border: 1px solid black;
+  border: 1px solid #ddd;
+  border-radius: 0.3rem;
+  background-color: #eee;
   padding: 0.5rem;
+  margin: 1.7rem 0;
 }
 pre {
   overflow-x: auto;
