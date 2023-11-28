@@ -14,11 +14,7 @@ code,
 pre {
   font-family: "IBM Plex Mono";
 }
-code {
-  color: darkred;
-}
 pre code {
-  color: inherit;
   font-size: 0.9rem;
 }
 
@@ -26,6 +22,17 @@ p,
 ul,
 ol {
   line-height: 1.35rem;
+  margin: 1.7rem 0;
+}
+li + li {
+  margin-top: 0.7rem;
+}
+h2 + p,
+h3 + p,
+h4 + p,
+h5 + p,
+h6 + p {
+  margin-top: 1.3rem;
 }
 
 a {
@@ -96,13 +103,21 @@ blockquote {
   quotes: "\201C" "\201D";
   /* prevent long links from breaking out of the blockquote: */
   overflow-wrap: break-word;
+  padding: 0 0.4rem 0 0.7rem;
+  background-color: cornsilk;
+  border-radius: 0.3rem;
+  border: 1px solid brown;
 }
 blockquote::before {
   position: absolute;
-  margin-left: -0.6em;
+  margin-left: -0.8em;
   margin-top: -0.25em;
   font-size: 3em;
+  color: brown;
   content: open-quote;
+}
+blockquote p {
+  margin: 0.7rem 0;
 }
 
 sup {
