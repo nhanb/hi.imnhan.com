@@ -11,7 +11,6 @@
   This post is part of
   <a href="{{.Post.Parent.WebPath}}">{{.Post.Parent.Title}}</a>
 </em>
-<hr>
 {{- end }}
 
 <h1>{{.Post.Title}}</h1>
@@ -29,7 +28,7 @@
     {{- range .Post.Parent.Children }}
       {{ if not .IsDraft -}}
       <li><a href="{{.WebPath}}">{{.Title}}</a>
-          {{- if eq $.Post.WebPath .WebPath }} (you are here) {{- end -}}
+          {{- if eq $.Post.WebPath .WebPath }} (you&nbsp;are&nbsp;here) {{- end -}}
       </li>
       {{- end -}}
     {{ end }}
@@ -40,8 +39,15 @@
     .series-container {
       margin: 2rem 0;
       padding: 0 1rem;
-      border: 1px dashed #aaa;
+      border: 2px dashed #aaa;
+      border-radius: 0.3rem;
       background-color: #eee;
+    }
+    .series-container li {
+      margin: 0.3rem;
+    }
+    .series-container p, .series-container ol {
+      margin: 0.8rem 0 1rem 0;
     }
   </style>
 {{ end -}}
