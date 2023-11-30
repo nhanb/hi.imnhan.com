@@ -66,6 +66,8 @@ section:target > h6 {
 main img,
 main video {
   max-width: 100%;
+  border: 1px solid black;
+  border-radius: 0.3rem;
 }
 
 main hr {
