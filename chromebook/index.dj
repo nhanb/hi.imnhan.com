@@ -122,7 +122,7 @@ devices). After some desperate googling I found
 configs lifted straight from ChromeOS upstream. Sure enough, the device showed
 up:
 
-![default-profile-get](voxel_audio_device.png)
+![default-profile-get](voxel_audio_device.png){style="border:none;"}
 
 And it would actually play sound... for a while until it crashes. I later found
 out that wired headphones and HDMI audio work just fine, so only using internal
