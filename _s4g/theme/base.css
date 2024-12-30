@@ -1,6 +1,6 @@
 html {
   font-size: 1em; /* respect user configured font size */
-  max-width: 50em;
+  max-width: 40em;
   margin: auto;
 
   /* Always show scrollbar, to prevent content shifting when navigating
