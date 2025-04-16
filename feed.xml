@@ -2,12 +2,19 @@
   <title>Hi, I&#39;m Nhân</title>
   <id>https://hi.imnhan.com/</id>
   <link rel="self" href="/feed.xml"></link>
-  <updated>2023-10-31T20:28:00+07:00</updated>
+  <updated>2025-04-16T23:39:00+07:00</updated>
   <author>
     <name>Bùi Thành Nhân</name>
     <uri>https://hi.imnhan.com</uri>
     <email>hi@imnhan.com</email>
   </author>
+  <entry>
+    <title>Systemd-nspawn seems like a viable Vagrant alternative</title>
+    <id>https://hi.imnhan.com/nspawn/</id>
+    <link href="https://hi.imnhan.com/nspawn/"></link>
+    <published>2025-04-16T23:39:00+07:00</published>
+    <updated>2025-04-16T23:39:00+07:00</updated>
+  </entry>
   <entry>
     <title>Java Script</title>
     <id>https://hi.imnhan.com/java-script/</id>

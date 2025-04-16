@@ -1,0 +1,67 @@
+Title: Systemd-nspawn seems like a viable Vagrant alternative
+ShowInFeed: true
+PostedAt: 2025-04-16 23:39
+---
+
+I'm working on a Python project where packaging container images is too
+uneconomical compared to just pushing source code, so I went with the latter,
+using an [ansible-like](https://pyinfra.com/) configuration management system to
+manage a _pet_ server. That also means I need some way to replicate the pet
+locally. Way back in my first job we used to utilize Vagrant for such a use
+case, but if memory serves, it was painfully slow and would have minor breakages
+all the time. To be honest it could have been either virtualbox or my
+inexperienced fresh graduate self's fault, but I'm sure of one thing:
+initializing a Virtualbox-backed Vagrant VM is slooooow.
+
+That leads us to... containers! Not the "application containers" category made
+mainstream by Docker and friends, but the old-school "system containers" that
+act like lightweight VMs: booting one will launch the full init system (read:
+systemd) which then spawns the main application along with any supporting
+services. Historically lxc/lxd (now [incus](https://linuxcontainers.org/incus/))
+was the most notable in this space, but relatively recently systemd threw its
+hat in the ring with systemd-nspawn. I've dabbled with incus for a while but
+its configuration never clicked with me, and networking breaks if it's run on
+the same machine with Docker. Unfortunately I still need to touch Docker from
+time to time, so that's an major inconvenience. To be fair, this seems like
+Docker's fault for its overzealous iptables configs, and there are workarounds,
+but I'm not comfortable with any of those. On the other hand, systemd-nspawn
+just works, albeit with some manual network configuration.
+
+## Quick start
+
+The Arch Linux wiki page is pretty comprehensive, so I recommend just reading
+that: <https://wiki.archlinux.org/title/Systemd-nspawn>
+
+However I don't want to give the container full access to the host network, so
+Host Networking is out. [Private Networking using a virtual Ether
+link](https://wiki.archlinux.org/title/Systemd-nspawn#Use_a_virtual_Ethernet_link)
+is the next simplest option. This requires systemd-networkd on both host &
+guest. Also needs systemd-resolved on guest for DNS to Just Work, apparently:
+
+```sh
+# On host, enable systemd-networkd and create a debian bookworm root dir:
+systemctl enable --now systemd-networkd
+debootstrap \
+    --include=dbus,libpam-systemd,systemd-resolved \
+    bookworm \
+    /var/lib/machines/myguest \
+    'https://mirror.bizflycloud.vn/debian/'
+
+# Set root password on guest:
+systemd-nspawn -D /var/lib/machines/myguest passwd
+
+# Now spawn a guest shell and enable necessary network services:
+systemd-nspawn -D /var/lib/machines/myguest --network-veth -b
+#> systemctl enable --now systemd-networkd systemd-resolved
+```
+
+## Pyinfra
+
+Unfortunately, pyinfra doesn't have a systemd-nspawn
+[connector](https://docs.pyinfra.com/en/3.x/connectors.html) yet, so I still
+have to setup an SSH server on the guest. Maybe someday I'll get sufficiently
+motivated and write a pyinfra connector for it. Maybe.
+
+## What about Windows?
+
+Sounds like a You problem. Seriously though, just use WSL.

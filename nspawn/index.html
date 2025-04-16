@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Systemd-nspawn seems like a viable Vagrant alternative | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_s4g/theme/fonts.css">
+  <link rel="stylesheet" href="/_s4g/theme/base.css">
+
+  <meta property="og:title" content="Systemd-nspawn seems like a viable Vagrant alternative" />
+  <meta name="twitter:title" content="Systemd-nspawn seems like a viable Vagrant alternative" />
+  <meta name="twitter:card" content="summary" /><meta property="og:image" content="https://hi.imnhan.com/about/keyboard-warrior.jpg" />
+    <meta name="twitter:image" content="https://hi.imnhan.com/about/keyboard-warrior.jpg" /><meta name="twitter:site" content="@nhanb" />
+
+  <script src="/_s4g/theme/konami/konami.js"></script>
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_s4g/theme/navbar.css">
+<nav>
+  <a href="/" >Home</a>
+  <a href="/about/" >About</a>
+  <a href="/projects/" >Projects</a>
+  <a href="https://cv.imnhan.com" target="_blank">CV</a>
+
+  <a class="feed-link" href="/feed.xml" title="Actually Atom">RSS</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2025-04-16">
+        Wednesday, 16 Apr 2025
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+
+<h1>Systemd-nspawn seems like a viable Vagrant alternative</h1>
+
+<p>I’m working on a Python project where packaging container images is too
+uneconomical compared to just pushing source code, so I went with the latter,
+using an <a href="https://pyinfra.com/">ansible-like</a> configuration management system to
+manage a <em>pet</em> server. That also means I need some way to replicate the pet
+locally. Way back in my first job we used to utilize Vagrant for such a use
+case, but if memory serves, it was painfully slow and would have minor breakages
+all the time. To be honest it could have been either virtualbox or my
+inexperienced fresh graduate self’s fault, but I’m sure of one thing:
+initializing a Virtualbox-backed Vagrant VM is slooooow.</p>
+<p>That leads us to… containers! Not the “application containers” category made
+mainstream by Docker and friends, but the old-school “system containers” that
+act like lightweight VMs: booting one will launch the full init system (read:
+systemd) which then spawns the main application along with any supporting
+services. Historically lxc/lxd (now <a href="https://linuxcontainers.org/incus/">incus</a>)
+was the most notable in this space, but relatively recently systemd threw its
+hat in the ring with systemd-nspawn. I’ve dabbled with incus for a while but
+its configuration never clicked with me, and networking breaks if it’s run on
+the same machine with Docker. Unfortunately I still need to touch Docker from
+time to time, so that’s an major inconvenience. To be fair, this seems like
+Docker’s fault for its overzealous iptables configs, and there are workarounds,
+but I’m not comfortable with any of those. On the other hand, systemd-nspawn
+just works, albeit with some manual network configuration.</p>
+<section id="Quick-start">
+<h2>Quick start<a href="#Quick-start" class="heading-link">#</a></h2>
+<p>The Arch Linux wiki page is pretty comprehensive, so I recommend just reading
+that: <a href="https://wiki.archlinux.org/title/Systemd-nspawn">https://wiki.archlinux.org/title/Systemd-nspawn</a></p>
+<p>However I don’t want to give the container full access to the host network, so
+Host Networking is out. <a href="https://wiki.archlinux.org/title/Systemd-nspawn#Use_a_virtual_Ethernet_link">Private Networking using a virtual Ether
+link</a>
+is the next simplest option. This requires systemd-networkd on both host &amp;
+guest. Also needs systemd-resolved on guest for DNS to Just Work, apparently:</p>
+<pre><code class="language-sh"># On host, enable systemd-networkd and create a debian bookworm root dir:
+systemctl enable --now systemd-networkd
+debootstrap \
+    --include=dbus,libpam-systemd,systemd-resolved \
+    bookworm \
+    /var/lib/machines/myguest \
+    'https://mirror.bizflycloud.vn/debian/'
+
+# Set root password on guest:
+systemd-nspawn -D /var/lib/machines/myguest passwd
+
+# Now spawn a guest shell and enable necessary network services:
+systemd-nspawn -D /var/lib/machines/myguest --network-veth -b
+#&gt; systemctl enable --now systemd-networkd systemd-resolved
+</code></pre>
+</section>
+<section id="Pyinfra">
+<h2>Pyinfra<a href="#Pyinfra" class="heading-link">#</a></h2>
+<p>Unfortunately, pyinfra doesn’t have a systemd-nspawn
+<a href="https://docs.pyinfra.com/en/3.x/connectors.html">connector</a> yet, so I still
+have to setup an SSH server on the guest. Maybe someday I’ll get sufficiently
+motivated and write a pyinfra connector for it. Maybe.</p>
+</section>
+<section id="What-about-Windows">
+<h2>What about Windows?<a href="#What-about-Windows" class="heading-link">#</a></h2>
+<p>Sounds like a You problem. Seriously though, just use WSL.</p>
+</section>
+
+</main>
+
+<footer>
+© 2013–2025 Bùi Thành Nhân<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a> and probably too much <a href="https://www.instagram.com/cheese.coffee/" target="_blank">cà&nbsp;phê&nbsp;sữa&nbsp;đá</a>
+</footer>
+
+</body>
+
+</html>
