@@ -1,0 +1,39 @@
+Title: Reimplementing Firefox Send
+ShowInFeed: true
+PostedAt: 2025-07-24 23:24
+---
+
+I got bored and tried reimplementing [Firefox Send](https://github.com/mozilla/send) --- I call it [shipperman](https://github.com/nhanb/shipperman).
+
+If memory serves, FF Send was a web-based file sharing service with real end-to-end encryption. To summarize how it works:
+
+- Client generates a key for symmetric encryption, then encrypts the file ("plaintext").
+- Client uploads encrypted blob ("ciphertext") to server.
+- Client gives user a download url that includes the key after a hash (`#`) sign, making it a [URI fragment](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment).
+- User opens said url. Because the key is in a URI fragment, it's never sent to the server, meaning the server can never decrypt the file itself.
+- But because client-side javascript can read the fragment via `window.location.hash`, it can decrypt the blob downloaded from the server.
+
+Turns out browsers these days have access to [somewhat usable crypto APIs](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto) out of the box, so I really need no library for the encryption/decryption logic.
+
+The code is, uh, proof-of-concept quality, but it works:
+
+```=html
+<video controls>
+  <source src="demo.mp4" type="video/mp4">
+  <a href="demo">Video: demo.mp4</a>
+</video>
+```
+
+## Thoughts
+
+Obviously, this setup requires trusting the server to _not_ start serving malicious JS at some point. That makes the whole concept a hard sell tbh.
+
+Ideally Alice should send the URL to Bob via some secure communication channel, but then, maybe effort is better spent on building a secure communication channel that can efficiently handle large file transfers as well?
+
+Of course a production grade service would include some sort of checksum: an SHA-256 for the original file, and maybe another for the encrypted blob - just so we know if the server mangled our stuff without wasting effort on decrypting.
+
+Working with bytes on the frontend is _annoying_. Why are Firefox & Safari the only browsers that implement `Uint8Array.toBase64()`? I ended up just serializing Uint8Arrays as lists of numbers, because at this point why bother? Also promises, my god look at them promises. Guess I really need to learn to use that shiny async syntax if I want to keep my sanity huh...
+
+Baking static content into the executable is neat and all, but the slow rebuild time makes the feedback loop much worse than reading them from disk at runtime. Maybe when zig 0.15 lands with the native x86 backend & incremental build, it'll become more... acceptable.
+
+The so-called Subtle Crypto API comes with the usual "risk of blown off foot" warning. Though I'm pretty sure I picked the right options for a simple symmetric encryption, I only spent like 15 minutes on the docs. I sure wish they could offer something idiot-proof like the NaCl APIs though.

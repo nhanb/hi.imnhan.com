@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Reimplementing Firefox Send | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_s4g/theme/fonts.css">
+  <link rel="stylesheet" href="/_s4g/theme/base.css">
+
+  <meta property="og:title" content="Reimplementing Firefox Send" />
+  <meta name="twitter:title" content="Reimplementing Firefox Send" />
+  <meta name="twitter:card" content="summary" /><meta property="og:image" content="https://hi.imnhan.com/about/keyboard-warrior.jpg" />
+    <meta name="twitter:image" content="https://hi.imnhan.com/about/keyboard-warrior.jpg" /><meta name="twitter:site" content="@nhanb" />
+
+  <script src="/_s4g/theme/konami/konami.js"></script>
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_s4g/theme/navbar.css">
+<nav>
+  <a href="/" >Home</a>
+  <a href="/about/" >About</a>
+  <a href="/projects/" >Projects</a>
+  <a href="https://cv.imnhan.com" target="_blank">CV</a>
+
+  <a class="feed-link" href="/feed.xml" title="Actually Atom">RSS</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2025-07-24">
+        Thursday, 24 Jul 2025
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+
+<h1>Reimplementing Firefox Send</h1>
+
+<p>I got bored and tried reimplementing <a href="https://github.com/mozilla/send">Firefox Send</a> — I call it <a href="https://github.com/nhanb/shipperman">shipperman</a>.</p>
+<p>If memory serves, FF Send was a web-based file sharing service with real end-to-end encryption. To summarize how it works:</p>
+<ul>
+<li>
+Client generates a key for symmetric encryption, then encrypts the file (“plaintext”).
+</li>
+<li>
+Client uploads encrypted blob (“ciphertext”) to server.
+</li>
+<li>
+Client gives user a download url that includes the key after a hash (<code>#</code>) sign, making it a <a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment">URI fragment</a>.
+</li>
+<li>
+User opens said url. Because the key is in a URI fragment, it’s never sent to the server, meaning the server can never decrypt the file itself.
+</li>
+<li>
+But because client-side javascript can read the fragment via <code>window.location.hash</code>, it can decrypt the blob downloaded from the server.
+</li>
+</ul>
+<p>Turns out browsers these days have access to <a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto">somewhat usable crypto APIs</a> out of the box, so I really need no library for the encryption/decryption logic.</p>
+<p>The code is, uh, proof-of-concept quality, but it works:</p>
+<video controls>
+  <source src="demo.mp4" type="video/mp4">
+  <a href="demo">Video: demo.mp4</a>
+</video>
+<section id="Thoughts">
+<h2>Thoughts<a href="#Thoughts" class="heading-link">#</a></h2>
+<p>Obviously, this setup requires trusting the server to <em>not</em> start serving malicious JS at some point. That makes the whole concept a hard sell tbh.</p>
+<p>Ideally Alice should send the URL to Bob via some secure communication channel, but then, maybe effort is better spent on building a secure communication channel that can efficiently handle large file transfers as well?</p>
+<p>Of course a production grade service would include some sort of checksum: an SHA-256 for the original file, and maybe another for the encrypted blob - just so we know if the server mangled our stuff without wasting effort on decrypting.</p>
+<p>Working with bytes on the frontend is <em>annoying</em>. Why are Firefox &amp; Safari the only browsers that implement <code>Uint8Array.toBase64()</code>? I ended up just serializing Uint8Arrays as lists of numbers, because at this point why bother? Also promises, my god look at them promises. Guess I really need to learn to use that shiny async syntax if I want to keep my sanity huh…</p>
+<p>Baking static content into the executable is neat and all, but the slow rebuild time makes the feedback loop much worse than reading them from disk at runtime. Maybe when zig 0.15 lands with the native x86 backend &amp; incremental build, it’ll become more… acceptable.</p>
+<p>The so-called Subtle Crypto API comes with the usual “risk of blown off foot” warning. Though I’m pretty sure I picked the right options for a simple symmetric encryption, I only spent like 15 minutes on the docs. I sure wish they could offer something idiot-proof like the NaCl APIs though.</p>
+</section>
+
+</main>
+
+<footer>
+© 2013–2025 Bùi Thành Nhân<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a> and probably too much <a href="https://www.instagram.com/cheese.coffee/" target="_blank">cà&nbsp;phê&nbsp;sữa&nbsp;đá</a>
+</footer>
+
+</body>
+
+</html>
