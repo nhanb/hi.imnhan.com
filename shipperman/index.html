@@ -73,7 +73,10 @@ But because client-side javascript can read the fragment via <code>window.locati
 <p>Ideally Alice should send the URL to Bob via some secure communication channel, but then, maybe effort is better spent on building a secure communication channel that can efficiently handle large file transfers as well?</p>
 <p>Of course a production grade service would include some sort of checksum: an SHA-256 for the original file, and maybe another for the encrypted blob - just so we know if the server mangled our stuff without wasting effort on decrypting.</p>
 <p>Working with bytes on the frontend is <em>annoying</em>. Why are Firefox &amp; Safari the only browsers that implement <code>Uint8Array.toBase64()</code>? I ended up just serializing Uint8Arrays as lists of numbers, because at this point why bother? Also promises, my god look at them promises. Guess I really need to learn to use that shiny async syntax if I want to keep my sanity huh…</p>
-<p>Baking static content into the executable is neat and all, but the slow rebuild time makes the feedback loop much worse than reading them from disk at runtime. Maybe when zig 0.15 lands with the native x86 backend &amp; incremental build, it’ll become more… acceptable.</p>
+<p>Baking static content into the executable is neat and all, but the slow rebuild time makes the development feedback loop much worse than reading them from disk at runtime. Maybe when zig 0.15 lands with the native x86 backend &amp; incremental build, it’ll become more… acceptable.</p>
+<div class="sidenote">
+<p><strong>Update</strong>: Now that zig 0.15 has landed, I’ve indeed got practicaly instant rebuilds. Gotta love Andrew and co.</p>
+</div>
 <p>The so-called Subtle Crypto API comes with the usual “risk of blown off foot” warning. Though I’m pretty sure I picked the right options for a simple symmetric encryption, I only spent like 15 minutes on the docs. I sure wish they could offer something idiot-proof like the NaCl APIs though.</p>
 </section>
 
