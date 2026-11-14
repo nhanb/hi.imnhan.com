@@ -1,0 +1,49 @@
+Title: Controlling ZORTS remotely using tailcat
+PostedAt: 2026-11-14 10:27
+Description: or: bradfitz again with a banger
+---
+
+Last weekend someone emailed me asking if [ZORTS][1] could be controlled remotely:
+
+> [...] Is there a way to use it so I can control the scoreboard remotely from another computer? A streamer is doing a tekken tournament but needs help with the scoreboard and keeping track of scores but she will be busy doing commentary. [...]
+
+My first reaction was that while remote control was out of scope, it could be interesting to implement. I do not want to support a live service, so a client-server setup à la [StreamElements][2] is out. Now if only we could run ZORTS on computer A, then let the streamer from computer B run OBS browser source pointing to `http://<computer-a>:1337`, we would be golden, right? Unfortunately, the modern internet conspires against us: your home devices almost certainly do not have a globally reachable IP address attached to it. Much digital ink has been spilled on the topic, so I won't rehash things here. For the uninitiated, I recommend reading [tailscale's article][3] on the subject.
+
+
+::: sidenote
+As an aside, IPv6 is supposed to fix all that, but it has been "supposed to" for decades now, so I wouldn't hold my breath.
+:::
+
+Coincidentally, tailscale recently released [tailcat][4], which handles the fiddly NAT traversal-or-fallback-to-proxy stuff in said article _without a tailscale account_. We can now expose any port from your computer to another, which opens up all sorts of fun possibilities. For this article though, let's go through how it could help us remote control ZORTS.
+
+Let's say we have two people in two separate locations: a *Streamer* who streams a Tekken tournament and an *Operator* who controls the scoreboard overlay, both of whom run Windows PCs. Here's a step-by-step guide:
+
+- *Streamer + Operator*: install [tailcat][4] using any method listed on tailcat's page. I recommend using [scoop][5], which is also a good choice for installing most Windows software.
+- *Operator*: run ZORTS, then expose ZORTS's port to tailcat (run this in the Windows Terminal app):
+
+  ```
+  tailcat serve 1337
+  ```
+
+  This command will output a tailcat address. Copy and give it to the *Streamer*. Keep the command running.
+
+- *Streamer*: Expose *Operator*'s ZORTS ports locally:
+
+  ```
+  tailcat forward <operator-tailcat-address> 1337:1337
+  ```
+
+  The *Streamer* can now point an OBS browser source to http://localhost:1337 as if they were running ZORTS locally.
+
+## For the programming-inclined
+
+If relying on a corporate entity bothers you (and it should), remember that you can also tell tailcat to use your own DERP server (tailscale's name for their STUN/TURN/proxy servers). It's also worth checking out the [iroh][6] project which uses a similar approach but using QUIC as the transport layer instead of Wireguard. Now if you're willing to put some elbow grease to it, you can try programming directly against [Google's public STUN servers][7].
+
+
+[1]: https://gitlab.com/nhanb/zorts
+[2]: https://streamelements.com/
+[3]: https://tailscale.com/blog/how-nat-traversal-works
+[4]: https://github.com/tailscale/tailcat
+[5]: https://scoop.sh/
+[6]: https://www.iroh.computer/
+[7]: https://www.videosdk.live/developer-hub/stun-turn-server/google-stun-server

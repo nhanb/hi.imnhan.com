@@ -18,6 +18,11 @@ pre code {
   font-size: 0.9rem;
 }
 
+li > pre {
+  margin-top: -0.5rem;
+  margin-bottom: 0;
+}
+
 p,
 ul,
 ol {

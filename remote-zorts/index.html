@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Controlling ZORTS remotely using tailcat | Hi, I&#39;m Nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="alternate" type="application/atom+xml" title="Atom feed" href="/feed.xml">
+  <link rel="stylesheet" href="/_s4g/theme/fonts.css">
+  <link rel="stylesheet" href="/_s4g/theme/base.css">
+
+  <meta property="og:title" content="Controlling ZORTS remotely using tailcat" />
+  <meta name="twitter:title" content="Controlling ZORTS remotely using tailcat" />
+  <meta name="twitter:card" content="summary" /><meta property="og:description" content="or: bradfitz again with a banger" />
+    <meta name="twitter:description" content="or: bradfitz again with a banger" /><meta property="og:image" content="https://hi.imnhan.com/about/keyboard-warrior.jpg" />
+    <meta name="twitter:image" content="https://hi.imnhan.com/about/keyboard-warrior.jpg" /><meta name="twitter:site" content="@nhanb" />
+
+  <script src="/_s4g/theme/konami/konami.js"></script>
+</head>
+
+<body>
+
+<link rel="stylesheet" href="/_s4g/theme/navbar.css">
+<nav>
+  <a href="/" >Home</a>
+  <a href="/about/" >About</a>
+  <a href="/projects/" >Projects</a>
+  <a href="https://cv.imnhan.com" target="_blank">CV</a>
+
+  <a class="feed-link" href="/feed.xml" title="Actually Atom">RSS</a>
+  <span class="posted-on">
+    Posted on
+    <time datetime="2026-11-14">
+        Saturday, 14 Nov 2026
+    </time>
+  </span>
+
+</nav>
+<hr class="nav-hr">
+
+
+<main>
+
+<h1>Controlling ZORTS remotely using tailcat</h1>
+
+<p>Last weekend someone emailed me asking if <a href="https://gitlab.com/nhanb/zorts">ZORTS</a> could be controlled remotely:</p>
+<blockquote>
+<p>[…] Is there a way to use it so I can control the scoreboard remotely from another computer? A streamer is doing a tekken tournament but needs help with the scoreboard and keeping track of scores but she will be busy doing commentary. […]</p>
+</blockquote>
+<p>My first reaction was that while remote control was out of scope, it could be interesting to implement. I do not want to support a live service, so a client-server setup à la <a href="https://streamelements.com/">StreamElements</a> is out. Now if only we could run ZORTS on computer A, then let the streamer from computer B run OBS browser source pointing to <code>http://&lt;computer-a&gt;:1337</code>, we would be golden, right? Unfortunately, the modern internet conspires against us: your home devices almost certainly do not have a globally reachable IP address attached to it. Much digital ink has been spilled on the topic, so I won’t rehash things here. For the uninitiated, I recommend reading <a href="https://tailscale.com/blog/how-nat-traversal-works">tailscale’s article</a> on the subject.</p>
+<div class="sidenote">
+<p>As an aside, IPv6 is supposed to fix all that, but it has been “supposed to” for decades now, so I wouldn’t hold my breath.</p>
+</div>
+<p>Coincidentally, tailscale recently released <a href="https://github.com/tailscale/tailcat">tailcat</a>, which handles the fiddly NAT traversal-or-fallback-to-proxy stuff in said article <em>without a tailscale account</em>. We can now expose any port from your computer to another, which opens up all sorts of fun possibilities. For this article though, let’s go through how it could help us remote control ZORTS.</p>
+<p>Let’s say we have two people in two separate locations: a <strong>Streamer</strong> who streams a Tekken tournament and an <strong>Operator</strong> who controls the scoreboard overlay, both of whom run Windows PCs. Here’s a step-by-step guide:</p>
+<ul>
+<li>
+<p><strong>Streamer + Operator</strong>: install <a href="https://github.com/tailscale/tailcat">tailcat</a> using any method listed on tailcat’s page. I recommend using <a href="https://scoop.sh/">scoop</a>, which is also a good choice for installing most Windows software.</p>
+</li>
+<li>
+<p><strong>Operator</strong>: run ZORTS, then expose ZORTS’s port to tailcat (run this in the Windows Terminal app):</p>
+<pre><code>tailcat serve 1337
+</code></pre>
+<p>This command will output a tailcat address. Copy and give it to the <strong>Streamer</strong>. Keep the command running.</p>
+</li>
+<li>
+<p><strong>Streamer</strong>: Expose <strong>Operator</strong>’s ZORTS ports locally:</p>
+<pre><code>tailcat forward &lt;operator-tailcat-address&gt; 1337:1337
+</code></pre>
+<p>The <strong>Streamer</strong> can now point an OBS browser source to http://localhost:1337 as if they were running ZORTS locally.</p>
+</li>
+</ul>
+<section id="For-the-programming-inclined">
+<h2>For the programming-inclined<a href="#For-the-programming-inclined" class="heading-link">#</a></h2>
+<p>If relying on a corporate entity bothers you (and it should), remember that you can also tell tailcat to use your own DERP server (tailscale’s name for their STUN/TURN/proxy servers). It’s also worth checking out the <a href="https://www.iroh.computer/">iroh</a> project which uses a similar approach but using QUIC as the transport layer instead of Wireguard. Now if you’re willing to put some elbow grease to it, you can try programming directly against <a href="https://www.videosdk.live/developer-hub/stun-turn-server/google-stun-server">Google’s public STUN servers</a>.</p>
+</section>
+
+</main>
+
+<footer>
+© 2013–2026 Bùi Thành Nhân<br>
+Made with <a href="https://github.com/nhanb/s4g">s4g</a> and probably too much <a href="https://www.instagram.com/cheese.coffee/" target="_blank">cà&nbsp;phê&nbsp;sữa&nbsp;đá</a>
+</footer>
+
+</body>
+
+</html>
