@@ -4,7 +4,7 @@ Tagline: and welcome to my humble corner on the intertubes
 Root: /
 ShowFooter: true
 FooterText: Made with <a href="https://github.com/nhanb/s4g">s4g</a> and the occasional <a href="/caphe.jpg">cappuccino</a>
-NavbarLinks: index.dj, about/index.dj, projects/index.dj, #CV^#https://cv.imnhan.com
+NavbarLinks: index.dj, about/index.dj, projects/index.dj
 DefaultThumb: about/keyboard-warrior.jpg
 
 AuthorName: Bùi Thành Nhân
